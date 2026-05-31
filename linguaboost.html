@@ -28,8 +28,8 @@
       <a href="#testimonials">Témoignages</a>
     </div>
     <div class="nav-cta">
-      <a href="#cta" class="nav-login">Connexion</a>
-      <a href="#cta" class="nav-register">Commencer gratuitement</a>
+      <a href="javascript:void(0)" class="nav-login" onclick="openSignup()">Connexion</a>
+      <a href="javascript:void(0)" class="nav-register" onclick="openSignup()">Commencer gratuitement</a>
     </div>
   </div>
 </nav>
@@ -58,7 +58,7 @@
     <p>Anglais, espagnol, portugais — de zéro à B1 en 6&nbsp;mois. Gamification, IA personnalisée et reconnaissance vocale.</p>
 
     <div class="hero-cta">
-      <a href="#cta" class="btn-primary">Commencer gratuitement ✨</a>
+      <a href="javascript:void(0)" class="btn-primary" onclick="openSignup()">Commencer gratuitement ✨</a>
       <a href="#preview" class="btn-ghost">Voir comment ça marche →</a>
     </div>
 
@@ -83,7 +83,7 @@
     </div>
 
     <div class="languages-grid fade-up">
-      <a href="#cta" class="lang-card">
+      <a href="javascript:void(0)" class="lang-card" onclick="openSignup()">
         <div class="lang-card-inner">
           <div class="lang-strip" style="background:linear-gradient(90deg,#3B82F6,#06B6D4)"></div>
           <div class="lang-flag">🇬🇧</div>
@@ -96,7 +96,7 @@
           <div class="lang-link">Commencer <span>→</span></div>
         </div>
       </a>
-      <a href="#cta" class="lang-card">
+      <a href="javascript:void(0)" class="lang-card" onclick="openSignup()">
         <div class="lang-card-inner">
           <div class="lang-strip" style="background:linear-gradient(90deg,#EF4444,#F97316)"></div>
           <div class="lang-flag">🇪🇸</div>
@@ -109,7 +109,7 @@
           <div class="lang-link">Commencer <span>→</span></div>
         </div>
       </a>
-      <a href="#cta" class="lang-card">
+      <a href="javascript:void(0)" class="lang-card" onclick="openSignup()">
         <div class="lang-card-inner">
           <div class="lang-strip" style="background:linear-gradient(90deg,#10B981,#0D9488)"></div>
           <div class="lang-flag">🇧🇷</div>
@@ -446,7 +446,7 @@
      MOBILE STICKY CTA
 ═══════════════════════════════════════ -->
 <div class="mobile-signup">
-  <a href="#cta" class="btn-primary" style="width:100%;justify-content:center">Commencer gratuitement — C'est gratuit !</a>
+  <a href="javascript:void(0)" class="btn-primary" style="width:100%;justify-content:center" onclick="openSignup()">Commencer gratuitement — C'est gratuit !</a>
 </div>
 
 <!-- ═══════════════════════════════════════
@@ -535,6 +535,27 @@
   </div>
 </div>
 
+<script>
+function openSignup() {
+  var modal = document.getElementById('modal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeSignup() {
+  var modal = document.getElementById('modal');
+  modal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+function handleSignup(btn) {
+  btn.textContent = '⏳ Création en cours...';
+  btn.style.opacity = '0.7';
+  setTimeout(function() {
+    btn.textContent = '✅ Compte créé ! Bienvenue !';
+    btn.style.background = 'linear-gradient(135deg,#059669,#10B981)';
+    setTimeout(function() { closeSignup(); }, 1500);
+  }, 1400);
+}
+</script>
 <script src="linguaboost.js"></script>
 </body>
 </html>

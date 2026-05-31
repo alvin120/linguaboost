@@ -16,31 +16,8 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-/* ── Modal ──────────────────────────────── */
-function openSignup() {
-  const modal = document.getElementById('modal');
-  modal.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-}
-function closeSignup() {
-  const modal = document.getElementById('modal');
-  modal.style.display = 'none';
-  document.body.style.overflow = '';
-}
-document.querySelectorAll('a[href="#cta"]').forEach(a => {
-  a.addEventListener('click', e => { e.preventDefault(); openSignup(); });
-});
+/* ── Modal (Escape key) ─────────────────── */
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSignup(); });
-
-function handleSignup(btn) {
-  btn.textContent = '⏳ Création en cours...';
-  btn.style.opacity = '.7';
-  setTimeout(() => {
-    btn.textContent = '✅ Compte créé ! Bienvenue !';
-    btn.style.background = 'linear-gradient(135deg,#059669,#10B981)';
-    setTimeout(() => closeSignup(), 1500);
-  }, 1400);
-}
 
 /* ── Nav scroll effect ──────────────────── */
 window.addEventListener('scroll', () => {

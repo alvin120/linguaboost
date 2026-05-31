@@ -32,8 +32,7 @@ document.querySelectorAll('a[href="#cta"]').forEach(a => {
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSignup(); });
 
-function handleSignup() {
-  const btn = event.currentTarget;
+function handleSignup(btn) {
   btn.textContent = '⏳ Création en cours...';
   btn.style.opacity = '.7';
   setTimeout(() => {
@@ -57,7 +56,7 @@ window.addEventListener('scroll', () => {
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const href = a.getAttribute('href');
-    if (href === '#cta') return;
+    if (!href || href === '#' || href === '#cta') return;
     const target = document.querySelector(href);
     if (target) {
       e.preventDefault();

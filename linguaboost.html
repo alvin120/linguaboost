@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LinguaBoost — Apprenez les langues en 15 min/jour</title>
+<meta name="description" content="Apprenez l'anglais, l'espagnol et le portugais avec la gamification, l'IA et la reconnaissance vocale. De A1 à B1 en 6 mois."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+/* ── Reset & Base ─────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:#0A0F1E;color:#F1F5F9;
+  min-height:100vh;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+
+/* ── CSS Variables ────────────────────────── */
+:root{
+  --violet:#8B5CF6;--violet-d:#7C3AED;
+  --cyan:#06B6D4;--emerald:#10B981;
+  --orange:#F97316;--amber:#F59E0B;
+  --red:#EF4444;--pink:#EC4899;
+  --bg:#0A0F1E;--card:#111827;--card2:#1F2937;
+  --border:rgba(255,255,255,.08);
+  --text:#F1F5F9;--muted:#94A3B8;--dim:#64748B;
+  --radius-sm:12px;--radius:16px;--radius-lg:24px;--radius-xl:32px;
+}
+
+/* ── Scrollbar ────────────────────────────── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--card)}
+::-webkit-scrollbar-thumb{background:#374151;border-radius:3px}
+
+/* ── Utilities ────────────────────────────── */
+.container{max-width:1140px;margin:0 auto;padding:0 20px}
+.gradient-text{
+  background:linear-gradient(135deg,var(--violet),var(--cyan),var(--emerald));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--border)}
+.card{background:rgba(17,24,39,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:var(--radius-lg)}
+.btn-primary{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 28px;border-radius:var(--radius);font-weight:700;font-size:1rem;color:#fff;
+  background:linear-gradient(135deg,var(--violet-d),var(--cyan));
+  transition:transform .2s,box-shadow .2s;white-space:nowrap;
+}
+.btn-primary:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 16px 48px rgba(139,92,246,.4)}
+.btn-ghost{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 28px;border-radius:var(--radius);font-weight:600;font-size:1rem;
+  color:var(--muted);border:1px solid var(--border);background:rgba(255,255,255,.04);
+  transition:color .2s,background .2s,transform .2s;
+}
+.btn-ghost:hover{color:#fff;background:rgba(255,255,255,.08);transform:translateY(-1px)}
+.section-label{
+  display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--violet);background:rgba(139,92,246,.15);
+  border:1px solid rgba(139,92,246,.3);padding:5px 14px;border-radius:100px;margin-bottom:18px;
+}
+.section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.15;margin-bottom:14px}
+.section-sub{font-size:1.05rem;color:var(--muted);max-width:580px;line-height:1.7}
+
+/* ── Animations ───────────────────────────── */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes glow-pulse{0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes fade-up{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes streak{0%,100%{transform:rotate(-4deg) scale(1)}50%{transform:rotate(4deg) scale(1.1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes bar-fill{from{width:0}to{width:var(--w)}}
+.animate-float{animation:float 3.5s ease-in-out infinite}
+.animate-glow{animation:glow-pulse 2.5s ease-in-out infinite}
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* ── Orbs ─────────────────────────────────── */
+.orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px)}
+.orb-violet{background:rgba(139,92,246,.25);width:500px;height:500px}
+.orb-cyan{background:rgba(6,182,212,.2);width:400px;height:400px}
+.orb-emerald{background:rgba(16,185,129,.15);width:350px;height:350px}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:12px 16px;
+}
+.nav-inner{
+  max-width:1140px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  background:rgba(17,24,39,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:10px 20px;
+}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo-icon{
+  width:34px;height:34px;border-radius:10px;
+  background:linear-gradient(135deg,var(--violet),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.9rem;color:#fff;flex-shrink:0;
+}
+.nav-logo-text{font-weight:800;font-size:1.1rem}
+.nav-links{display:flex;align-items:center;gap:24px}
+.nav-links a{font-size:.9rem;font-weight:500;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:#fff}
+.nav-cta{display:flex;align-items:center;gap:8px}
+.nav-login{font-size:.9rem;color:var(--muted);padding:8px 14px;transition:color .2s;font-weight:500}
+.nav-login:hover{color:#fff}
+.nav-register{
+  padding:8px 16px;border-radius:10px;
+  background:var(--violet-d);color:#fff;font-size:.85rem;font-weight:700;
+  transition:background .2s,transform .15s;
+}
+.nav-register:hover{background:var(--violet);transform:scale(1.03)}
+@media(max-width:768px){
+  .nav-links,.nav-login{display:none}
+  .nav-register{padding:7px 13px}
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:100px 20px 60px;position:relative;overflow:hidden;
+}
+.hero .orb-violet{top:-80px;left:calc(50% - 400px)}
+.hero .orb-cyan{top:100px;right:calc(50% - 400px)}
+.hero .orb-emerald{bottom:0;left:50%;transform:translateX(-50%)}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 16px;border-radius:100px;background:rgba(139,92,246,.12);
+  border:1px solid rgba(139,92,246,.3);font-size:.8rem;color:#C4B5FD;
+  margin-bottom:28px;
+}
+.hero-badge-dot{width:7px;height:7px;border-radius:50%;background:#10B981;animation:glow-pulse 2s infinite}
+.hero-mascot{font-size:5rem;margin-bottom:20px;display:block}
+.hero h1{
+  font-size:clamp(2.4rem,7vw,5rem);font-weight:900;line-height:1.1;
+  margin-bottom:20px;letter-spacing:-.02em;
+}
+.hero p{
+  font-size:clamp(1rem,2.5vw,1.2rem);color:var(--muted);
+  max-width:520px;margin:0 auto 36px;line-height:1.7;
+}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:52px}
+.hero-stats{
+  display:grid;grid-template-columns:repeat(4,auto);gap:32px;
+}
+.hero-stat p:first-child{font-size:1.5rem;font-weight:900}
+.hero-stat p:last-child{font-size:.75rem;color:var(--muted);margin-top:2px}
+@media(max-width:600px){
+  .hero-stats{grid-template-columns:repeat(2,1fr);gap:20px}
+  .hero-cta .btn-primary,.hero-cta .btn-ghost{width:100%;max-width:340px}
+}
+
+/* ═══════════════════════════════════════════
+   SECTION WRAPPER
+═══════════════════════════════════════════ */
+section{padding:90px 0;position:relative}
+.section-center{text-align:center;margin-bottom:52px}
+
+/* ═══════════════════════════════════════════
+   LANGUAGES
+═══════════════════════════════════════════ */
+.languages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.lang-card{
+  border-radius:var(--radius-lg);overflow:hidden;
+  transition:transform .25s,box-shadow .25s;
+  cursor:pointer;
+}
+.lang-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.lang-card-inner{background:rgba(17,24,39,.9);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px}
+.lang-strip{height:4px;border-radius:4px;margin-bottom:24px}
+.lang-flag{font-size:3rem;margin-bottom:12px}
+.lang-name{font-size:1.4rem;font-weight:800;margin-bottom:10px}
+.lang-tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:10px}
+.lang-tag{padding:3px 10px;border-radius:8px;font-size:.72rem;font-weight:700;background:rgba(16,185,129,.2);color:#6EE7B7}
+.lang-speakers{font-size:.82rem;color:var(--dim)}
+.lang-levels{font-size:.85rem;color:var(--muted);margin-bottom:16px}
+.lang-link{font-size:.85rem;font-weight:700;color:var(--violet);display:flex;align-items:center;gap:6px;transition:gap .2s}
+.lang-card:hover .lang-link{gap:12px}
+@media(max-width:768px){.languages-grid{grid-template-columns:1fr}}
+
+/* ═══════════════════════════════════════════
+   FEATURES
+═══════════════════════════════════════════ */
+#features{background:linear-gradient(180deg,transparent,rgba(139,92,246,.04),transparent)}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat-card{
+  border-radius:var(--radius);padding:24px;
+  background:rgba(17,24,39,.8);border:1px solid var(--border);
+  transition:border-color .25s,transform .25s;
+}
+.feat-card:hover{transform:translateY(-3px);border-color:var(--feat-color,var(--violet))}
+.feat-icon{
+  width:48px;height:48px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+  margin-bottom:16px;
+}
+.feat-title{font-weight:800;font-size:.98rem;margin-bottom:6px;color:#fff}
+.feat-desc{font-size:.85rem;color:var(--muted);line-height:1.6}
+@media(max-width:900px){.features-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:580px){.features-grid{grid-template-columns:1fr}}
+
+/* ═══════════════════════════════════════════
+   HOW IT WORKS
+═══════════════════════════════════════════ */
+.steps{display:flex;flex-direction:column;gap:16px;max-width:700px;margin:0 auto}
+.step-card{
+  display:flex;align-items:flex-start;gap:20px;
+  padding:22px 24px;background:rgba(17,24,39,.8);
+  border:1px solid var(--border);border-radius:var(--radius);
+}
+.step-icon{
+  width:52px;height:52px;border-radius:14px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+}
+.step-meta{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+.step-num{font-size:.68rem;font-weight:800;padding:3px 8px;border-radius:6px;letter-spacing:.08em}
+.step-title{font-weight:800;font-size:.95rem;color:#fff}
+.step-desc{font-size:.85rem;color:var(--muted);line-height:1.65}
+
+/* ═══════════════════════════════════════════
+   STATS BAND
+═══════════════════════════════════════════ */
+.stats-band{background:rgba(139,92,246,.06);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:50px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.stat-val{font-size:2.2rem;font-weight:900;margin-bottom:4px}
+.stat-label{font-size:.8rem;color:var(--muted)}
+@media(max-width:600px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ═══════════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════════ */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.testi-card{
+  padding:24px;background:rgba(17,24,39,.85);
+  border:1px solid var(--border);border-radius:var(--radius);
+  display:flex;flex-direction:column;
+}
+.testi-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.testi-avatar{
+  width:40px;height:40px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--violet-d),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;color:#fff;font-size:.95rem;
+}
+.testi-name{font-weight:700;font-size:.9rem;color:#fff}
+.testi-role{font-size:.75rem;color:var(--dim)}
+.testi-score{
+  margin-left:auto;padding:3px 10px;border-radius:8px;
+  background:rgba(16,185,129,.2);color:#6EE7B7;font-size:.72rem;font-weight:700;white-space:nowrap;
+}
+.testi-text{font-size:.88rem;color:var(--muted);line-height:1.7;flex:1}
+.testi-stars{margin-top:14px;color:#F59E0B;font-size:.85rem;letter-spacing:1px}
+@media(max-width:900px){.testi-grid{grid-template-columns:1fr}}
+@media(min-width:600px) and (max-width:900px){.testi-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ═══════════════════════════════════════════
+   EXERCISE PREVIEW
+═══════════════════════════════════════════ */
+.preview{padding:90px 0;overflow:hidden}
+.preview-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
+}
+.preview-text .section-label{display:block;width:max-content}
+.preview-list{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:12px}
+.preview-list li{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 16px;background:rgba(17,24,39,.8);
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  font-size:.9rem;color:var(--muted);transition:border-color .2s;
+}
+.preview-list li:hover{border-color:var(--violet)}
+.preview-list li span:first-child{font-size:1.2rem;flex-shrink:0}
+.preview-phone{
+  position:relative;display:flex;justify-content:center;
+}
+.phone-wrap{
+  width:260px;background:rgba(17,24,39,.95);border:1px solid var(--border);
+  border-radius:28px;padding:20px;box-shadow:0 40px 100px rgba(0,0,0,.5);
+  transform:perspective(800px) rotateY(-8deg) rotateX(4deg);
+  transition:transform .4s;
+}
+.phone-wrap:hover{transform:perspective(800px) rotateY(-3deg) rotateX(1deg)}
+.phone-notch{width:70px;height:6px;background:var(--card2);border-radius:10px;margin:0 auto 14px}
+.phone-exercise{background:var(--card2);border-radius:14px;padding:16px}
+.phone-question{font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:10px}
+.phone-word{font-size:1.5rem;text-align:center;font-weight:900;margin-bottom:14px;color:#fff}
+.phone-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.phone-opt{
+  padding:9px;border-radius:10px;background:rgba(255,255,255,.05);
+  border:1.5px solid var(--border);font-size:.76rem;color:var(--muted);
+  text-align:center;transition:all .15s;cursor:pointer;
+}
+.phone-opt:hover{border-color:var(--violet);color:#fff;background:rgba(139,92,246,.1)}
+.phone-opt.correct{border-color:#10B981;background:rgba(16,185,129,.15);color:#6EE7B7}
+.phone-xp{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  margin-top:14px;padding:6px;background:rgba(245,158,11,.1);
+  border-radius:8px;font-size:.75rem;font-weight:700;color:#F59E0B;
+}
+.phone-hearts{display:flex;gap:3px;justify-content:center;margin-bottom:10px;font-size:.85rem}
+@media(max-width:768px){
+  .preview-inner{grid-template-columns:1fr}
+  .preview-phone{display:none}
+}
+
+/* ═══════════════════════════════════════════
+   GAMIFICATION
+═══════════════════════════════════════════ */
+.gamif-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.gamif-card{
+  text-align:center;padding:28px 16px;
+  background:rgba(17,24,39,.8);border:1px solid var(--border);
+  border-radius:var(--radius);transition:transform .25s,border-color .25s;
+}
+.gamif-card:hover{transform:translateY(-4px);border-color:rgba(139,92,246,.4)}
+.gamif-icon{font-size:2.4rem;margin-bottom:12px}
+.gamif-title{font-weight:800;font-size:.95rem;margin-bottom:6px;color:#fff}
+.gamif-desc{font-size:.8rem;color:var(--muted);line-height:1.6}
+@media(max-width:900px){.gamif-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ═══════════════════════════════════════════
+   PROGRESS DEMO
+═══════════════════════════════════════════ */
+.progress-demo{
+  max-width:700px;margin:0 auto;
+  background:rgba(17,24,39,.85);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:32px;
+}
+.progress-title{font-weight:800;font-size:1.1rem;color:#fff;margin-bottom:24px;text-align:center}
+.level-row{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
+.level-label{display:flex;justify-content:space-between;font-size:.85rem}
+.level-name{font-weight:600;color:#fff}
+.level-pct{color:var(--muted)}
+.level-bar{height:10px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden}
+.level-fill{height:100%;border-radius:10px;--w:0%;animation:bar-fill 1.5s ease forwards;animation-play-state:paused}
+.level-fill.played{animation-play-state:running}
+.cefr-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:20px;justify-content:center}
+.cefr-pill{
+  padding:5px 14px;border-radius:100px;font-size:.78rem;font-weight:700;
+  transition:all .2s;
+}
+.cefr-active{background:var(--violet-d);color:#fff}
+.cefr-done{background:rgba(16,185,129,.25);color:#6EE7B7}
+.cefr-locked{background:rgba(255,255,255,.06);color:var(--dim)}
+
+/* ═══════════════════════════════════════════
+   CTA
+═══════════════════════════════════════════ */
+.cta-section{padding:90px 0}
+.cta-box{
+  max-width:720px;margin:0 auto;text-align:center;
+  background:rgba(17,24,39,.9);border:1px solid rgba(139,92,246,.25);
+  border-radius:var(--radius-xl);padding:64px 40px;
+  position:relative;overflow:hidden;
+}
+.cta-box::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(139,92,246,.12),rgba(6,182,212,.06));
+  pointer-events:none;
+}
+.cta-mascot{font-size:4.5rem;margin-bottom:20px;display:block}
+.cta-box h2{font-size:clamp(1.7rem,4vw,2.4rem);font-weight:900;margin-bottom:14px;line-height:1.2}
+.cta-box p{font-size:1.05rem;color:var(--muted);margin-bottom:32px;line-height:1.7}
+.cta-sub{font-size:.82rem;color:var(--dim);margin-top:16px}
+@media(max-width:600px){.cta-box{padding:44px 22px}}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer{border-top:1px solid var(--border);padding:36px 0}
+.footer-inner{
+  display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;gap:16px;
+}
+.footer-logo{display:flex;align-items:center;gap:8px}
+.footer-logo-icon{
+  width:26px;height:26px;border-radius:8px;
+  background:linear-gradient(135deg,var(--violet),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.7rem;color:#fff;
+}
+.footer-logo-text{font-weight:800;font-size:.95rem}
+.footer-copy{font-size:.8rem;color:var(--dim)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:.8rem;color:var(--dim);transition:color .2s}
+.footer-links a:hover{color:#fff}
+@media(max-width:600px){.footer-inner{flex-direction:column;text-align:center}.footer-links{justify-content:center}}
+
+/* ═══════════════════════════════════════════
+   MOBILE NAV BANNER
+═══════════════════════════════════════════ */
+.mobile-signup{
+  display:none;position:fixed;bottom:0;left:0;right:0;
+  background:rgba(17,24,39,.95);border-top:1px solid var(--border);
+  padding:12px 20px calc(12px + env(safe-area-inset-bottom));
+  z-index:90;backdrop-filter:blur(12px);
+}
+.mobile-signup a{width:100%;text-align:center}
+@media(max-width:580px){.mobile-signup{display:block}}
+
+/* ── Selection ────────────────────────────── */
+::selection{background:rgba(139,92,246,.3);color:#fff}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">L</div>
+      <span class="nav-logo-text gradient-text">LinguaBoost</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Fonctionnalités</a>
+      <a href="#languages">Langues</a>
+      <a href="#how">Méthode</a>
+      <a href="#testimonials">Témoignages</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#cta" class="nav-login">Connexion</a>
+      <a href="#cta" class="nav-register">Commencer gratuitement</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<section class="hero">
+  <div class="orb orb-violet" style="top:-80px;left:calc(50% - 350px)"></div>
+  <div class="orb orb-cyan" style="top:120px;right:calc(50% - 350px)"></div>
+  <div class="orb orb-emerald" style="bottom:-60px;left:50%;transform:translateX(-50%)"></div>
+
+  <div style="position:relative;z-index:1;width:100%">
+    <div style="display:flex;justify-content:center;margin-bottom:28px">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Nouveau : Tuteur IA avec GPT-4o
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;margin-bottom:22px">
+      <span class="animate-float" style="font-size:5.5rem;line-height:1">🦉</span>
+    </div>
+
+    <h1>Maîtrisez une<br><span class="gradient-text">nouvelle langue</span><br>en 15 min/jour</h1>
+    <p>Anglais, espagnol, portugais — de zéro à B1 en 6&nbsp;mois. Gamification, IA personnalisée et reconnaissance vocale.</p>
+
+    <div class="hero-cta">
+      <a href="#cta" class="btn-primary">Commencer gratuitement ✨</a>
+      <a href="#preview" class="btn-ghost">Voir comment ça marche →</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat"><p class="gradient-text">2M+</p><p>Apprenants actifs</p></div>
+      <div class="hero-stat"><p class="gradient-text">50K+</p><p>Mots enseignés</p></div>
+      <div class="hero-stat"><p class="gradient-text">4.9★</p><p>Note moyenne</p></div>
+      <div class="hero-stat"><p class="gradient-text">6 mois</p><p>Pour A1 → B1</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     LANGUAGES
+═══════════════════════════════════════ -->
+<section id="languages">
+  <div class="container">
+    <div class="section-center fade-up">
+      <span class="section-label">3 langues</span>
+      <h2 class="section-title">Choisissez votre <span class="gradient-text">langue cible</span></h2>
+      <p class="section-sub" style="margin:0 auto">Anglais, espagnol ou portugais — commencez aujourd'hui, changez quand vous voulez.</p>
+    </div>
+
+    <div class="languages-grid fade-up">
+      <a href="#cta" class="lang-card">
+        <div class="lang-card-inner">
+          <div class="lang-strip" style="background:linear-gradient(90deg,#3B82F6,#06B6D4)"></div>
+          <div class="lang-flag">🇬🇧</div>
+          <div class="lang-name">Anglais</div>
+          <div class="lang-tags">
+            <span class="lang-tag">Facile</span>
+            <span class="lang-speakers">1.5 milliard de locuteurs</span>
+          </div>
+          <div class="lang-levels">A1 → C2 · 6 unités disponibles</div>
+          <div class="lang-link">Commencer <span>→</span></div>
+        </div>
+      </a>
+      <a href="#cta" class="lang-card">
+        <div class="lang-card-inner">
+          <div class="lang-strip" style="background:linear-gradient(90deg,#EF4444,#F97316)"></div>
+          <div class="lang-flag">🇪🇸</div>
+          <div class="lang-name">Espagnol</div>
+          <div class="lang-tags">
+            <span class="lang-tag">Facile</span>
+            <span class="lang-speakers">500 millions de locuteurs</span>
+          </div>
+          <div class="lang-levels">A1 → C2 · 2 unités disponibles</div>
+          <div class="lang-link">Commencer <span>→</span></div>
+        </div>
+      </a>
+      <a href="#cta" class="lang-card">
+        <div class="lang-card-inner">
+          <div class="lang-strip" style="background:linear-gradient(90deg,#10B981,#0D9488)"></div>
+          <div class="lang-flag">🇧🇷</div>
+          <div class="lang-name">Portugais</div>
+          <div class="lang-tags">
+            <span class="lang-tag" style="background:rgba(245,158,11,.2);color:#FCD34D">Moyen</span>
+            <span class="lang-speakers">250 millions de locuteurs</span>
+          </div>
+          <div class="lang-levels">A1 → C2 · Bientôt</div>
+          <div class="lang-link">Commencer <span>→</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FEATURES
+═══════════════════════════════════════ -->
+<section id="features">
+  <div class="container">
+    <div class="section-center fade-up">
+      <span class="section-label">Fonctionnalités</span>
+      <h2 class="section-title">Tout ce qu'il faut pour <span class="gradient-text">réussir</span></h2>
+      <p class="section-sub" style="margin:0 auto">Une approche scientifique de l'apprentissage, rendue addictive par la gamification.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feat-card fade-up" style="--feat-color:#8B5CF6">
+        <div class="feat-icon" style="background:rgba(139,92,246,.18)">🧠</div>
+        <div class="feat-title">Répétition espacée</div>
+        <div class="feat-desc">Algorithme SM-2 comme Anki. Les mots reviennent juste avant que vous les oubliiez.</div>
+      </div>
+      <div class="feat-card fade-up" style="--feat-color:#10B981">
+        <div class="feat-icon" style="background:rgba(16,185,129,.18)">🎤</div>
+        <div class="feat-title">Reconnaissance vocale</div>
+        <div class="feat-desc">Score de prononciation phonème par phonème. Feedback immédiat en vert et rouge.</div>
+      </div>
+      <div class="feat-card fade-up" style="--feat-color:#F97316">
+        <div class="feat-icon" style="background:rgba(249,115,22,.18)">🎮</div>
+        <div class="feat-title">Gamification totale</div>
+        <div class="feat-desc">XP, streak, ligues hebdomadaires, badges, cœurs, gemmes — apprenez comme vous jouez.</div>
+      </div>
+      <div class="feat-card fade-up" style="--feat-color:#06B6D4">
+        <div class="feat-icon" style="background:rgba(6,182,212,.18)">🤖</div>
+        <div class="feat-title">Tuteur IA GPT-4o</div>
+        <div class="feat-desc">Analyse vos erreurs récentes et génère des exercices sur mesure à chaque session.</div>
+      </div>
+      <div class="feat-card fade-up" style="--feat-color:#F59E0B">
+        <div class="feat-icon" style="background:rgba(245,158,11,.18)">📊</div>
+        <div class="feat-title">Progression CECR</div>
+        <div class="feat-desc">Visualisez votre niveau A1→C2 séparément : lecture, grammaire, écoute, oral.</div>
+      </div>
+      <div class="feat-card fade-up" style="--feat-color:#EC4899">
+        <div class="feat-icon" style="background:rgba(236,72,153,.18)">🔊</div>
+        <div class="feat-title">Audio natif</div>
+        <div class="feat-desc">Vrais accents UK, US, Mexique, Espagne, Brésil, Portugal — vitesse réglable 0.75×→1.25×.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     EXERCISE PREVIEW
+═══════════════════════════════════════ -->
+<section id="preview">
+  <div class="container">
+    <div class="preview-inner">
+      <div class="preview-text fade-up">
+        <span class="section-label">5 types d'exercices</span>
+        <h2 class="section-title">Un parcours <span class="gradient-text">complet</span> à chaque leçon</h2>
+        <p style="color:var(--muted);line-height:1.7;margin-bottom:8px">Chaque unité thématique suit le même cycle pour un apprentissage équilibré :</p>
+        <ul class="preview-list">
+          <li><span>📖</span><span><strong style="color:#fff">Vocabulaire</strong> — Flashcards avec flip 3D, répétition espacée</span></li>
+          <li><span>✏️</span><span><strong style="color:#fff">Grammaire</strong> — QCM avec explication immédiate du pourquoi</span></li>
+          <li><span>📰</span><span><strong style="color:#fff">Lecture</strong> — Textes authentiques : SMS, emails, articles</span></li>
+          <li><span>🎧</span><span><strong style="color:#fff">Écoute</strong> — Audio natif, transcription, vitesse réglable</span></li>
+          <li><span>🎤</span><span><strong style="color:#fff">Expression orale</strong> — Score de prononciation en temps réel</span></li>
+        </ul>
+      </div>
+
+      <div class="preview-phone fade-up">
+        <div class="phone-wrap">
+          <div class="phone-notch"></div>
+          <div class="phone-hearts">❤️ ❤️ ❤️ ❤️ ❤️</div>
+          <div class="phone-exercise">
+            <div class="phone-question">Comment dit-on en anglais ?</div>
+            <div class="phone-word">🍎 pomme</div>
+            <div class="phone-opts">
+              <div class="phone-opt">Orange</div>
+              <div class="phone-opt correct">Apple ✓</div>
+              <div class="phone-opt">Banana</div>
+              <div class="phone-opt">Grape</div>
+            </div>
+            <div class="phone-xp">⭐ +10 XP — Excellent !</div>
+          </div>
+          <div style="margin-top:12px;text-align:center;font-size:.7rem;color:var(--dim)">Progression 2/3 leçons</div>
+          <div style="height:4px;background:rgba(255,255,255,.07);border-radius:4px;margin-top:6px;overflow:hidden">
+            <div style="width:66%;height:100%;background:linear-gradient(90deg,#8B5CF6,#06B6D4);border-radius:4px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     STATS BAND
+═══════════════════════════════════════ -->
+<div class="stats-band">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="fade-up"><div class="stat-val gradient-text">2 000 000</div><div class="stat-label">Apprenants actifs dans le monde</div></div>
+      <div class="fade-up"><div class="stat-val gradient-text">50 000+</div><div class="stat-label">Mots et expressions enseignés</div></div>
+      <div class="fade-up"><div class="stat-val gradient-text">4.9 / 5</div><div class="stat-label">Note moyenne sur 18 000 avis</div></div>
+      <div class="fade-up"><div class="stat-val gradient-text">6 mois</div><div class="stat-label">Pour passer de A1 à B1 (15 min/j)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     HOW IT WORKS
+═══════════════════════════════════════ -->
+<section id="how">
+  <div class="container">
+    <div class="section-center fade-up">
+      <span class="section-label">Méthode</span>
+      <h2 class="section-title">Comment ça <span class="gradient-text">marche ?</span></h2>
+    </div>
+
+    <div class="steps fade-up">
+      <div class="step-card">
+        <div class="step-icon" style="background:rgba(139,92,246,.18)">🎯</div>
+        <div>
+          <div class="step-meta">
+            <span class="step-num" style="background:rgba(139,92,246,.2);color:#C4B5FD">ÉTAPE 01</span>
+            <span class="step-title">Test de niveau</span>
+          </div>
+          <p class="step-desc">Un test de 5 minutes vous place au bon niveau (A1→C2). Pas de temps perdu sur ce que vous connaissez déjà.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon" style="background:rgba(16,185,129,.18)">📚</div>
+        <div>
+          <div class="step-meta">
+            <span class="step-num" style="background:rgba(16,185,129,.2);color:#6EE7B7">ÉTAPE 02</span>
+            <span class="step-title">5 exercices par leçon</span>
+          </div>
+          <p class="step-desc">Vocabulaire → Grammaire → Lecture → Écoute → Expression orale. Un cycle équilibré par unité thématique.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon" style="background:rgba(6,182,212,.18)">🤖</div>
+        <div>
+          <div class="step-meta">
+            <span class="step-num" style="background:rgba(6,182,212,.2);color:#67E8F9">ÉTAPE 03</span>
+            <span class="step-title">IA personnalisée</span>
+          </div>
+          <p class="step-desc">GPT-4o analyse vos erreurs récentes et génère des exercices ciblés. Chaque session est unique.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon" style="background:rgba(249,115,22,.18)">🔥</div>
+        <div>
+          <div class="step-meta">
+            <span class="step-num" style="background:rgba(249,115,22,.2);color:#FCA16B">ÉTAPE 04</span>
+            <span class="step-title">15 min par jour</span>
+          </div>
+          <p class="step-desc">Streak quotidien, ligues hebdomadaires, badges — la gamification rend la pratique irrésistible.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     GAMIFICATION
+═══════════════════════════════════════ -->
+<section style="background:rgba(139,92,246,.04);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div class="section-center fade-up">
+      <span class="section-label">Gamification</span>
+      <h2 class="section-title">Apprenez comme <span class="gradient-text">vous jouez</span></h2>
+    </div>
+
+    <div class="gamif-grid fade-up">
+      <div class="gamif-card">
+        <div class="gamif-icon" style="animation:streak 1.2s infinite">🔥</div>
+        <div class="gamif-title">Streak quotidien</div>
+        <div class="gamif-desc">Pratiquez chaque jour pour maintenir votre flamme. Notifications de rappel intelligentes.</div>
+      </div>
+      <div class="gamif-card">
+        <div class="gamif-icon">⭐</div>
+        <div class="gamif-title">Système XP</div>
+        <div class="gamif-desc">Gagnez des points d'expérience à chaque exercice. Montez de niveau et débloquez des bonus.</div>
+      </div>
+      <div class="gamif-card">
+        <div class="gamif-icon">🏆</div>
+        <div class="gamif-title">Ligues hebdo</div>
+        <div class="gamif-desc">Bronze → Argent → Or → Diamant. Montez dans les classements chaque semaine.</div>
+      </div>
+      <div class="gamif-card">
+        <div class="gamif-icon">🎖️</div>
+        <div class="gamif-title">20+ Badges</div>
+        <div class="gamif-desc">"Premier Mot", "Semaine de Feu", "Maître Orateur"… Collectionnez-les tous !</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     PROGRESS DEMO
+═══════════════════════════════════════ -->
+<section>
+  <div class="container">
+    <div class="section-center fade-up">
+      <span class="section-label">Progression</span>
+      <h2 class="section-title">Visualisez votre <span class="gradient-text">évolution</span></h2>
+    </div>
+
+    <div class="progress-demo fade-up" id="progress-demo">
+      <div class="progress-title">Anglais · Niveau B1 · Alexandre</div>
+
+      <div class="level-row">
+        <div class="level-label"><span class="level-name">Vocabulaire</span><span class="level-pct">78%</span></div>
+        <div class="level-bar"><div class="level-fill" id="bar1" style="--w:78%;background:linear-gradient(90deg,#8B5CF6,#7C3AED)"></div></div>
+      </div>
+      <div class="level-row">
+        <div class="level-label"><span class="level-name">Grammaire</span><span class="level-pct">65%</span></div>
+        <div class="level-bar"><div class="level-fill" id="bar2" style="--w:65%;background:linear-gradient(90deg,#10B981,#059669)"></div></div>
+      </div>
+      <div class="level-row">
+        <div class="level-label"><span class="level-name">Compréhension orale</span><span class="level-pct">72%</span></div>
+        <div class="level-bar"><div class="level-fill" id="bar3" style="--w:72%;background:linear-gradient(90deg,#F97316,#EA580C)"></div></div>
+      </div>
+      <div class="level-row">
+        <div class="level-label"><span class="level-name">Expression orale</span><span class="level-pct">58%</span></div>
+        <div class="level-bar"><div class="level-fill" id="bar4" style="--w:58%;background:linear-gradient(90deg,#06B6D4,#0891B2)"></div></div>
+      </div>
+
+      <div class="cefr-pills">
+        <span class="cefr-pill cefr-done">✓ A1</span>
+        <span class="cefr-pill cefr-done">✓ A2</span>
+        <span class="cefr-pill cefr-active">B1 — En cours</span>
+        <span class="cefr-pill cefr-locked">B2</span>
+        <span class="cefr-pill cefr-locked">C1</span>
+        <span class="cefr-pill cefr-locked">C2</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     TESTIMONIALS
+═══════════════════════════════════════ -->
+<section id="testimonials" style="background:rgba(0,0,0,.2)">
+  <div class="container">
+    <div class="section-center fade-up">
+      <span class="section-label">Témoignages</span>
+      <h2 class="section-title">Ils ont <span class="gradient-text">réussi</span></h2>
+    </div>
+
+    <div class="testi-grid fade-up">
+      <div class="testi-card">
+        <div class="testi-header">
+          <div class="testi-avatar">M</div>
+          <div><div class="testi-name">Marie L.</div><div class="testi-role">Étudiante, Paris</div></div>
+          <div class="testi-score">B1 en 3 mois</div>
+        </div>
+        <p class="testi-text">"En 3 mois j'ai atteint B1 en anglais ! Les exercices de prononciation sont incroyables — je vois ma progression chaque semaine."</p>
+        <div class="testi-stars">★★★★★</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-header">
+          <div class="testi-avatar">T</div>
+          <div><div class="testi-name">Thomas R.</div><div class="testi-role">Développeur, Lyon</div></div>
+          <div class="testi-score">Streak 45 jours</div>
+        </div>
+        <p class="testi-text">"La gamification me pousse à pratiquer chaque jour. Mon streak est à 45 jours ! Je n'avais jamais tenu aussi longtemps avec d'autres apps."</p>
+        <div class="testi-stars">★★★★★</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-header">
+          <div class="testi-avatar">E</div>
+          <div><div class="testi-name">Emma V.</div><div class="testi-role">Traductrice, Bordeaux</div></div>
+          <div class="testi-score">A2→B2 en 6 mois</div>
+        </div>
+        <p class="testi-text">"Le tuteur IA détecte exactement mes faiblesses. Je progresse deux fois plus vite qu'avec un cours classique, pour une fraction du prix."</p>
+        <div class="testi-stars">★★★★★</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CTA
+═══════════════════════════════════════ -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="cta-box fade-up">
+      <span class="cta-mascot animate-float">🦉</span>
+      <h2>Prêt à <span class="gradient-text">booster</span> votre langue ?</h2>
+      <p>Rejoignez 2 millions d'apprenants. Gratuit, addictif, efficace. Aucune carte bancaire requise.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center">
+        <a href="#" class="btn-primary" style="font-size:1.05rem;padding:16px 32px" onclick="openSignup()">Créer mon compte gratuitement ✨</a>
+      </div>
+      <p class="cta-sub">✓ Gratuit pour toujours · ✓ Annulable à tout moment · ✓ Aucun engagement</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <div class="footer-logo-icon">L</div>
+        <span class="footer-logo-text gradient-text">LinguaBoost</span>
+      </div>
+      <p class="footer-copy">© 2026 LinguaBoost · Apprendre une langue, c'est s'ouvrir au monde.</p>
+      <div class="footer-links">
+        <a href="#">Confidentialité</a>
+        <a href="#">CGU</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════
+     MOBILE STICKY CTA
+═══════════════════════════════════════ -->
+<div class="mobile-signup">
+  <a href="#cta" class="btn-primary" style="width:100%;justify-content:center">Commencer gratuitement — C'est gratuit !</a>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SIGNUP MODAL
+═══════════════════════════════════════ -->
+<div id="modal" style="
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;padding:20px;
+" onclick="if(event.target===this)closeSignup()">
+  <div style="
+    background:#111827;border:1px solid rgba(139,92,246,.3);
+    border-radius:28px;padding:40px 32px;width:100%;max-width:420px;
+    position:relative;animation:fade-up .35s ease;
+  ">
+    <button onclick="closeSignup()" style="
+      position:absolute;top:16px;right:16px;
+      width:32px;height:32px;border-radius:8px;
+      background:rgba(255,255,255,.07);color:var(--muted);
+      font-size:1.1rem;display:flex;align-items:center;justify-content:center;
+      cursor:pointer;transition:background .2s;
+    " onmouseover="this.style.background='rgba(255,255,255,.14)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">✕</button>
+
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="font-size:3rem;margin-bottom:10px">🦉</div>
+      <h3 style="font-size:1.4rem;font-weight:900;margin-bottom:6px">Créez votre compte</h3>
+      <p style="font-size:.85rem;color:var(--muted)">Gratuit pour toujours · Aucune carte bancaire</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <input type="text" placeholder="Votre prénom" style="
+        width:100%;padding:13px 16px;background:rgba(255,255,255,.06);
+        border:1px solid rgba(255,255,255,.1);border-radius:12px;
+        color:#fff;font-family:inherit;font-size:.95rem;outline:none;
+        transition:border-color .2s;
+      " onfocus="this.style.borderColor='#8B5CF6'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"/>
+      <input type="email" placeholder="votre@email.com" style="
+        width:100%;padding:13px 16px;background:rgba(255,255,255,.06);
+        border:1px solid rgba(255,255,255,.1);border-radius:12px;
+        color:#fff;font-family:inherit;font-size:.95rem;outline:none;
+        transition:border-color .2s;
+      " onfocus="this.style.borderColor='#8B5CF6'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"/>
+      <input type="password" placeholder="Mot de passe (6 caractères min.)" style="
+        width:100%;padding:13px 16px;background:rgba(255,255,255,.06);
+        border:1px solid rgba(255,255,255,.1);border-radius:12px;
+        color:#fff;font-family:inherit;font-size:.95rem;outline:none;
+        transition:border-color .2s;
+      " onfocus="this.style.borderColor='#8B5CF6'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"/>
+
+      <div style="margin:4px 0">
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:8px;font-weight:600">Je veux apprendre :</p>
+        <div style="display:flex;gap:8px">
+          <label style="flex:1;cursor:pointer">
+            <input type="radio" name="lang" value="en" style="display:none" checked/>
+            <div class="lang-radio" style="
+              padding:8px;border-radius:10px;border:1.5px solid rgba(139,92,246,.5);
+              background:rgba(139,92,246,.1);text-align:center;font-size:.8rem;
+              color:#C4B5FD;font-weight:700;
+            ">🇬🇧 Anglais</div>
+          </label>
+          <label style="flex:1;cursor:pointer">
+            <input type="radio" name="lang" value="es" style="display:none"/>
+            <div style="padding:8px;border-radius:10px;border:1.5px solid var(--border);text-align:center;font-size:.8rem;color:var(--muted);font-weight:700;transition:all .2s;">🇪🇸 Espagnol</div>
+          </label>
+          <label style="flex:1;cursor:pointer">
+            <input type="radio" name="lang" value="pt" style="display:none"/>
+            <div style="padding:8px;border-radius:10px;border:1.5px solid var(--border);text-align:center;font-size:.8rem;color:var(--muted);font-weight:700;transition:all .2s;">🇧🇷 Portugais</div>
+          </label>
+        </div>
+      </div>
+
+      <button onclick="handleSignup()" style="
+        width:100%;padding:14px;
+        background:linear-gradient(135deg,#7C3AED,#06B6D4);
+        border-radius:14px;color:#fff;font-weight:800;font-size:1rem;
+        cursor:pointer;transition:transform .2s,box-shadow .2s;margin-top:4px;
+      " onmouseover="this.style.transform='scale(1.02)';this.style.boxShadow='0 12px 40px rgba(139,92,246,.4)'"
+         onmouseout="this.style.transform='scale(1)';this.style.boxShadow='none'">
+        Commencer gratuitement ✨
+      </button>
+    </div>
+
+    <div style="text-align:center;margin-top:16px">
+      <p style="font-size:.8rem;color:var(--dim)">Déjà un compte ? <a href="#" style="color:#8B5CF6;font-weight:600" onclick="closeSignup()">Se connecter</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════ -->
+<script>
+/* ── Scroll animations ──────────────────── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      // Trigger bar animations
+      if (e.target.id === 'progress-demo') {
+        ['bar1','bar2','bar3','bar4'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.add('played');
+        });
+      }
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+/* ── Modal ──────────────────────────────── */
+function openSignup() {
+  const modal = document.getElementById('modal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeSignup() {
+  const modal = document.getElementById('modal');
+  modal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('a[href="#cta"]').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); openSignup(); });
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSignup(); });
+
+function handleSignup() {
+  const btn = event.currentTarget;
+  btn.textContent = '⏳ Création en cours...';
+  btn.style.opacity = '.7';
+  setTimeout(() => {
+    btn.textContent = '✅ Compte créé ! Bienvenue !';
+    btn.style.background = 'linear-gradient(135deg,#059669,#10B981)';
+    setTimeout(() => closeSignup(), 1500);
+  }, 1400);
+}
+
+/* ── Nav scroll effect ──────────────────── */
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('.nav-inner');
+  if (window.scrollY > 60) {
+    nav.style.background = 'rgba(10,15,30,.95)';
+  } else {
+    nav.style.background = 'rgba(17,24,39,.85)';
+  }
+});
+
+/* ── Smooth anchor scroll ───────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if (href === '#cta') return;
+    const target = document.querySelector(href);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+/* ── Phone exercise interaction ─────────── */
+document.querySelectorAll('.phone-opt').forEach(opt => {
+  opt.addEventListener('click', function() {
+    document.querySelectorAll('.phone-opt').forEach(o => o.classList.remove('correct'));
+    this.classList.add('correct');
+  });
+});
+
+/* ── Language radio buttons ─────────────── */
+document.querySelectorAll('input[name="lang"]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    document.querySelectorAll('input[name="lang"]').forEach(r => {
+      const div = r.nextElementSibling;
+      if (r.checked) {
+        div.style.borderColor = 'rgba(139,92,246,.5)';
+        div.style.background = 'rgba(139,92,246,.1)';
+        div.style.color = '#C4B5FD';
+      } else {
+        div.style.borderColor = 'rgba(255,255,255,.08)';
+        div.style.background = 'transparent';
+        div.style.color = 'var(--muted)';
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>

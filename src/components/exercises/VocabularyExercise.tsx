@@ -30,33 +30,50 @@ export default function VocabularyExercise({ exercise, onComplete }: Props) {
       {/* Flashcard */}
       <div className="flex justify-center">
         <motion.div
-          className="relative w-48 h-48 cursor-pointer"
+          className="relative w-52 h-52 cursor-pointer"
           onClick={() => setIsFlipped(!isFlipped)}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
           style={{ perspective: 1000 }}
         >
           <motion.div
             className="relative w-full h-full"
             animate={{ rotateY: isFlipped ? 180 : 0 }}
-            transition={{ duration: 0.6, ease: 'easeInOut' }}
+            transition={{ duration: 0.55, ease: 'easeInOut' }}
             style={{ transformStyle: 'preserve-3d' }}
           >
             {/* Front */}
             <div
-              className="absolute inset-0 glass-card rounded-3xl flex flex-col items-center justify-center border border-violet-500/30 gap-3"
-              style={{ backfaceVisibility: 'hidden' }}
+              className="absolute inset-0 glass-card rounded-3xl flex flex-col items-center justify-center gap-3"
+              style={{
+                backfaceVisibility: 'hidden',
+                border: '1px solid rgba(139,92,246,0.35)',
+                boxShadow: '0 0 40px rgba(139,92,246,0.15), 0 8px 32px rgba(0,0,0,0.4)',
+              }}
             >
-              <span className="text-6xl">{exercise.imageUrl}</span>
-              <p className="text-xs text-slate-400">Cliquez pour voir</p>
+              <div className="w-24 h-24 rounded-2xl flex items-center justify-center text-5xl"
+                style={{ background: 'rgba(139,92,246,0.12)', border: '1px solid rgba(139,92,246,0.2)' }}
+              >
+                {exercise.imageUrl}
+              </div>
+              <p className="text-xs text-slate-400 flex items-center gap-1.5">
+                <span className="w-1 h-1 rounded-full bg-violet-400 animate-pulse" />
+                Cliquez pour révéler
+              </p>
             </div>
             {/* Back */}
             <div
-              className="absolute inset-0 glass-card rounded-3xl flex flex-col items-center justify-center border border-emerald-500/30 gap-2"
-              style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+              className="absolute inset-0 glass-card rounded-3xl flex flex-col items-center justify-center gap-2"
+              style={{
+                backfaceVisibility: 'hidden',
+                transform: 'rotateY(180deg)',
+                border: '1px solid rgba(16,185,129,0.35)',
+                boxShadow: '0 0 40px rgba(16,185,129,0.15), 0 8px 32px rgba(0,0,0,0.4)',
+              }}
             >
-              <span className="text-3xl font-bold text-white">{exercise.correctAnswer as string}</span>
-              <p className="text-sm text-emerald-400">/æpəl/</p>
+              <span className="text-5xl">{exercise.imageUrl}</span>
+              <span className="text-3xl font-black text-white">{exercise.correctAnswer as string}</span>
+              <p className="text-sm text-emerald-400 font-medium">/æpəl/</p>
             </div>
           </motion.div>
         </motion.div>
@@ -64,7 +81,7 @@ export default function VocabularyExercise({ exercise, onComplete }: Props) {
 
       {/* Question */}
       <div className="text-center">
-        <p className="text-lg font-medium text-slate-200">{exercise.question}</p>
+        <p className="text-lg font-semibold text-slate-200">{exercise.question}</p>
       </div>
 
       {/* Options */}

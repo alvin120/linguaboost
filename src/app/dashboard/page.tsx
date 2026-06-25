@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { mockUser, languageInfo, streakCalendar } from '@/lib/data';
+import { mockUser, languageInfo, streakCalendar, englishUnits } from '@/lib/data';
 import ProgressRing from '@/components/ProgressRing';
 import Mascot from '@/components/Mascot';
 import { cn } from '@/lib/cn';
@@ -15,13 +15,20 @@ const skillProgress = [78, 65, 72, 58];
 
 function StatCard({ icon, value, label, color }: { icon: string; value: string | number; label: string; color: string }) {
   return (
-    <motion.div whileHover={{ y: -2 }} className="glass-card rounded-2xl p-4 border border-white/8">
+    <motion.div
+      whileHover={{ y: -3, boxShadow: `0 12px 40px ${color}25` }}
+      className="glass-card rounded-2xl p-4 transition-all duration-300"
+      style={{ borderColor: `${color}20` }}
+    >
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0" style={{ background: `${color}20` }}>
+        <div
+          className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0"
+          style={{ background: `${color}18`, border: `1px solid ${color}30`, boxShadow: `0 0 12px ${color}25` }}
+        >
           {icon}
         </div>
         <div className="min-w-0">
-          <p className="text-lg font-black text-white leading-none">{value}</p>
+          <p className="text-xl font-black leading-none" style={{ color }}>{value}</p>
           <p className="text-xs text-slate-400 mt-0.5 truncate">{label}</p>
         </div>
       </div>
@@ -31,6 +38,10 @@ function StatCard({ icon, value, label, color }: { icon: string; value: string |
 
 export default function DashboardPage() {
   const currentLang = mockUser.languages[0];
+  const activeLesson = englishUnits.flatMap(u => u.lessons).find(l => l.status === 'in_progress');
+  const lessonHref = activeLesson
+    ? `/learn/${currentLang.language}/lesson/${activeLesson.id}`
+    : `/learn/${currentLang.language}`;
 
   return (
     <div className="min-h-screen pb-24 lg:pb-10">
@@ -67,7 +78,7 @@ export default function DashboardPage() {
                 <p className="text-sm text-violet-300">Plus que 1 leçon pour l&apos;objectif du jour</p>
               </div>
             </div>
-            <Link href={`/learn/${currentLang.language}`} className="w-full sm:w-auto shrink-0">
+            <Link href={lessonHref} className="w-full sm:w-auto shrink-0">
               <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
@@ -170,23 +181,41 @@ export default function DashboardPage() {
         </div>
 
         {/* ── Streak calendar ── */}
-        <div className="glass-card rounded-2xl p-5 border border-white/8">
+        <div className="glass-card rounded-2xl p-5 border border-orange-500/15"
+          style={{ boxShadow: '0 4px 32px rgba(0,0,0,0.35), 0 0 40px rgba(249,115,22,0.06)' }}
+        >
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-white">Streak calendrier</h3>
-            <span className="text-sm text-orange-400 font-bold">🔥 {mockUser.streak} jours</span>
+            <motion.span
+              animate={{ scale: [1, 1.08, 1] }}
+              transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
+              className="text-sm text-orange-400 font-black px-3 py-1 rounded-xl"
+              style={{ background: 'rgba(249,115,22,0.15)', border: '1px solid rgba(249,115,22,0.3)' }}
+            >
+              🔥 {mockUser.streak} jours
+            </motion.span>
           </div>
           <div className="grid grid-cols-10 gap-1 sm:gap-1.5">
-            {streakCalendar.map(day => (
-              <motion.div
-                key={day.day}
-                whileHover={{ scale: 1.3 }}
-                title={`Jour ${day.day}${day.hasActivity ? ` — ${day.xp} XP` : ''}`}
-                className={cn(
-                  'aspect-square rounded-md cursor-default transition-all',
-                  day.hasActivity ? 'bg-orange-500' : 'bg-slate-700/60'
-                )}
-              />
-            ))}
+            {streakCalendar.map((day, idx) => {
+              const intensity = day.hasActivity ? Math.min(1, (day.xp || 30) / 60) : 0;
+              return (
+                <motion.div
+                  key={day.day}
+                  whileHover={{ scale: 1.4 }}
+                  title={`Jour ${day.day}${day.hasActivity ? ` — ${day.xp} XP` : ''}`}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: idx * 0.015, type: 'spring', stiffness: 200 }}
+                  className="aspect-square rounded-md cursor-default"
+                  style={{
+                    background: day.hasActivity
+                      ? `rgba(249, ${Math.round(115 + intensity * 50)}, 22, ${0.5 + intensity * 0.5})`
+                      : 'rgba(51, 65, 85, 0.5)',
+                    boxShadow: day.hasActivity ? `0 0 6px rgba(249,115,22,${intensity * 0.4})` : 'none',
+                  }}
+                />
+              );
+            })}
           </div>
           <div className="flex items-center gap-4 mt-3 text-xs text-slate-500">
             <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-sm bg-orange-500" /><span>Pratiqué</span></div>

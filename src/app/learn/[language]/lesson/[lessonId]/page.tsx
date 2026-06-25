@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import {
   vocabularyExercises, grammarExercises, readingExercises,
-  listeningExercises, speakingExercises, englishUnits,
+  listeningExercises, speakingExercises, englishUnits, spanishUnits,
 } from '@/lib/data';
 import { Exercise } from '@/lib/types';
 import VocabularyExercise from '@/components/exercises/VocabularyExercise';
@@ -27,10 +27,10 @@ const allExercises: Exercise[] = [
 export default function LessonPage({ params }: { params: Promise<{ language: string; lessonId: string }> }) {
   const { language, lessonId } = use(params);
 
-  const lesson = englishUnits.flatMap(u => u.lessons).find(l => l.id === lessonId);
-  const exercises = allExercises
-    .filter(e => !lesson || e.type === lesson.type)
-    .slice(0, 3);
+  const allLessons = [...englishUnits, ...spanishUnits].flatMap(u => u.lessons);
+  const lesson = allLessons.find(l => l.id === lessonId);
+  const typePool = allExercises.filter(e => !lesson || e.type === lesson.type);
+  const exercises = typePool.length >= 3 ? typePool.slice(0, 3) : allExercises.slice(0, 3);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hearts, setHearts] = useState(5);
@@ -170,42 +170,55 @@ export default function LessonPage({ params }: { params: Promise<{ language: str
         <div className="flex items-center gap-3 mb-5">
           <Link href={`/learn/${language}`}>
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.1)' }}
               whileTap={{ scale: 0.95 }}
-              className="w-10 h-10 rounded-xl glass border border-white/10 flex items-center justify-center text-slate-300 cursor-pointer shrink-0"
+              className="w-10 h-10 rounded-xl glass border border-white/10 flex items-center justify-center text-slate-400 cursor-pointer shrink-0 transition-colors"
             >
               ✕
             </motion.button>
           </Link>
 
-          <div className="flex-1 h-3 bg-slate-700 rounded-full overflow-hidden">
-            <motion.div
-              className="h-full bg-linear-to-r from-violet-500 to-cyan-500 rounded-full"
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.4 }}
-            />
+          <div className="flex-1 relative">
+            <div className="h-3.5 bg-slate-800 rounded-full overflow-hidden border border-white/5">
+              <motion.div
+                className="h-full rounded-full relative overflow-hidden"
+                style={{ background: 'linear-gradient(90deg, #8B5CF6, #06B6D4)' }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+              >
+                <div className="absolute inset-0 animate-shimmer" />
+              </motion.div>
+            </div>
+            <div className="flex justify-between text-[10px] text-slate-500 mt-0.5 px-0.5">
+              <span>{currentIndex + 1}/{exercises.length}</span>
+              <span>{Math.round(progress)}%</span>
+            </div>
           </div>
 
           <div className="flex gap-0.5 shrink-0">
             {Array.from({ length: 5 }).map((_, i) => (
               <motion.span
                 key={i}
-                animate={i === (5 - hearts) && hearts < 5 ? { scale: [1, 1.5, 1] } : {}}
-                className={cn('text-sm', i < hearts ? 'text-red-500' : 'opacity-20 grayscale')}
+                animate={i === (5 - hearts) && hearts < 5 ? { scale: [1, 1.6, 1] } : {}}
+                transition={{ duration: 0.4 }}
+                className={cn('text-base', i < hearts ? '' : 'opacity-20 grayscale')}
               >
                 ❤️
               </motion.span>
             ))}
           </div>
 
-          <div className="flex items-center gap-1 px-2.5 py-1.5 bg-yellow-500/20 rounded-xl border border-yellow-500/30 shrink-0">
+          <motion.div
+            key={xpGained}
+            initial={xpGained > 0 ? { scale: 1.3 } : {}}
+            animate={{ scale: 1 }}
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl border shrink-0"
+            style={{ background: 'rgba(234,179,8,0.15)', borderColor: 'rgba(234,179,8,0.35)' }}
+          >
             <span className="text-yellow-400 text-sm">⭐</span>
-            <span className="text-yellow-400 font-bold text-sm">{xpGained}</span>
-          </div>
+            <span className="text-yellow-400 font-black text-sm">{xpGained}</span>
+          </motion.div>
         </div>
-
-        {/* Counter */}
-        <p className="text-center text-sm text-slate-400 mb-4">{currentIndex + 1} / {exercises.length}</p>
 
         {/* Exercise */}
         <AnimatePresence mode="wait">

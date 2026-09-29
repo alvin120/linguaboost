@@ -1,0 +1,5 @@
+docs
+dev-server.mjs
+.env
+.env.example
+node_modules

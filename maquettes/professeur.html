@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="fr" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Professeur IA — LinguaBoost</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>try{var t=localStorage.getItem('lb-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<style>
+  body { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
+  .topbar { position: sticky; top: 0; z-index: 30; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .topbar .row { display: flex; align-items: center; gap: 10px; min-height: 60px; }
+  .topbar .who { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; }
+  .topbar small { color: var(--muted); display: block; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font-weight: 800; flex-shrink: 0; }
+
+  /* Écran de configuration */
+  .setup { padding: 24px 0 48px; }
+  .setup h1 { font-size: clamp(26px, 4vw, 36px); }
+  .profs { display: grid; gap: 12px; margin: 20px 0; }
+  @media (min-width: 720px) { .profs { grid-template-columns: repeat(3, 1fr); } }
+  .prof-opt { display: flex; gap: 12px; align-items: center; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius); background: var(--surface); cursor: pointer; text-align: left; width: 100%; }
+  .prof-opt[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+  .prof-opt small { color: var(--muted); display: block; }
+  .fields { display: grid; gap: 14px; }
+  @media (min-width: 720px) { .fields { grid-template-columns: repeat(2, 1fr); } }
+  .field label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+  .field select, .field input { width: 100%; min-height: 44px; padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); }
+  .field .note { margin-top: 4px; }
+  .setup-actions { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+  /* Chat */
+  .chat { flex: 1; display: none; flex-direction: column; }
+  .chat.on { display: flex; }
+  .thread { flex: 1; padding: 20px 0 12px; display: flex; flex-direction: column; gap: 14px; }
+  .msg { max-width: min(680px, 92%); }
+  .msg.me { align-self: flex-end; background: var(--accent); color: var(--on-accent); padding: 10px 14px; border-radius: 18px 18px 6px 18px; white-space: pre-wrap; }
+  .msg.bot { align-self: flex-start; display: grid; gap: 10px; }
+  .bubble { background: var(--surface); border: 1px solid var(--border); padding: 12px 16px; border-radius: 18px 18px 18px 6px; white-space: pre-wrap; }
+  .bubble .relance { display: block; margin-top: 8px; font-weight: 600; }
+  .speak { border: 0; background: none; cursor: pointer; color: var(--accent); font-size: 14px; padding: 4px 0; min-height: 32px; }
+  .panel { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; background: var(--surface); font-size: 14px; }
+  .panel h3 { margin: 0; padding: 8px 12px; background: var(--accent-soft); color: var(--accent); font-size: 14px; }
+  .panel .body { padding: 10px 12px; display: grid; gap: 6px; }
+  .panel table { width: 100%; border-collapse: collapse; }
+  .panel th, .panel td { text-align: left; padding: 8px 12px; border-top: 1px solid var(--border); vertical-align: top; }
+  .panel th { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .panel del { color: var(--err); } .panel ins { color: var(--ok); text-decoration: none; font-weight: 600; }
+  .tag { font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 6px; background: var(--surface-2); color: var(--muted); white-space: nowrap; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { border: 1px solid var(--border); background: var(--surface); border-radius: 999px; padding: 4px 10px; font-size: 13px; cursor: pointer; min-height: 32px; }
+  .chip[aria-pressed="true"] { background: var(--ok-soft); border-color: var(--ok); }
+  .table-scroll { overflow-x: auto; }
+  .typing { align-self: flex-start; color: var(--muted); font-style: italic; }
+  .error { align-self: stretch; background: var(--err-soft); padding: 12px 14px; border-radius: var(--radius-sm); font-size: 14px; }
+  .estimate { background: var(--warn-soft); padding: 10px 12px; border-radius: var(--radius-sm); font-size: 14px; }
+
+  .composer { position: sticky; bottom: 0; background: var(--bg); border-top: 1px solid var(--border); padding: 10px 0 14px; }
+  .composer .row { display: flex; gap: 8px; align-items: flex-end; }
+  .composer textarea { flex: 1; min-height: 48px; max-height: 180px; resize: vertical; padding: 12px 14px; border-radius: 16px; border: 1px solid var(--border); background: var(--surface); font: inherit; }
+  .composer .tools { display: flex; gap: 8px; align-items: center; justify-content: space-between; margin-top: 8px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+  .mic[aria-pressed="true"] { background: var(--err-soft); border-color: var(--err); }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<header class="topbar">
+  <div class="container row">
+    <a class="icon-btn" href="accueil.html" aria-label="Retour à l'accueil">←</a>
+    <div class="who">
+      <span class="avatar" id="top-avatar" aria-hidden="true">E</span>
+      <div style="min-width:0;"><strong id="top-name">Professeur IA</strong><small id="top-info">Choisis ton professeur</small></div>
+    </div>
+    <button class="btn btn-ghost btn-sm" id="end" type="button" hidden>Terminer</button>
+    <button class="icon-btn" id="theme-toggle" type="button" aria-label="Basculer le mode sombre">🌓</button>
+  </div>
+</header>
+
+<main id="contenu" class="container" style="flex:1;display:flex;flex-direction:column;">
+  <!-- CONFIGURATION -->
+  <section class="setup" id="setup" aria-labelledby="setup-title">
+    <h1 id="setup-title">Avec qui veux-tu parler ?</h1>
+    <div class="profs" role="group" aria-label="Choix du professeur">
+      <button class="prof-opt" type="button" data-prof="emma" data-lang="en" aria-pressed="true"><span class="avatar" aria-hidden="true">E</span><span><strong>Emma</strong><small>Anglais · Londres</small></span></button>
+      <button class="prof-opt" type="button" data-prof="lucia" data-lang="es" aria-pressed="false"><span class="avatar" aria-hidden="true">L</span><span><strong>Lucía</strong><small>Espagnol · Madrid</small></span></button>
+      <button class="prof-opt" type="button" data-prof="rafael" data-lang="pt" aria-pressed="false"><span class="avatar" aria-hidden="true">R</span><span><strong>Rafael</strong><small>Portugais · São Paulo</small></span></button>
+    </div>
+    <div class="fields">
+      <div class="field"><label for="f-variante">Variante</label><select id="f-variante"></select></div>
+      <div class="field"><label for="f-niveau">Ton niveau</label>
+        <select id="f-niveau"><option>A1</option><option selected>A2</option><option>B1</option><option>B2</option><option>C1</option><option>C2</option></select></div>
+      <div class="field"><label for="f-mode">Activité</label>
+        <select id="f-mode">
+          <option value="conversation">Conversation libre</option>
+          <option value="jeu_de_role">Jeu de rôle (hôtel, restaurant, entretien…)</option>
+          <option value="grammaire">Explication de grammaire</option>
+          <option value="correction_texte">Correction d'un texte</option>
+          <option value="simulation_examen">Simulation d'examen</option>
+          <option value="prononciation">Prononciation</option>
+        </select></div>
+      <div class="field"><label for="f-objectif">Objectif</label>
+        <select id="f-objectif"><option>voyage</option><option>travail</option><option>examen</option><option>conversation</option><option>tourisme pro</option></select></div>
+      <div class="field"><label for="f-prenom">Prénom (facultatif)</label><input id="f-prenom" autocomplete="given-name" maxlength="40"></div>
+      <div class="field"><label for="f-interets">Centres d'intérêt (facultatif)</label><input id="f-interets" maxlength="200" placeholder="football, cuisine, séries…"></div>
+    </div>
+    <div class="setup-actions">
+      <button class="btn btn-primary" id="start" type="button">Commencer la séance</button>
+      <label style="display:flex;gap:8px;align-items:center;cursor:pointer;"><input type="checkbox" id="f-vocal" style="width:18px;height:18px;"> Mode vocal (réponses courtes, lues à voix haute)</label>
+    </div>
+    <p class="note" style="margin-top:16px;">Les scores donnés par le professeur sont des estimations, pas des certifications officielles. Tes messages sont envoyés à un service d'IA (Anthropic) pour générer les réponses.</p>
+  </section>
+
+  <!-- CHAT -->
+  <section class="chat" id="chat" aria-label="Conversation">
+    <div class="thread" id="thread" aria-live="polite"></div>
+    <form class="composer" id="composer">
+      <div class="row">
+        <label for="input" class="sr-only">Ton message</label>
+        <textarea id="input" rows="1" placeholder="Écris ton message…" required></textarea>
+        <button class="icon-btn mic" id="mic" type="button" aria-pressed="false" aria-label="Dicter mon message" hidden>🎙️</button>
+        <button class="btn btn-primary" id="send" type="submit">Envoyer</button>
+      </div>
+      <div class="tools">
+        <span>Entrée pour envoyer · Maj+Entrée pour aller à la ligne</span>
+        <label style="display:flex;gap:6px;align-items:center;cursor:pointer;"><input type="checkbox" id="autospeak"> Lire les réponses à voix haute</label>
+      </div>
+    </form>
+  </section>
+</main>
+
+<script>
+(function () {
+  var PROFS = {
+    emma:   { nom: 'Emma',   initiale: 'E', lang: 'en', langue: 'Anglais',   variantes: [['UK', '🇬🇧 Royaume-Uni', 'en-GB'], ['US', '🇺🇸 États-Unis', 'en-US']] },
+    lucia:  { nom: 'Lucía',  initiale: 'L', lang: 'es', langue: 'Espagnol',  variantes: [['ES', '🇪🇸 Espagne', 'es-ES'], ['LATAM', '🌎 Amérique latine', 'es-MX']] },
+    rafael: { nom: 'Rafael', initiale: 'R', lang: 'pt', langue: 'Portugais', variantes: [['BR', '🇧🇷 Brésil', 'pt-BR'], ['PT', '🇵🇹 Portugal', 'pt-PT']] }
+  };
+  var MODES = { conversation: 'Conversation', jeu_de_role: 'Jeu de rôle', grammaire: 'Grammaire', correction_texte: 'Correction de texte', simulation_examen: "Simulation d'examen", prononciation: 'Prononciation' };
+  var OUVERTURE = "[Début de séance. Salue-moi et lance l'activité choisie, en respectant mon niveau.]";
+  var FIN = "J'ai terminé pour aujourd'hui. Tu peux me faire le bilan de la séance ?";
+
+  var $ = function (id) { return document.getElementById(id); };
+  var state = { prof: 'emma', session: null, history: [], busy: false, saved: [] };
+
+  function el(tag, attrs, text) {
+    var n = document.createElement(tag);
+    Object.keys(attrs || {}).forEach(function (k) { if (k === 'class') n.className = attrs[k]; else n.setAttribute(k, attrs[k]); });
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function variantInfo() { return PROFS[state.prof].variantes.filter(function (v) { return v[0] === $('f-variante').value; })[0]; }
+
+  // ---- Configuration ----
+  function selectProf(key) {
+    state.prof = key;
+    document.querySelectorAll('.prof-opt').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.prof === key); });
+    document.documentElement.dataset.lang = PROFS[key].lang;
+    var sel = $('f-variante'); sel.innerHTML = '';
+    PROFS[key].variantes.forEach(function (v) { sel.appendChild(el('option', { value: v[0] }, v[1])); });
+    $('top-avatar').textContent = PROFS[key].initiale;
+  }
+  document.querySelectorAll('.prof-opt').forEach(function (b) { b.addEventListener('click', function () { selectProf(b.dataset.prof); }); });
+  selectProf('emma');
+
+  $('start').addEventListener('click', function () {
+    state.session = {
+      prof: state.prof, variante: $('f-variante').value, niveau: $('f-niveau').value, mode: $('f-mode').value,
+      canal: $('f-vocal').checked ? 'vocal' : 'texte', objectif: $('f-objectif').value,
+      prenom: $('f-prenom').value.trim(), interets: $('f-interets').value.trim()
+    };
+    $('autospeak').checked = state.session.canal === 'vocal';
+    var p = PROFS[state.prof], v = variantInfo();
+    $('top-name').textContent = p.nom;
+    $('top-info').textContent = p.langue + ' · ' + v[1] + ' · ' + state.session.niveau + ' · ' + MODES[state.session.mode];
+    $('setup').hidden = true; $('chat').classList.add('on'); $('end').hidden = false;
+    state.history = [{ role: 'user', content: OUVERTURE }];
+    envoyer();
+  });
+
+  // ---- Échanges ----
+  function envoyer() {
+    if (location.protocol === 'file:') {
+      return afficherErreur("Le professeur IA a besoin d'un serveur. Lance « npm run dev » dans le dossier du projet, puis ouvre http://localhost:3000/maquettes/professeur.html (ou utilise le site déployé sur Vercel).");
+    }
+    state.busy = true; $('send').disabled = true;
+    var typing = el('p', { class: 'typing' }, PROFS[state.prof].nom + ' écrit…');
+    $('thread').appendChild(typing); typing.scrollIntoView({ block: 'end' });
+    var body = Object.assign({}, state.session, { messages: state.history });
+    fetch('/api/professeur', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().catch(function () { return { erreur: 'Réponse du serveur illisible (code ' + r.status + ').' }; }); })
+      .then(function (res) {
+        typing.remove();
+        if (res.erreur || !res.donnees) {
+          state.history.pop(); // on retire le message non traité pour pouvoir le renvoyer
+          return afficherErreur(res.erreur || 'Erreur inconnue.');
+        }
+        state.history.push({ role: 'assistant', content: res.brut });
+        afficherReponse(res.donnees);
+      })
+      .catch(function () { typing.remove(); state.history.pop(); afficherErreur('Impossible de joindre le serveur. Vérifie ta connexion.'); })
+      .then(function () { state.busy = false; $('send').disabled = false; $('input').focus(); });
+  }
+
+  function afficherErreur(msg) {
+    var e = el('p', { class: 'error', role: 'alert' }, '⚠️ ' + msg);
+    $('thread').appendChild(e); e.scrollIntoView({ block: 'end' });
+  }
+
+  function afficherReponse(d) {
+    var box = el('div', { class: 'msg bot' });
+    var lang = variantInfo()[2];
+    var bubble = el('div', { class: 'bubble', lang: lang });
+    bubble.appendChild(document.createTextNode(d.reponse));
+    if (d.question_relance) bubble.appendChild(el('span', { class: 'relance' }, d.question_relance));
+    box.appendChild(bubble);
+    var toSpeak = (d.reponse + ' ' + (d.question_relance || '')).trim();
+    if (window.speechSynthesis) {
+      var sp = el('button', { class: 'speak', type: 'button' }, '🔊 Écouter');
+      sp.addEventListener('click', function () { parler(toSpeak); });
+      box.appendChild(sp);
+    }
+
+    if (d.corrections && d.corrections.length) {
+      var p = el('div', { class: 'panel' }); p.appendChild(el('h3', null, '✏️ Corrections'));
+      var wrap = el('div', { class: 'table-scroll' }), t = el('table');
+      t.innerHTML = '<thead><tr><th>Tu as écrit</th><th>Forme correcte</th><th>Pourquoi</th></tr></thead>';
+      var tb = el('tbody');
+      d.corrections.forEach(function (c) {
+        var tr = el('tr');
+        var a = el('td', { lang: lang }); a.appendChild(el('del', null, c.original));
+        var b = el('td', { lang: lang }); b.appendChild(el('ins', null, c.correction));
+        var w = el('td'); w.appendChild(document.createTextNode(c.explication + ' ')); w.appendChild(el('span', { class: 'tag' }, c.type.replace('_', ' ')));
+        tr.appendChild(a); tr.appendChild(b); tr.appendChild(w); tb.appendChild(tr);
+      });
+      t.appendChild(tb); wrap.appendChild(t); p.appendChild(wrap); box.appendChild(p);
+    }
+    if (d.version_naturelle || d.a_toi) {
+      var n = el('div', { class: 'panel' }), nb = el('div', { class: 'body' });
+      if (d.version_naturelle) nb.appendChild(el('div', { lang: lang }, '💡 Plus naturel : ' + d.version_naturelle));
+      if (d.a_toi) nb.appendChild(el('div', null, '🔁 À toi : ' + d.a_toi));
+      n.appendChild(nb); box.appendChild(n);
+    }
+    if (d.vocabulaire_nouveau && d.vocabulaire_nouveau.length) box.appendChild(panneauVocab('📚 Nouveau vocabulaire', d.vocabulaire_nouveau, lang));
+    if (d.score_estime) {
+      box.appendChild(el('div', { class: 'estimate' }, '📊 ' + d.score_estime.examen + ' : ' + d.score_estime.score + '. ' + d.score_estime.detail + ' (estimation indicative, pas un résultat officiel)'));
+    }
+    if (d.bilan) box.appendChild(panneauBilan(d.bilan, lang));
+
+    $('thread').appendChild(box);
+    box.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    if ($('autospeak').checked) parler(toSpeak);
+    if (d.fin_de_seance) { $('end').hidden = true; }
+  }
+
+  function panneauVocab(titre, items, lang) {
+    var p = el('div', { class: 'panel' }); p.appendChild(el('h3', null, titre));
+    var body = el('div', { class: 'body' }), chips = el('div', { class: 'chips' });
+    items.forEach(function (v) {
+      var deja = state.saved.indexOf(v.terme) !== -1;
+      var c = el('button', { class: 'chip', type: 'button', 'aria-pressed': deja ? 'true' : 'false', title: v.exemple, lang: lang }, (deja ? '✓ ' : '＋ ') + v.terme + ' = ' + v.traduction);
+      c.addEventListener('click', function () {
+        if (state.saved.indexOf(v.terme) === -1) state.saved.push(v.terme);
+        c.setAttribute('aria-pressed', 'true'); c.textContent = '✓ ' + v.terme + ' = ' + v.traduction;
+      });
+      chips.appendChild(c);
+    });
+    body.appendChild(chips);
+    body.appendChild(el('p', { class: 'note', style: 'margin:4px 0 0;' }, 'Touche une expression pour l\'ajouter à tes révisions.'));
+    p.appendChild(body); return p;
+  }
+
+  function panneauBilan(b, lang) {
+    var p = el('div', { class: 'panel' }); p.appendChild(el('h3', null, '🏁 Bilan de la séance · niveau estimé ' + b.niveau_seance + ' (indicatif)'));
+    var body = el('div', { class: 'body' });
+    body.appendChild(el('strong', null, '✅ Réussi'));
+    b.points_reussis.forEach(function (x) { body.appendChild(el('div', null, '• ' + x)); });
+    if (b.erreurs.length) {
+      body.appendChild(el('strong', null, '🔁 À retravailler'));
+      b.erreurs.forEach(function (x) {
+        var d = el('div', { lang: lang }); d.appendChild(el('del', null, x.erreur)); d.appendChild(document.createTextNode(' → ')); d.appendChild(el('ins', null, x.correction));
+        body.appendChild(d);
+      });
+    }
+    body.appendChild(el('strong', null, '💡 Conseil pour la prochaine fois'));
+    body.appendChild(el('div', null, b.conseil));
+    p.appendChild(body);
+    var wrap = el('div'); wrap.appendChild(p);
+    if (b.flashcards.length) wrap.appendChild(panneauVocab('🗂️ À ajouter aux flashcards', b.flashcards, lang));
+    return wrap;
+  }
+
+  $('composer').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var txt = $('input').value.trim();
+    if (!txt || state.busy) return;
+    $('thread').appendChild(el('p', { class: 'msg me', lang: variantInfo()[2] }, txt));
+    state.history.push({ role: 'user', content: txt });
+    $('input').value = '';
+    envoyer();
+  });
+  $('input').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('composer').requestSubmit(); }
+  });
+  $('end').addEventListener('click', function () {
+    if (state.busy) return;
+    $('thread').appendChild(el('p', { class: 'msg me' }, FIN));
+    state.history.push({ role: 'user', content: FIN });
+    envoyer();
+  });
+
+  // ---- Voix (navigateur) ----
+  function parler(texte) {
+    if (!window.speechSynthesis) return;
+    speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(texte);
+    u.lang = variantInfo()[2];
+    var voix = speechSynthesis.getVoices().filter(function (v) { return v.lang.replace('_', '-') === u.lang; })[0];
+    if (voix) u.voice = voix;
+    speechSynthesis.speak(u);
+  }
+  var Reco = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (Reco) {
+    var reco = null;
+    $('mic').hidden = false;
+    $('mic').addEventListener('click', function () {
+      if (reco) { reco.stop(); return; }
+      reco = new Reco();
+      reco.lang = variantInfo()[2]; reco.interimResults = true;
+      var base = $('input').value;
+      reco.onresult = function (ev) {
+        var t = ''; for (var i = 0; i < ev.results.length; i++) t += ev.results[i][0].transcript;
+        $('input').value = (base ? base + ' ' : '') + t;
+      };
+      reco.onend = function () { reco = null; $('mic').setAttribute('aria-pressed', 'false'); };
+      reco.onerror = function () { afficherErreur("Micro indisponible (autorise l'accès au micro dans le navigateur)."); };
+      $('mic').setAttribute('aria-pressed', 'true');
+      reco.start();
+    });
+  }
+
+  $('theme-toggle').addEventListener('click', function () {
+    var root = document.documentElement;
+    var dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('lb-theme', root.dataset.theme); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

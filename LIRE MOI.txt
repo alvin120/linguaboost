@@ -1,0 +1,12 @@
+LINGUABOOST - VERSION SITE INTERNET
+================================
+
+Ce dossier contient la version site web autonome de LinguaBoost.
+
+Pour ouvrir le site :
+  -> Double-cliquez sur le fichier linguaboost.html
+  -> Le site s'ouvre directement dans votre navigateur
+  -> Aucune installation requise !
+
+Contenu :
+  linguaboost.html  -> Page d'accueil complete (landing page)

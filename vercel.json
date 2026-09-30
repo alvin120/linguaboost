@@ -1,5 +1,8 @@
 {
   "redirects": [
     { "source": "/", "destination": "/maquettes/accueil.html", "permanent": false }
-  ]
+  ],
+  "functions": {
+    "api/professeur.js": { "maxDuration": 60 }
+  }
 }

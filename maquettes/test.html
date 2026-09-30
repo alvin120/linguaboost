@@ -239,8 +239,8 @@
 
     var niveauProf = niveau === 'Pré-A1' ? 'A1' : niveau;
     var actions = el('div', { class: 'actions' });
-    if (state.key === 'en') actions.appendChild(el('a', { class: 'btn btn-primary', href: 'lecon.html' }, 'Essayer une leçon A2'));
-    actions.appendChild(el('a', { class: 'btn ' + (state.key === 'en' ? 'btn-ghost' : 'btn-primary'), href: 'professeur.html?prof=' + t.prof + '&niveau=' + niveauProf }, 'Parler avec ' + { emma: 'Emma', lucia: 'Lucía', rafael: 'Rafael' }[t.prof] + ' (niveau ' + niveauProf + ')'));
+    actions.appendChild(el('a', { class: 'btn btn-primary', href: 'lecon.html?langue=' + state.key }, 'Essayer une leçon A2'));
+    actions.appendChild(el('a', { class: 'btn btn-ghost', href: 'professeur.html?prof=' + t.prof + '&niveau=' + niveauProf }, 'Parler avec ' + { emma: 'Emma', lucia: 'Lucía', rafael: 'Rafael' }[t.prof] + ' (niveau ' + niveauProf + ')'));
     var again = el('button', { class: 'btn btn-ghost', type: 'button' }, 'Tester une autre langue');
     again.addEventListener('click', function () { r.hidden = true; $('intro').hidden = false; $('bar').style.width = '0'; document.documentElement.removeAttribute('data-lang'); window.scrollTo(0, 0); });
     actions.appendChild(again);

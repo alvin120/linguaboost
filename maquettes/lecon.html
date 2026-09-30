@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>At the hotel — Leçon A2</title>
+<title>Leçon A2 — À l'hôtel</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -121,6 +121,7 @@
   .gap-ex { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 17px; }
 
   /* Pratique, production, bilan */
+  .g-h3 { margin-top: 24px; font-size: 18px; }
   .ex-title { font-size: 18px; margin-bottom: 8px; }
   .ex-help { font-size: 14px; }
   .ex-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
@@ -159,20 +160,17 @@
 </head>
 <body>
 <a class="skip-link" href="#contenu">Aller au contenu de la leçon</a>
-<div class="mock-banner">Version de démonstration : leçon d'anglais A2.</div>
+<div class="mock-banner" id="banner">Version de démonstration : leçon A2.</div>
 
 <header class="lesson-top">
   <div class="container row">
     <a class="icon-btn" href="accueil.html" aria-label="Quitter la leçon et revenir à l'accueil">✕</a>
     <div class="lesson-title">
-      <strong>Unit 3 · At the hotel</strong>
+      <strong id="lesson-title"></strong>
       <small><span class="pill" style="padding:1px 8px;font-size:12px;">A2</span> Voyage · À l'hôtel · ≈ 25 min au total</small>
     </div>
     <div class="top-actions">
-      <div class="segmented" role="group" aria-label="Variante d'anglais">
-        <button type="button" data-variant="us" aria-pressed="true">🇺🇸 US</button>
-        <button type="button" data-variant="uk" aria-pressed="false">🇬🇧 UK</button>
-      </div>
+      <div class="segmented" role="group" id="variants" aria-label="Variante"></div>
       <button class="icon-btn hide-mobile" id="theme-toggle" type="button" aria-label="Basculer le mode sombre">🌓</button>
     </div>
   </div>
@@ -189,7 +187,7 @@
     <section class="panel active" id="step-1" aria-labelledby="h-1">
       <p class="eyebrow">Étape 1 · Découverte</p>
       <h2 id="h-1">Camille arrive à son hôtel</h2>
-      <p class="intro">Camille arrive le soir à son hôtel, à <span data-v="city">Boston</span>. Écoutez d'abord sans lire, puis une deuxième fois avec la transcription. Touchez un mot souligné pour voir sa traduction.</p>
+      <p class="intro">Camille arrive le soir à son hôtel, à <span data-v="city"></span>. Écoutez d'abord sans lire, puis une deuxième fois avec la transcription. Touchez un mot souligné pour voir sa traduction.</p>
 
       <div class="card block">
         <div class="player">
@@ -202,15 +200,12 @@
           <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;">
             <input type="checkbox" id="toggle-fr" style="width:18px;height:18px;"> Traduction
           </label>
-          <p class="tts-note" id="tts-note">Démo : voix de synthèse du navigateur. En production, l'audio est enregistré par des natifs (US et UK).</p>
+          <p class="tts-note" id="tts-note"></p>
         </div>
         <div class="transcript" id="transcript" aria-live="off"></div>
       </div>
 
-      <div class="card block" style="background:var(--warn-soft);border-color:transparent;box-shadow:none;">
-        <strong>🇺🇸 / 🇬🇧 Ce qui change selon la variante</strong>
-        <p style="margin:6px 0 0;font-size:15px;">Les passages <span class="diff">surlignés</span> changent entre l'anglais américain et l'anglais britannique. Basculez US / UK en haut de l'écran pour comparer. Attention aux <b>étages</b> : aux États-Unis, le rez-de-chaussée s'appelle <i lang="en">first floor</i>. Le 3ᵉ étage français est donc le <i lang="en">fourth floor</i> 🇺🇸, mais le <i lang="en">third floor</i> 🇬🇧.</p>
-      </div>
+      <div class="card block" id="variant-note" style="background:var(--warn-soft);border-color:transparent;box-shadow:none;"></div>
     </section>
 
     <!-- 2. COMPRÉHENSION -->
@@ -232,48 +227,12 @@
     <!-- 4. GRAMMAIRE -->
     <section class="panel" id="step-4" aria-labelledby="h-4">
       <p class="eyebrow">Étape 4 · Grammaire</p>
-      <h2 id="h-4">Demander poliment : <span lang="en">Can I…? / Could you…? / I'd like…</span></h2>
+      <h2 id="h-4"></h2>
       <div class="card block">
-        <div class="rule">
-          <strong>La règle</strong><br>
-          <span lang="en"><b>Can</b> / <b>Could</b></span> + verbe à la base verbale, <b>sans <span lang="en">to</span></b> et <b>sans <span lang="en">do</span></b>.<br>
-          <span lang="en"><b>Could</b></span> est plus poli que <span lang="en"><b>can</b></span>. <span lang="en"><b>I'd like</b></span> (= <span lang="en">I would like</span>) signifie « je voudrais ».
-        </div>
-        <div class="table-scroll">
-          <table class="g-table">
-            <thead><tr><th>Anglais</th><th>Français</th><th>Registre</th></tr></thead>
-            <tbody lang="en">
-              <tr><td>Can I have a towel, please?</td><td lang="fr">Je peux avoir une serviette, s'il vous plaît ?</td><td lang="fr">neutre</td></tr>
-              <tr><td>Could I see your ID, please?</td><td lang="fr">Puis-je voir votre pièce d'identité ?</td><td lang="fr">poli</td></tr>
-              <tr><td>Could you call a taxi for me, please?</td><td lang="fr">Pourriez-vous m'appeler un taxi ?</td><td lang="fr">poli</td></tr>
-              <tr><td>I'd like a room with a view.</td><td lang="fr">Je voudrais une chambre avec vue.</td><td lang="fr">poli</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h3 style="margin-top:24px;font-size:18px;">🇫🇷 Comparaison avec le français</h3>
-        <p>« Pourriez-vous… ? » se dit <span lang="en"><b>Could you…?</b></span>, et « Je voudrais… » se dit <span lang="en"><b>I'd like…</b></span>. En anglais, <span lang="en"><b>I want</b></span> est beaucoup plus direct que « je veux » : à l'hôtel ou au restaurant, il peut sembler impoli.</p>
-
-        <h3 style="margin-top:24px;font-size:18px;">⚠️ Erreurs typiques des francophones</h3>
-        <div class="table-scroll">
-          <table class="g-table">
-            <thead><tr><th>Erreur</th><th>Correction</th><th>Pourquoi</th></tr></thead>
-            <tbody>
-              <tr><td lang="en"><del>Could I to see the room?</del></td><td lang="en"><ins>Could I see the room?</ins></td><td>Jamais de <span lang="en">to</span> après <span lang="en">can / could</span>.</td></tr>
-              <tr><td lang="en"><del>Do you can help me?</del></td><td lang="en"><ins>Can you help me?</ins></td><td>Pour la question, on inverse <span lang="en">can</span> et le sujet, sans <span lang="en">do</span>.</td></tr>
-              <tr><td lang="en"><del>I want a towel.</del></td><td lang="en"><ins>I'd like a towel, please.</ins></td><td><span lang="en">I want</span> sonne comme un ordre.</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h3 style="margin-top:24px;font-size:18px;">✍️ À vous</h3>
-        <div class="gap-ex" lang="en">
-          <select id="gap" aria-label="Choisissez le mot manquant" style="padding:8px 10px;border-radius:8px;border:2px solid var(--border);background:var(--surface);">
-            <option value="">…</option><option>Could</option><option>Do</option><option>Would</option>
-          </select>
-          <span>I have a late <span data-v="checkout">checkout</span>, please?</span>
-        </div>
-        <p id="gap-fb" class="feedback" hidden></p>
+        <div id="grammar"></div>
+        <h3 class="g-h3">✍️ À vous</h3>
+        <div class="gap-ex" id="gram-ex"></div>
+        <p id="gap-fb" class="feedback" aria-live="polite" hidden></p>
       </div>
     </section>
 
@@ -286,8 +245,8 @@
       <div class="card block">
         <h3 class="ex-title">1. Remettez le début du dialogue dans l'ordre</h3>
         <p class="muted ex-help">Touchez les répliques dans l'ordre où elles sont dites. Touchez une réplique déjà choisie pour la retirer.</p>
-        <ol class="order-picked" id="order-picked" lang="en"></ol>
-        <div class="order-pool" id="order-pool" lang="en"></div>
+        <ol class="order-picked" id="order-picked"></ol>
+        <div class="order-pool" id="order-pool"></div>
         <div class="ex-actions">
           <button class="btn btn-primary btn-sm" id="order-check" type="button">Vérifier</button>
           <button class="btn btn-ghost btn-sm" id="order-reset" type="button">Recommencer</button>
@@ -297,19 +256,16 @@
 
       <div class="card block">
         <h3 class="ex-title">2. Complétez les phrases</h3>
-        <div id="gaps" lang="en"></div>
+        <div id="gaps"></div>
         <div class="ex-actions"><button class="btn btn-primary btn-sm" id="gaps-check" type="button">Vérifier</button></div>
         <div class="feedback" id="gaps-fb" aria-live="polite" hidden></div>
       </div>
 
       <div class="card block">
-        <h3 class="ex-title">3. Paires minimales : <span lang="en">stay</span> ou <span lang="en">stair</span> ?</h3>
-        <p class="muted ex-help" id="pairs-help">Écoutez le mot, puis choisissez ce que vous avez entendu. <span lang="en">stay</span> /steɪ/ (séjour) finit par le son « eï » ; <span lang="en">stair</span> (marche d'escalier) finit par un son « èr ».</p>
+        <h3 class="ex-title" id="pairs-title"></h3>
+        <p class="muted ex-help" id="pairs-help"></p>
         <div class="ex-actions"><button class="btn btn-ghost btn-sm" id="pairs-play" type="button">🔊 Écouter un mot</button><span class="xp-note" id="pairs-score">0 / 0</span></div>
-        <div class="options two" id="pairs-opts">
-          <button class="option" type="button" data-pair="stay" disabled><span class="key" aria-hidden="true">A</span><span lang="en">stay</span></button>
-          <button class="option" type="button" data-pair="stair" disabled><span class="key" aria-hidden="true">B</span><span lang="en">stair</span></button>
-        </div>
+        <div class="options two" id="pairs-opts"></div>
         <p class="feedback" id="pairs-fb" aria-live="polite" hidden></p>
       </div>
 
@@ -327,17 +283,17 @@
       <p class="intro">Réutilisez les formules de la leçon dans une vraie situation.</p>
 
       <div class="card block">
-        <h3 class="ex-title">🎭 Jeu de rôle avec Emma</h3>
-        <p>Vous arrivez à l'hôtel, mais la réceptionniste ne trouve pas votre réservation. Expliquez la situation, donnez votre nom et trouvez une solution, poliment. Emma joue la réceptionniste et vous corrige à la fin de la scène.</p>
+        <h3 class="ex-title" id="roleplay-title"></h3>
+        <p id="roleplay-text"></p>
         <a class="btn btn-primary" id="roleplay-link" href="professeur.html">Lancer le jeu de rôle</a>
         <p class="note" style="margin-top:10px;">Le professeur IA s'ouvre dans une nouvelle séance, déjà réglée (niveau A2, jeu de rôle, votre variante).</p>
       </div>
 
       <div class="card block">
         <h3 class="ex-title">✍️ À l'écrit</h3>
-        <p>Vous êtes dans votre chambre. Écrivez un court message à la réception pour demander <b>un départ tardif</b> et <b>une serviette en plus</b>.</p>
-        <label for="write" class="sr-only">Votre message en anglais</label>
-        <textarea id="write" class="write" lang="en" rows="4" placeholder="Hello, …"></textarea>
+        <p id="write-consigne"></p>
+        <label for="write" class="sr-only">Votre message</label>
+        <textarea id="write" class="write" rows="4"></textarea>
         <div class="ex-actions"><button class="btn btn-primary btn-sm" id="write-check" type="button">Vérifier mon message</button></div>
         <div class="feedback" id="write-fb" aria-live="polite" hidden></div>
       </div>
@@ -346,26 +302,8 @@
     <!-- 7. CULTURE -->
     <section class="panel" id="step-7" aria-labelledby="h-7">
       <p class="eyebrow">Étape 7 · Culture</p>
-      <h2 id="h-7">À l'hôtel, aux États-Unis et au Royaume-Uni</h2>
-      <div class="card block">
-        <h3 class="ex-title">💵 Les pourboires</h3>
-        <p><b>🇺🇸 États-Unis :</b> le pourboire (<i lang="en">tip</i>) fait partie des usages. À l'hôtel, on donne souvent 1 à 2 dollars par bagage au bagagiste (<i lang="en">bellhop</i>) et quelques dollars par nuit pour la femme de chambre (<i lang="en">housekeeping</i>), laissés dans la chambre. Au restaurant, 15 à 20 % de l'addition est la norme.</p>
-        <p style="margin:0;"><b>🇬🇧 Royaume-Uni :</b> le pourboire à l'hôtel n'est pas attendu. Au restaurant, vérifiez l'addition : un <i lang="en">service charge</i> (souvent 10 à 12,5 %) est parfois déjà inclus. Sinon, environ 10 % est un geste apprécié.</p>
-      </div>
-      <div class="card block">
-        <h3 class="ex-title">🏢 Les étages</h3>
-        <div class="table-scroll">
-          <table class="g-table">
-            <thead><tr><th>En France</th><th>🇬🇧 Royaume-Uni</th><th>🇺🇸 États-Unis</th></tr></thead>
-            <tbody>
-              <tr><td>rez-de-chaussée</td><td lang="en">ground floor</td><td lang="en">first floor</td></tr>
-              <tr><td>1ᵉʳ étage</td><td lang="en">first floor</td><td lang="en">second floor</td></tr>
-              <tr><td>3ᵉ étage</td><td lang="en">third floor</td><td lang="en">fourth floor</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="note" style="margin:10px 0 0;">Dans l'ascenseur (<i lang="en">lift</i> 🇬🇧, <i lang="en">elevator</i> 🇺🇸), le rez-de-chaussée britannique est souvent marqué « G ».</p>
-      </div>
+      <h2 id="h-7"></h2>
+      <div id="culture"></div>
       <div class="card block" id="culture-quiz"></div>
     </section>
 
@@ -382,10 +320,10 @@
   <aside aria-label="Informations complémentaires">
     <div class="card aside-card">
       <div class="teacher-tip">
-        <span class="avatar" aria-hidden="true">E</span>
+        <span class="avatar" aria-hidden="true" id="tip-avatar"></span>
         <div>
-          <h3>Le conseil d'Emma</h3>
-          <p style="font-size:14px;margin:0;">« <span lang="en">Under the name</span> » : c'est la formule toute faite pour donner le nom d'une réservation. Retenez-la en bloc, elle sert aussi au restaurant !</p>
+          <h3 id="tip-title"></h3>
+          <p style="font-size:14px;margin:0;" id="tip-text"></p>
         </div>
       </div>
     </div>
@@ -395,14 +333,19 @@
     </div>
     <div class="card aside-card">
       <h3>💬 Une question ?</h3>
-      <p style="font-size:14px;">Demandez à Emma d'expliquer une phrase du dialogue.</p>
-      <a class="btn btn-ghost btn-sm" href="professeur.html">Ouvrir le chat</a>
+      <p style="font-size:14px;" id="ask-text"></p>
+      <a class="btn btn-ghost btn-sm" id="ask-link" href="professeur.html">Ouvrir le chat</a>
+    </div>
+    <div class="card aside-card">
+      <h3>🌍 Autres langues</h3>
+      <p style="font-size:14px;margin:0 0 8px;">La même leçon existe dans les trois langues.</p>
+      <div class="ex-actions" style="margin:0;" id="other-langs"></div>
     </div>
   </aside>
 </main>
 
 <div class="popover" id="popover" role="dialog" aria-modal="false" aria-labelledby="pop-word" hidden>
-  <h3 id="pop-word" lang="en"></h3>
+  <h3 id="pop-word"></h3>
   <div class="ipa" id="pop-ipa"></div>
   <p id="pop-tr" style="margin:8px 0 0;"></p>
   <div class="actions">
@@ -420,124 +363,29 @@
   </div>
 </div>
 
+<script src="lecons/en.js"></script>
+<script src="lecons/es.js"></script>
+<script src="lecons/pt.js"></script>
 <script>
 (function () {
-  // ---- Données ----
-  // Chaque segment est soit du texte, soit {w:'clé du glossaire'}, soit {d:{us:'…',uk:'…'}} (différence de variante).
-  var dialogue = [
-    { who: 'R', seg: ['Good evening, welcome to the ', {d:{us:'Harbor', uk:'Harbour'}}, ' View Hotel. How can I help you?'],
-      fr: 'Bonsoir, bienvenue au Harbor View Hotel. Que puis-je faire pour vous ?' },
-    { who: 'C', seg: [{d:{us:'Hi, I have a ', uk:"Hello, I've got a "}}, {w:'reservation'}, ' ', {w:'under the name'}, ' Martin.'],
-      fr: "Bonjour, j'ai une réservation au nom de Martin." },
-    { who: 'R', seg: ['Let me check… Yes, Camille Martin, two nights, a double room. Could I see your ', {w:'ID'}, ', please?'],
-      fr: "Je vérifie… Oui, Camille Martin, deux nuits, une chambre double. Puis-je voir votre pièce d'identité, s'il vous plaît ?" },
-    { who: 'C', seg: ["Sure, here's my passport."],
-      fr: 'Bien sûr, voici mon passeport.' },
-    { who: 'R', seg: ["Thank you. Your room is on the ", {d:{us:'fourth floor, room 412', uk:'third floor, room 312'}}, '. ', {w:'Breakfast'}, ' is served from 6:30 to 10.'],
-      fr: 'Merci. Votre chambre est au 3ᵉ étage, chambre {room}. Le petit-déjeuner est servi de 6 h 30 à 10 h.' },
-    { who: 'C', seg: ['Great. Is there Wi-Fi in the room?'],
-      fr: 'Super. Il y a le wifi dans la chambre ?' },
-    { who: 'R', seg: ["Yes, it's free. The ", {w:'password'}, ' is on your ', {w:'key card'}, ' holder.'],
-      fr: "Oui, il est gratuit. Le mot de passe est sur la pochette de votre carte-clé." },
-    { who: 'C', seg: ['Perfect. And what time is ', {w:'checkout'}, '?'],
-      fr: "Parfait. Et à quelle heure faut-il libérer la chambre ?" },
-    { who: 'R', seg: [{w:'checkoutCap'}, ' is at 11 a.m. If you need a late ', {w:'checkout'}, ', just call ', {d:{us:'the front desk', uk:'reception'}}, '.'],
-      fr: "Le départ est à 11 h. Si vous avez besoin de partir plus tard, appelez simplement la réception." },
-    { who: 'C', seg: [{d:{us:'Thanks a lot.', uk:'Thanks very much.'}}],
-      fr: 'Merci beaucoup.' },
-    { who: 'R', seg: ["You're welcome. Enjoy your ", {w:'stay'}, '!'],
-      fr: 'Je vous en prie. Bon séjour !' }
-  ];
+  // ---- Leçon choisie : lecon.html?langue=en|es|pt ----
+  var LANGUE = new URLSearchParams(location.search).get('langue');
+  if (!window.LECONS[LANGUE]) LANGUE = 'en';
+  var L = window.LECONS[LANGUE];
+  var NOMS = { en: 'Anglais', es: 'Espagnol', pt: 'Portugais' };
+  document.documentElement.dataset.lang = LANGUE;
 
-  var glossary = {
-    reservation:    { word: {us:'reservation', uk:'booking'}, ipa: {us:'/ˌrɛzɚˈveɪʃən/', uk:'/ˈbʊkɪŋ/'}, tr: {us:'une réservation', uk:'une réservation (UK : on dit plus souvent « booking »)'}, v: 0 },
-    'under the name': { word: 'under the name', ipa: {us:'/ˈʌndɚ ðə neɪm/', uk:'/ˈʌndə ðə neɪm/'}, tr: 'au nom de', v: 1 },
-    ID:             { word: 'ID', ipa: '/ˌaɪˈdiː/', tr: "une pièce d'identité (abréviation de « identification »)", v: 2 },
-    Breakfast:      { word: 'Breakfast', ipa: '/ˈbrɛkfəst/', tr: 'le petit-déjeuner (attention : « brek », pas « brèk-fast »)', v: 7 },
-    password:       { word: 'password', ipa: {us:'/ˈpæswɝd/', uk:'/ˈpɑːswɜːd/'}, tr: 'le mot de passe' },
-    'key card':     { word: 'key card', ipa: {us:'/ˈki kɑrd/', uk:'/ˈkiː kɑːd/'}, tr: 'la carte-clé', v: 4 },
-    checkout:       { word: {us:'checkout', uk:'check-out'}, ipa: '/ˈtʃɛkaʊt/', tr: "le départ (l'heure à laquelle on libère la chambre)", v: 5 },
-    checkoutCap:    { word: {us:'Checkout', uk:'Check-out'}, ipa: '/ˈtʃɛkaʊt/', tr: "le départ (l'heure à laquelle on libère la chambre)", v: 5 },
-    stay:           { word: 'stay', ipa: '/steɪ/', tr: 'le séjour (aussi : rester, séjourner)', v: 10 }
-  };
-
-  var vocab = [
-    { en: {us:'I have a reservation', uk:"I've got a booking"}, fr: "J'ai une réservation", ex: {us:'I have a reservation for two nights.', uk:"I've got a booking for two nights."} },
-    { en: 'under the name…', fr: 'au nom de…', ex: 'The table is under the name Dubois.' },
-    { en: 'Could I see your ID?', fr: "Puis-je voir votre pièce d'identité ?", ex: 'Could I see your ID, please?' },
-    { en: {us:'the front desk', uk:'reception'}, fr: 'la réception', ex: {us:'Please call the front desk.', uk:'Please call reception.'} },
-    { en: 'a key card', fr: 'une carte-clé', ex: "My key card doesn't work." },
-    { en: {us:'checkout', uk:'check-out'}, fr: 'le départ (libérer la chambre)', ex: {us:'Checkout is at 11 a.m.', uk:'Check-out is at 11 a.m.'} },
-    { en: {us:'a late checkout', uk:'a late check-out'}, fr: 'un départ tardif', ex: {us:'Can I have a late checkout?', uk:'Can I have a late check-out?'} },
-    { en: 'Breakfast is served from… to…', fr: 'Le petit-déjeuner est servi de… à…', ex: 'Breakfast is served from 7 to 10.' },
-    { en: {us:'the fourth floor', uk:'the third floor'}, fr: 'le 3ᵉ étage', ex: {us:'My room is on the fourth floor.', uk:'My room is on the third floor.'} },
-    { en: 'Is there Wi-Fi in the room?', fr: 'Y a-t-il le wifi dans la chambre ?', ex: 'Is there Wi-Fi in the room?' },
-    { en: 'Enjoy your stay!', fr: 'Bon séjour !', ex: 'Thank you, and enjoy your stay!' },
-    { en: "You're welcome.", fr: 'Je vous en prie. / De rien.', ex: "\"Thanks a lot!\" — \"You're welcome.\"" }
-  ];
-
-  var quiz = [
-    { q: 'Que demande Camille à la réceptionniste ?',
-      opts: ["S'il y a le wifi dans la chambre, et l'heure du départ", "L'heure du petit-déjeuner et le mot de passe", 'Une chambre plus grande'],
-      a: 0, why: "Camille demande « Is there Wi-Fi in the room? », puis « what time is checkout? ». L'heure du petit-déjeuner, c'est la réceptionniste qui la donne sans qu'on la demande." },
-    { q: 'À quelle heure Camille doit-elle libérer la chambre ?',
-      opts: ['10 h', '11 h', '12 h'],
-      a: 1, why: '« Checkout is at 11 a.m. » : a.m. = le matin. 10 h, c\'est la fin du petit-déjeuner.' },
-    { q: 'Où se trouve le mot de passe du wifi ?',
-      opts: ['À la réception', 'Sur la pochette de la carte-clé', 'Dans un e-mail'],
-      a: 1, why: '« The password is on your key card holder. » Un holder, c\'est un étui ou une pochette.' }
-  ];
-
-  var gaps = [
-    { before: 'I have a reservation', opts: ['under', 'on', 'at'], a: 'under', after: 'the name Martin.', why: '« under the name… » = « au nom de… ».' },
-    { before: 'Could I', opts: ['see', 'to see', 'seeing'], a: 'see', after: 'your ID, please?', why: 'Après could : la base verbale, sans « to ».' },
-    { before: 'Breakfast is served', opts: ['from', 'since', 'between'], a: 'from', after: '6:30 to 10.', why: '« from… to… » = « de… à… ».' },
-    { before: "You're welcome. Enjoy your", opts: ['stay', 'staying', 'rest'], a: 'stay', after: '!', why: '« Enjoy your stay! » = « Bon séjour ! ».' }
-  ];
-
-  var cultureQuiz = [
-    { q: 'Au Royaume-Uni, à l\'hôtel, le pourboire est…',
-      opts: ['Pas attendu', 'Obligatoire : 20 %', 'Inclus dans le prix de la chambre, à préciser au départ'],
-      a: 0, why: 'Au Royaume-Uni, on ne donne généralement pas de pourboire à l\'hôtel. Aux États-Unis, en revanche, c\'est l\'usage.' },
-    { q: 'Votre chambre est au « second floor » à New York. En France, ce serait…',
-      opts: ['Le 2ᵉ étage', 'Le 1ᵉʳ étage', 'Le rez-de-chaussée'],
-      a: 1, why: 'Aux États-Unis, le rez-de-chaussée est le « first floor », donc le « second floor » est notre 1ᵉʳ étage.' }
-  ];
-
-  var finalQuiz = [
-    { q: '« Je voudrais une chambre avec vue. »', lang: 'en',
-      opts: ["I'd like a room with a view.", 'I want a room with view.', 'I would like have a room with a view.'],
-      a: 0, why: "« I'd like… » est la formule polie. « I want » sonne comme un ordre.", rev: "I'd like a room with a view." },
-    { q: 'Complétez : « Could I ___ your ID, please? »', lang: 'en',
-      opts: ['see', 'to see', 'seeing'],
-      a: 0, why: 'Après can / could : base verbale, sans « to ».', rev: 'Could I see your ID?' },
-    { q: 'Au Royaume-Uni, le rez-de-chaussée se dit…', lang: 'en',
-      opts: ['ground floor', 'first floor', 'zero floor'],
-      a: 0, why: '« ground floor » 🇬🇧, « first floor » 🇺🇸.', rev: 'ground floor' },
-    { q: '« Bon séjour ! »', lang: 'en',
-      opts: ['Enjoy your stay!', 'Good stay!', 'Have a nice trip!'],
-      a: 0, why: '« Enjoy your stay! » est la formule de l\'hôtel. « Have a nice trip! » se dit à quelqu\'un qui part en voyage.', rev: 'Enjoy your stay!' },
-    { q: '« Checkout is at 11 a.m. » signifie…',
-      opts: ['Il faut libérer la chambre à 11 h', "L'arrivée est possible à partir de 11 h", 'Le petit-déjeuner est servi jusqu\'à 11 h'],
-      a: 0, why: '« checkout » = le départ, l\'heure où l\'on rend la chambre. L\'arrivée se dit « check-in ».', rev: {us:'checkout', uk:'check-out'} },
-    { q: 'Quelle phrase est correcte ?', lang: 'en',
-      opts: ['Can you help me?', 'Do you can help me?', 'Can you to help me?'],
-      a: 0, why: 'Pour poser la question, on inverse « can » et le sujet, sans « do » et sans « to ».', rev: 'Can you help me?' },
-    { q: 'Où appelez-vous pour demander un départ tardif ?',
-      opts: [{us:'The front desk', uk:'Reception'}, 'The lobby bar', 'The key card'],
-      a: 0, why: '« the front desk » 🇺🇸 ou « reception » 🇬🇧 : la réception.', rev: {us:'the front desk', uk:'reception'} },
-    { q: '« J\'ai une réservation au nom de Martin. »', lang: 'en',
-      opts: ['I have a reservation under the name Martin.', 'I have a reservation on the name Martin.', 'I have a reservation at the name of Martin.'],
-      a: 0, why: '« under the name… » est une formule toute faite.', rev: 'under the name…' }
-  ];
-
-  var steps = ['Découverte','Compréhension', 'Vocabulaire', 'Grammaire', 'Pratique', 'Production', 'Culture', 'Bilan'];
+  var dialogue = L.dialogue, glossary = L.glossaire, vocab = L.vocabulaire;
+  var steps = ['Découverte', 'Compréhension', 'Vocabulaire', 'Grammaire', 'Pratique', 'Production', 'Culture', 'Bilan'];
 
   // ---- État ----
-  var state = { variant: 'us', step: 1, rate: 1, xp: 0, saved: [] };
-  try { var v = localStorage.getItem('lb-variant-en'); if (v === 'us' || v === 'uk') state.variant = v; } catch (e) {}
+  var state = { variant: L.variantes[0].k, step: 1, rate: 1, xp: 0, saved: [] };
+  var CLE_VARIANTE = 'lb-variant-' + LANGUE;
+  try { var sv = localStorage.getItem(CLE_VARIANTE); if (L.variantes.some(function (x) { return x.k === sv; })) state.variant = sv; } catch (e) {}
 
-  function pick(x) { return (x && typeof x === 'object') ? x[state.variant] : x; }
+  function variante() { return L.variantes.filter(function (x) { return x.k === state.variant; })[0]; }
+  // Un objet indexé par variante renvoie le texte de la variante choisie.
+  function pick(x) { return (x && typeof x === 'object' && !Array.isArray(x) && !(x instanceof RegExp)) ? x[state.variant] : x; }
   function el(tag, attrs, text) {
     var n = document.createElement(tag);
     for (var k in attrs || {}) { if (k === 'class') n.className = attrs[k]; else n.setAttribute(k, attrs[k]); }
@@ -551,56 +399,107 @@
       return pick(glossary[s.w].word);
     }).join('');
   }
+  function shuffled(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
 
-  // ---- Synthèse vocale (démo) ----
+  // ---- Textes fixes de la leçon ----
+  document.title = L.titre + ' — Leçon A2';
+  document.getElementById('lesson-title').textContent = L.titre;
+  document.getElementById('banner').textContent = "Version de démonstration : leçon d'" + L.langue + ' A2.';
+  document.getElementById('variants').setAttribute('aria-label', "Variante d'" + L.langue);
+  L.variantes.forEach(function (v) {
+    var b = el('button', { type: 'button', 'data-variant': v.k, 'aria-pressed': 'false' }, v.label);
+    b.addEventListener('click', function () { setVariant(v.k); });
+    document.getElementById('variants').appendChild(b);
+  });
+  document.getElementById('variant-note').innerHTML = L.noteVariantes;
+  document.getElementById('h-4').innerHTML = L.grammaireTitre;
+  document.getElementById('grammar').innerHTML = L.grammaire;
+  document.getElementById('pairs-title').innerHTML = '3. Paires minimales : <span lang="' + L.lang + '">' + L.paires.a + '</span> ou <span lang="' + L.lang + '">' + L.paires.b + '</span> ?';
+  document.getElementById('pairs-help').innerHTML = L.paires.aide;
+  [L.paires.a, L.paires.b].forEach(function (w, i) {
+    var b = el('button', { class: 'option', type: 'button', 'data-pair': w, disabled: '' });
+    b.appendChild(el('span', { class: 'key', 'aria-hidden': 'true' }, 'AB'[i]));
+    b.appendChild(el('span', { lang: L.lang }, w));
+    document.getElementById('pairs-opts').appendChild(b);
+  });
+  document.getElementById('roleplay-title').textContent = '🎭 Jeu de rôle avec ' + L.profNom;
+  document.getElementById('roleplay-text').textContent = L.jeuDeRole.texte;
+  document.getElementById('write-consigne').innerHTML = L.redaction.consigne;
+  var write = document.getElementById('write'); write.lang = L.lang; write.placeholder = L.redaction.placeholder;
+  document.getElementById('h-7').textContent = L.cultureTitre;
+  document.getElementById('culture').innerHTML = L.culture;
+  document.getElementById('tip-avatar').textContent = L.profInitiale;
+  document.getElementById('tip-title').textContent = 'Le conseil de ' + L.profNom;
+  document.getElementById('tip-text').innerHTML = L.conseil;
+  document.getElementById('ask-text').textContent = 'Demandez à ' + L.profNom + " d'expliquer une phrase du dialogue.";
+  document.getElementById('ask-link').href = 'professeur.html?prof=' + L.prof + '&niveau=A2';
+  ['order-picked', 'order-pool', 'gaps', 'gram-ex', 'pop-word'].forEach(function (id) { document.getElementById(id).lang = L.lang; });
+  Object.keys(window.LECONS).forEach(function (k) {
+    if (k === LANGUE) return;
+    document.getElementById('other-langs').appendChild(el('a', { class: 'btn btn-ghost btn-sm', href: 'lecon.html?langue=' + k }, NOMS[k]));
+  });
+
+  // ---- Synthèse vocale (voix du navigateur) ----
   var synth = window.speechSynthesis;
-  if (!synth) document.getElementById('tts-note').textContent = "Votre navigateur ne permet pas la lecture audio de démonstration. En production, l'audio est enregistré par des natifs.";
-  function voiceFor(who) {
-    if (!synth) return null;
-    var lang = state.variant === 'us' ? 'en-US' : 'en-GB';
-    var vs = synth.getVoices().filter(function (v) { return v.lang.replace('_', '-') === lang; });
-    if (!vs.length) return null;
-    return who === 'C' ? vs[Math.min(1, vs.length - 1)] : vs[0];
+  // Voix exacte (es-MX), sinon une voix de la même langue (es-ES, es-US…).
+  function voicesFor(lang) {
+    if (!synth) return [];
+    var all = synth.getVoices(), norm = function (v) { return v.lang.replace('_', '-').toLowerCase(); };
+    var exact = all.filter(function (v) { return norm(v) === lang.toLowerCase(); });
+    if (exact.length) return exact;
+    var base = lang.split('-')[0].toLowerCase();
+    return all.filter(function (v) { return norm(v).split('-')[0] === base; });
+  }
+  function updateTtsNote() {
+    var note = document.getElementById('tts-note');
+    if (!synth) { note.textContent = "Votre navigateur ne permet pas la lecture audio. Essayez avec Chrome, Edge ou Safari."; return; }
+    if (synth.getVoices().length && !voicesFor(variante().speech).length) {
+      note.textContent = "⚠️ Aucune voix en " + L.langue + " n'est installée sur cet appareil : la lecture risque d'être muette ou avec un mauvais accent. Utilisez Chrome ou Edge (voix en ligne incluses), ou ajoutez une voix dans Windows : Paramètres → Heure et langue → Voix.";
+    } else {
+      note.textContent = "Démo : voix de synthèse du navigateur. En production, l'audio est enregistré par des natifs.";
+    }
   }
   function speak(text, who, onend) {
     if (!synth) { if (onend) onend(); return; }
     var u = new SpeechSynthesisUtterance(text);
-    u.lang = state.variant === 'us' ? 'en-US' : 'en-GB';
+    u.lang = variante().speech;
     u.rate = state.rate * 0.95;
-    var v = voiceFor(who); if (v) u.voice = v;
-    if (onend) u.onend = onend;
+    var vs = voicesFor(u.lang);
+    if (vs.length) u.voice = who === 'C' ? vs[Math.min(1, vs.length - 1)] : vs[0];
+    if (onend) { u.onend = onend; u.onerror = onend; }
     synth.speak(u);
   }
+  if (synth) synth.addEventListener ? synth.addEventListener('voiceschanged', updateTtsNote) : (synth.onvoiceschanged = updateTtsNote);
 
   // ---- Rendu : transcription ----
   function renderTranscript() {
     var box = document.getElementById('transcript');
     box.innerHTML = '';
     dialogue.forEach(function (line, i) {
+      var perso = L.personnages[line.who];
       var row = el('div', { class: 'line', id: 'line-' + i });
-      var who = el('span', { class: 'who' + (line.who === 'C' ? ' guest' : ''), 'aria-hidden': 'true' }, line.who === 'C' ? 'CM' : 'R');
+      var who = el('span', { class: 'who' + (line.who === 'C' ? ' guest' : ''), 'aria-hidden': 'true' }, perso.init);
       var text = el('div', { class: 'text' });
-      text.appendChild(el('span', { class: 'name' }, line.who === 'C' ? 'Camille' : 'Réceptionniste'));
-      var en = el('span', { class: 'en', lang: 'en' });
+      text.appendChild(el('span', { class: 'name' }, perso.nom));
+      var target = el('span', { class: 'en', lang: L.lang });
       line.seg.forEach(function (s) {
-        if (typeof s === 'string') en.appendChild(document.createTextNode(s));
-        else if (s.d) en.appendChild(el('span', { class: 'diff', title: 'Varie entre US et UK' }, s.d[state.variant]));
-        else {
-          var b = el('button', { class: 'word', type: 'button', 'data-key': s.w, 'aria-haspopup': 'dialog' }, pick(glossary[s.w].word));
-          en.appendChild(b);
-        }
+        if (typeof s === 'string') target.appendChild(document.createTextNode(s));
+        else if (s.d) target.appendChild(el('span', { class: 'diff', title: 'Varie selon la variante' }, s.d[state.variant]));
+        else target.appendChild(el('button', { class: 'word', type: 'button', 'data-key': s.w, 'aria-haspopup': 'dialog' }, pick(glossary[s.w].word)));
       });
       var play = el('button', { class: 'line-play', type: 'button', 'aria-label': 'Écouter cette réplique' }, '🔊');
       play.addEventListener('click', function () { if (synth) synth.cancel(); speak(lineText(line), line.who); });
-      en.appendChild(document.createTextNode(' ')); en.appendChild(play);
-      text.appendChild(en);
-      var room = state.variant === 'us' ? '412' : '312';
-      text.appendChild(el('span', { class: 'fr' }, line.fr.replace('{room}', room)));
+      target.appendChild(document.createTextNode(' ')); target.appendChild(play);
+      text.appendChild(target);
+      text.appendChild(el('span', { class: 'fr' }, line.fr.replace('{room}', pick(L.chambre) || '')));
       row.appendChild(who); row.appendChild(text);
       box.appendChild(row);
     });
-    document.querySelector('[data-v="city"]').textContent = state.variant === 'us' ? 'Boston' : 'Londres';
-    document.querySelector('[data-v="checkout"]').textContent = pick({us:'checkout', uk:'check-out'});
+    document.querySelector('[data-v="city"]').textContent = pick(L.ville);
   }
 
   document.getElementById('toggle-fr').addEventListener('change', function (e) {
@@ -636,9 +535,9 @@
   document.getElementById('transcript').addEventListener('click', function (e) {
     var b = e.target.closest('.word'); if (!b) return;
     var g = glossary[b.dataset.key];
-    currentWord = { en: pick(g.word), fr: pick(g.tr), save: g.v != null ? pick(vocab[g.v].en) : pick(g.word) };
+    currentWord = { en: pick(g.word), save: g.v != null ? pick(vocab[g.v].en) : pick(g.word) };
     document.getElementById('pop-word').textContent = pick(g.word);
-    document.getElementById('pop-ipa').textContent = pick(g.ipa) + (state.variant === 'us' ? ' · 🇺🇸' : ' · 🇬🇧');
+    document.getElementById('pop-ipa').textContent = (g.ipa ? pick(g.ipa) + ' · ' : '') + variante().label;
     document.getElementById('pop-tr').textContent = pick(g.tr);
     pop.hidden = false;
     var r = b.getBoundingClientRect(), w = pop.offsetWidth, h = pop.offsetHeight;
@@ -659,16 +558,11 @@
     if (state.saved.indexOf(text) !== -1) return;
     state.saved.push(text);
     var ul = document.getElementById('saved'); ul.innerHTML = '';
-    state.saved.forEach(function (s) { ul.appendChild(el('li', { lang: 'en' }, '• ' + s)); });
+    state.saved.forEach(function (s) { ul.appendChild(el('li', { lang: L.lang }, '• ' + s)); });
   }
 
   // ---- QCM (compréhension, culture, bilan) ----
-  function shuffled(arr) {
-    var a = arr.slice();
-    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
-    return a;
-  }
-  // onDone(bonnes, ratées) est appelé quand toutes les questions ont une réponse.
+  // Une question marquée « cible » a ses réponses dans la langue étudiée.
   function renderQuestions(boxId, items, shuffle, onDone) {
     var box = document.getElementById(boxId); box.innerHTML = '';
     var answered = 0, good = 0, missed = [];
@@ -683,7 +577,7 @@
       order.forEach(function (oi, pos) {
         var b = el('button', { class: 'option', type: 'button', 'data-i': oi });
         b.appendChild(el('span', { class: 'key', 'aria-hidden': 'true' }, 'ABC'[pos]));
-        b.appendChild(el('span', item.lang ? { lang: item.lang } : null, pick(item.opts[oi])));
+        b.appendChild(el('span', item.cible ? { lang: L.lang } : null, pick(item.opts[oi])));
         b.addEventListener('click', function () {
           var ok = oi === item.a;
           opts.querySelectorAll('.option').forEach(function (x) {
@@ -703,10 +597,52 @@
       box.appendChild(wrap);
     });
   }
-  function renderQuiz() { renderQuestions('quiz', quiz, false); }
+
+  // ---- Vocabulaire ----
+  function renderVocab() {
+    var ul = document.getElementById('vocab'); ul.innerHTML = '';
+    vocab.forEach(function (v) {
+      var li = el('li', { class: 'card' });
+      var play = el('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Écouter : ' + pick(v.en) }, '🔊');
+      play.addEventListener('click', function () { speak(pick(v.en).replace(/…/g, ''), 'R'); });
+      var mid = el('div');
+      var expr = el('div', { class: 'expr', lang: L.lang }, pick(v.en));
+      if (typeof v.en === 'object') expr.appendChild(el('span', { class: 'pill pill-neutral', style: 'margin-left:8px;font-size:11px;' }, variante().label));
+      mid.appendChild(expr);
+      mid.appendChild(el('div', { class: 'tr' }, v.fr));
+      mid.appendChild(el('div', { class: 'ex', lang: L.lang }, pick(v.ex)));
+      var deja = state.saved.indexOf(pick(v.en)) !== -1;
+      var add = el('button', { class: 'icon-btn add-btn', type: 'button', 'aria-pressed': deja ? 'true' : 'false', 'aria-label': 'Ajouter aux révisions : ' + pick(v.en) }, deja ? '✓' : '＋');
+      add.addEventListener('click', function () { addSaved(pick(v.en)); add.setAttribute('aria-pressed', 'true'); add.textContent = '✓'; });
+      li.appendChild(play); li.appendChild(mid); li.appendChild(add);
+      ul.appendChild(li);
+    });
+  }
+
+  // ---- Grammaire : exercice ----
+  var gapXp = false, EG = L.exGrammaire;
+  function renderGramEx() {
+    var box = document.getElementById('gram-ex'); box.innerHTML = '';
+    var parts = pick(EG.phrase).split('___');
+    if (parts[0]) box.appendChild(el('span', null, parts[0].trim()));
+    var sel = el('select', { id: 'gap', class: 'gap-select', 'aria-label': 'Choisissez le mot manquant' });
+    sel.appendChild(el('option', { value: '' }, '…'));
+    EG.options.forEach(function (o) { sel.appendChild(el('option', { value: o }, o)); });
+    box.appendChild(sel);
+    box.appendChild(el('span', null, parts[1].trim()));
+    document.getElementById('gap-fb').hidden = true;
+    sel.addEventListener('change', function () {
+      var fb = document.getElementById('gap-fb'), v = sel.value;
+      if (!v) { fb.hidden = true; return; }
+      fb.hidden = false;
+      fb.className = 'feedback ' + (v === EG.bonne ? 'ok' : 'ko');
+      fb.textContent = pick(EG.retours[v]);
+      if (v === EG.bonne && !gapXp) { gapXp = true; addXp(10); }
+    });
+  }
 
   // ---- Étape 5 : remettre le dialogue dans l'ordre ----
-  var ORDER_N = 5, picked = [];
+  var ORDER_N = 5, picked = [], orderPool = [], orderXp = false;
   function renderOrder() {
     var pool = document.getElementById('order-pool'), list = document.getElementById('order-picked');
     pool.innerHTML = ''; list.innerHTML = '';
@@ -723,13 +659,11 @@
       pool.appendChild(b);
     });
   }
-  var orderPool = [];
   function resetOrder() {
     var ids = []; for (var i = 0; i < ORDER_N; i++) ids.push(i);
     do { orderPool = shuffled(ids); } while (orderPool.join() === ids.join());
     picked = []; renderOrder();
   }
-  var orderXp = false;
   document.getElementById('order-reset').addEventListener('click', resetOrder);
   document.getElementById('order-check').addEventListener('click', function () {
     var fb = document.getElementById('order-fb'); fb.hidden = false;
@@ -745,30 +679,33 @@
   });
 
   // ---- Étape 5 : phrases à compléter ----
+  var gapsXp = false;
   function renderGaps() {
-    var box = document.getElementById('gaps'); box.innerHTML = '';
-    gaps.forEach(function (g, i) {
+    var box = document.getElementById('gaps'), prev = {};
+    box.querySelectorAll('select').forEach(function (s) { prev[s.id] = s.value; });
+    box.innerHTML = '';
+    L.trous.forEach(function (g, i) {
       var row = el('div', { class: 'gap-line' });
-      row.appendChild(el('span', null, g.before));
+      row.appendChild(el('span', null, pick(g.before)));
       var sel = el('select', { class: 'gap-select', id: 'g-' + i, 'aria-label': 'Mot manquant, phrase ' + (i + 1) });
       sel.appendChild(el('option', { value: '' }, '…'));
       g.opts.forEach(function (o) { sel.appendChild(el('option', { value: o }, o)); });
+      if (prev['g-' + i]) sel.value = prev['g-' + i];
       row.appendChild(sel);
-      row.appendChild(el('span', null, g.after));
+      row.appendChild(el('span', null, pick(g.after)));
       box.appendChild(row);
     });
   }
-  var gapsXp = false;
   document.getElementById('gaps-check').addEventListener('click', function () {
     var fb = document.getElementById('gaps-fb'), ok = 0, notes = [];
-    gaps.forEach(function (g, i) {
+    L.trous.forEach(function (g, i) {
       var sel = document.getElementById('g-' + i), right = sel.value === g.a;
       sel.classList.toggle('correct', right); sel.classList.toggle('wrong', !right);
       if (right) ok++; else notes.push((i + 1) + '. ' + g.why);
     });
-    fb.hidden = false; fb.className = 'feedback ' + (ok === gaps.length ? 'ok' : 'ko');
-    fb.textContent = ok === gaps.length ? '✅ 4 / 4, bravo !' : ok + ' / ' + gaps.length + '. ' + notes.join(' ');
-    if (ok === gaps.length && !gapsXp) { gapsXp = true; addXp(10); }
+    fb.hidden = false; fb.className = 'feedback ' + (ok === L.trous.length ? 'ok' : 'ko');
+    fb.textContent = ok === L.trous.length ? '✅ ' + ok + ' / ' + ok + ', bravo !' : ok + ' / ' + L.trous.length + '. ' + notes.join(' ');
+    if (ok === L.trous.length && !gapsXp) { gapsXp = true; addXp(10); }
   });
 
   // ---- Étape 5 : paires minimales ----
@@ -778,35 +715,36 @@
     document.getElementById('pairs-help').textContent = "Votre navigateur ne permet pas la lecture audio de cet exercice. Essayez avec Chrome, Edge ou Safari.";
   }
   document.getElementById('pairs-play').addEventListener('click', function () {
-    if (!pair.target) pair.target = Math.random() < 0.5 ? 'stay' : 'stair';
+    if (!pair.target) pair.target = Math.random() < 0.5 ? L.paires.a : L.paires.b;
     synth.cancel(); speak(pair.target, 'R');
     document.querySelectorAll('[data-pair]').forEach(function (b) { b.disabled = false; b.classList.remove('correct', 'wrong'); });
     document.getElementById('pairs-fb').hidden = true;
   });
-  document.querySelectorAll('[data-pair]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      if (!pair.target) return;
-      var ok = b.dataset.pair === pair.target, fb = document.getElementById('pairs-fb');
-      document.querySelectorAll('[data-pair]').forEach(function (x) { x.disabled = true; if (x.dataset.pair === pair.target) x.classList.add('correct'); });
-      if (!ok) b.classList.add('wrong');
-      pair.done++; if (ok) { pair.good++; addXp(2); }
-      fb.hidden = false; fb.className = 'feedback ' + (ok ? 'ok' : 'ko');
-      fb.textContent = (ok ? '✅ Oui, c\'était « ' : '❌ Non, c\'était « ') + pair.target + ' ». Touchez « Écouter un mot » pour continuer.';
-      document.getElementById('pairs-score').textContent = pair.good + ' / ' + pair.done;
-      pair.target = null;
-    });
+  document.getElementById('pairs-opts').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-pair]'); if (!b || !pair.target) return;
+    var ok = b.dataset.pair === pair.target, fb = document.getElementById('pairs-fb');
+    document.querySelectorAll('[data-pair]').forEach(function (x) { x.disabled = true; if (x.dataset.pair === pair.target) x.classList.add('correct'); });
+    if (!ok) b.classList.add('wrong');
+    pair.done++; if (ok) { pair.good++; addXp(2); }
+    fb.hidden = false; fb.className = 'feedback ' + (ok ? 'ok' : 'ko');
+    fb.textContent = (ok ? "✅ Oui, c'était « " : "❌ Non, c'était « ") + pair.target + ' ». Touchez « Écouter un mot » pour continuer.';
+    document.getElementById('pairs-score').textContent = pair.good + ' / ' + pair.done;
+    pair.target = null;
   });
 
   // ---- Étape 5 : shadowing ----
   var Reco = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (Reco) document.getElementById('shadow-help').textContent += ' Touchez 🎙️ pour vérifier ce que le micro a compris (Chrome ou Edge).';
-  function words(s) { return s.toLowerCase().replace(/[^a-z0-9' ]/g, ' ').split(/\s+/).filter(Boolean); }
+  // Mots sans accents ni ponctuation, pour comparer ce qui a été dit.
+  function words(s) {
+    return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9' ]/g, ' ').split(/\s+/).filter(Boolean);
+  }
   function renderShadow() {
     var ul = document.getElementById('shadow'); ul.innerHTML = '';
     dialogue.forEach(function (line) {
       if (line.who !== 'C') return;
       var txt = lineText(line), li = el('li');
-      li.appendChild(el('span', { lang: 'en' }, txt + ' '));
+      li.appendChild(el('span', { lang: L.lang }, txt + ' '));
       var play = el('button', { class: 'line-play', type: 'button', 'aria-label': 'Écouter : ' + txt }, '🔊');
       play.addEventListener('click', function () { if (synth) { synth.cancel(); speak(txt, 'C'); } });
       li.appendChild(play);
@@ -814,7 +752,7 @@
       if (Reco) {
         var mic = el('button', { class: 'line-play', type: 'button', 'aria-label': 'Répéter au micro : ' + txt }, '🎙️');
         mic.addEventListener('click', function () {
-          var r = new Reco(); r.lang = state.variant === 'us' ? 'en-US' : 'en-GB';
+          var r = new Reco(); r.lang = variante().speech;
           said.textContent = '🎙️ Je vous écoute…';
           r.onresult = function (ev) {
             var heard = ev.results[0][0].transcript, target = words(txt), got = words(heard);
@@ -823,7 +761,11 @@
             said.textContent = 'Compris : « ' + heard + ' » · ' + pct + ' % des mots reconnus' + (pct >= 80 ? ' ✅' : '. Réécoutez et réessayez.');
             if (pct >= 80) addXp(2);
           };
-          r.onerror = function () { said.textContent = "Micro indisponible : autorisez l'accès au micro dans le navigateur."; };
+          r.onerror = function (ev) {
+            said.textContent = ev.error === 'not-allowed' || ev.error === 'service-not-allowed'
+              ? "Micro refusé : autorisez l'accès au micro (icône à gauche de l'adresse du site)."
+              : ev.error === 'no-speech' ? "Je n'ai rien entendu : touchez 🎙️ et parlez tout de suite." : 'Micro indisponible (' + ev.error + ').';
+          };
           r.start();
         });
         li.appendChild(mic);
@@ -835,88 +777,49 @@
 
   // ---- Étape 6 : production ----
   function updateRoleplayLink() {
-    var q = 'prof=emma&mode=jeu_de_role&niveau=A2&objectif=voyage&variante=' + (state.variant === 'us' ? 'US' : 'UK') +
-      '&sujet=' + encodeURIComponent("À l'hôtel : j'arrive pour mon séjour, mais la réception ne trouve pas ma réservation. Tu joues la réceptionniste.");
+    var q = 'prof=' + L.prof + '&mode=jeu_de_role&niveau=A2&objectif=voyage&variante=' + variante().code + '&sujet=' + encodeURIComponent(L.jeuDeRole.sujet);
     document.getElementById('roleplay-link').href = 'professeur.html?' + q;
   }
+  var writeXp = false;
   document.getElementById('write-check').addEventListener('click', function () {
     var t = document.getElementById('write').value.toLowerCase(), fb = document.getElementById('write-fb');
-    var checks = [
-      [/\b(could|can|may) (i|you|we)\b|\bi'?d like\b|\bi would like\b/, 'Une formule polie (Could I… ? / Could you… ? / I\'d like…)'],
-      [/\bplease\b/, '« please »'],
-      [/\blate check-?out\b|\bcheck(-| )?out (later|at)\b/, 'La demande de départ tardif (a late ' + pick({us:'checkout', uk:'check-out'}) + ')'],
-      [/\btowels?\b/, 'Le mot « towel » (serviette)'],
-      [/\bi want\b/, '« I want » (trop direct, à éviter)', true]
-    ];
     fb.hidden = false; fb.innerHTML = '';
     if (t.trim().split(/\s+/).length < 5) { fb.className = 'feedback ko'; fb.textContent = 'Écrivez au moins une ou deux phrases complètes.'; return; }
     var ul = el('ul', { class: 'checklist' }), ok = 0, need = 0;
-    checks.forEach(function (c) {
+    L.redaction.criteres.forEach(function (c) {
       var found = c[0].test(t);
-      if (c[2]) { if (found) ul.appendChild(el('li', null, '⚠️ ' + c[1])); return; }
+      if (c[2]) { if (found) ul.appendChild(el('li', null, '⚠️ ' + pick(c[1]))); return; }
       need++; if (found) ok++;
-      ul.appendChild(el('li', null, (found ? '✅ ' : '⬜ ') + c[1]));
+      ul.appendChild(el('li', null, (found ? '✅ ' : '⬜ ') + pick(c[1])));
     });
     fb.className = 'feedback ' + (ok === need ? 'ok' : 'ko');
     fb.appendChild(el('strong', null, ok === need ? 'Très bon message !' : ok + ' / ' + need + ' éléments présents.'));
     fb.appendChild(ul);
-    fb.appendChild(el('p', { lang: 'en', style: 'margin:8px 0 0;' }, 'Modèle : Hello, this is room ' + (state.variant === 'us' ? '412' : '312') + '. Could I have a late ' + pick({us:'checkout', uk:'check-out'}) + ' tomorrow, please? And could you bring me an extra towel? Thank you!'));
-    if (ok === need && !state.writeXp) { state.writeXp = true; addXp(10); }
+    fb.appendChild(el('p', { lang: L.lang, style: 'margin:8px 0 0;' }, 'Modèle : ' + pick(L.redaction.modele)));
+    if (ok === need && !writeXp) { writeXp = true; addXp(10); }
   });
 
   // ---- Étapes 7 et 8 : culture et bilan ----
-  function renderCulture() { renderQuestions('culture-quiz', cultureQuiz, false); }
   function renderFinal() {
     document.getElementById('final-result').hidden = true;
-    renderQuestions('final-quiz', finalQuiz, true, function (good, missed) {
+    renderQuestions('final-quiz', L.bilan, true, function (good, missed) {
       missed.forEach(addSaved);
       var box = document.getElementById('final-result'); box.innerHTML = ''; box.hidden = false;
       var passed = good >= 6;
       if (passed) box.appendChild(el('div', { class: 'badge', 'aria-hidden': 'true' }, '🛎️'));
       box.appendChild(el('h3', null, passed ? 'Badge « Check-in » débloqué !' : 'Leçon terminée'));
-      box.appendChild(el('p', null, 'Score : ' + good + ' / ' + finalQuiz.length + ' · ' + state.xp + ' XP gagnés dans cette leçon.'));
+      box.appendChild(el('p', null, 'Score : ' + good + ' / ' + L.bilan.length + ' · ' + state.xp + ' XP gagnés dans cette leçon.'));
       box.appendChild(el('p', { class: 'muted' }, missed.length ? missed.length + ' expression(s) ajoutée(s) à vos révisions (colonne de droite).' : 'Aucune erreur : rien à ajouter aux révisions.'));
       var act = el('div', { class: 'ex-actions', style: 'justify-content:center;' });
       var again = el('button', { class: 'btn btn-ghost', type: 'button' }, 'Refaire le bilan');
       again.addEventListener('click', function () { renderFinal(); document.getElementById('h-8').scrollIntoView(); });
-      var talk = el('a', { class: 'btn btn-primary', href: document.getElementById('roleplay-link').getAttribute('href') }, 'Pratiquer avec Emma');
-      var home = el('a', { class: 'btn btn-ghost', href: 'accueil.html' }, "Retour à l'accueil");
-      act.appendChild(again); act.appendChild(talk); act.appendChild(home);
+      act.appendChild(again);
+      act.appendChild(el('a', { class: 'btn btn-primary', href: document.getElementById('roleplay-link').getAttribute('href') }, 'Pratiquer avec ' + L.profNom));
+      act.appendChild(el('a', { class: 'btn btn-ghost', href: 'accueil.html' }, "Retour à l'accueil"));
       box.appendChild(act);
       box.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   }
-
-  // ---- Vocabulaire ----
-  function renderVocab() {
-    var ul = document.getElementById('vocab'); ul.innerHTML = '';
-    vocab.forEach(function (v) {
-      var li = el('li', { class: 'card' });
-      var play = el('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Écouter : ' + pick(v.en) }, '🔊');
-      play.addEventListener('click', function () { speak(pick(v.en).replace('…', ''), 'R'); });
-      var mid = el('div');
-      var isDiff = typeof v.en === 'object';
-      var expr = el('div', { class: 'expr', lang: 'en' }, pick(v.en));
-      if (isDiff) expr.appendChild(el('span', { class: 'pill pill-neutral', style: 'margin-left:8px;font-size:11px;' }, state.variant === 'us' ? '🇺🇸 US' : '🇬🇧 UK'));
-      mid.appendChild(expr);
-      mid.appendChild(el('div', { class: 'tr' }, v.fr));
-      mid.appendChild(el('div', { class: 'ex', lang: 'en' }, pick(v.ex)));
-      var add = el('button', { class: 'icon-btn add-btn', type: 'button', 'aria-pressed': state.saved.indexOf(pick(v.en)) !== -1 ? 'true' : 'false', 'aria-label': 'Ajouter aux révisions : ' + pick(v.en) }, state.saved.indexOf(pick(v.en)) !== -1 ? '✓' : '＋');
-      add.addEventListener('click', function () { addSaved(pick(v.en)); add.setAttribute('aria-pressed', 'true'); add.textContent = '✓'; });
-      li.appendChild(play); li.appendChild(mid); li.appendChild(add);
-      ul.appendChild(li);
-    });
-  }
-
-  // ---- Grammaire : exercice ----
-  var gapXp = false;
-  document.getElementById('gap').addEventListener('change', function (e) {
-    var fb = document.getElementById('gap-fb'); var v = e.target.value; if (!v) { fb.hidden = true; return; }
-    fb.hidden = false;
-    if (v === 'Could') { fb.className = 'feedback ok'; fb.textContent = '✅ « Could I have a late ' + pick({us:'checkout', uk:'check-out'}) + ', please? » : une demande polie.'; if (!gapXp) { gapXp = true; addXp(10); } }
-    else if (v === 'Do') { fb.className = 'feedback ko'; fb.textContent = "❌ Avec « Do », il faudrait « Do you have… ? ». Pour demander quelque chose pour soi, on dit « Could I have… ? »."; }
-    else { fb.className = 'feedback ko'; fb.textContent = "❌ « Would I have » ne s'emploie pas pour une demande. On dit « Could I have… ? » ou « I'd like… »."; }
-  });
 
   // ---- Navigation entre étapes ----
   function renderSteps() {
@@ -934,29 +837,28 @@
   function go(n) {
     state.step = Math.max(1, Math.min(steps.length, n));
     document.querySelectorAll('.panel').forEach(function (p) { p.classList.toggle('active', p.id === 'step-' + state.step); });
-    document.getElementById('progress-bar').style.width = (state.step / 8 * 100) + '%';
+    document.getElementById('progress-bar').style.width = (state.step / steps.length * 100) + '%';
     document.getElementById('prev').disabled = state.step === 1;
     document.getElementById('next').disabled = state.step === steps.length;
     renderSteps();
     window.scrollTo({ top: 0 });
-    document.getElementById('h-' + state.step).setAttribute('tabindex', '-1');
-    document.getElementById('h-' + state.step).focus({ preventScroll: true });
+    var h = document.getElementById('h-' + state.step);
+    h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true });
   }
   document.getElementById('prev').addEventListener('click', function () { go(state.step - 1); });
   document.getElementById('next').addEventListener('click', function () { go(state.step + 1); });
 
   function addXp(n) { state.xp += n; document.getElementById('xp').textContent = '+' + state.xp + ' XP'; }
 
-  // ---- Variante US / UK ----
+  // ---- Variante ----
   function setVariant(v) {
     state.variant = v;
-    try { localStorage.setItem('lb-variant-en', v); } catch (e) {}
+    try { localStorage.setItem(CLE_VARIANTE, v); } catch (e) {}
     document.querySelectorAll('[data-variant]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.variant === v); });
     if (synth) synth.cancel(); playing = false; document.getElementById('play-all').textContent = '▶ Écouter tout';
     pop.hidden = true;
-    renderTranscript(); renderVocab(); resetOrder(); renderShadow(); updateRoleplayLink();
+    renderTranscript(); renderVocab(); renderGramEx(); renderGaps(); resetOrder(); renderShadow(); updateRoleplayLink(); updateTtsNote();
   }
-  document.querySelectorAll('[data-variant]').forEach(function (b) { b.addEventListener('click', function () { setVariant(b.dataset.variant); }); });
 
   // ---- Thème ----
   document.getElementById('theme-toggle').addEventListener('click', function () {
@@ -966,8 +868,10 @@
     try { localStorage.setItem('lb-theme', root.dataset.theme); } catch (e) {}
   });
 
-  if (synth && synth.onvoiceschanged !== undefined) synth.onvoiceschanged = function () {};
-  renderGaps(); setVariant(state.variant); renderQuiz(); renderCulture(); renderFinal(); renderSteps(); go(1);
+  setVariant(state.variant);
+  renderQuestions('quiz', L.comprehension, false);
+  renderQuestions('culture-quiz', L.cultureQuiz, false);
+  renderFinal(); renderSteps(); go(1);
   document.getElementById('h-1').removeAttribute('tabindex');
 })();
 </script>

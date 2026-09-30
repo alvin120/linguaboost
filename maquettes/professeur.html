@@ -205,23 +205,48 @@
     var typing = el('p', { class: 'typing' }, PROFS[state.prof].nom + ' écrit…');
     $('thread').appendChild(typing); typing.scrollIntoView({ block: 'end' });
     var body = Object.assign({}, state.session, { messages: state.history });
-    fetch('/api/professeur', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
-      .then(function (r) { return r.json().catch(function () { return { erreur: 'Réponse du serveur illisible (code ' + r.status + ').' }; }); })
+    // Au-delà de 90 s, on abandonne plutôt que de laisser « … écrit » sans fin.
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var minuteur = ctrl && setTimeout(function () { ctrl.abort(); }, 90000);
+    fetch('/api/professeur', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: ctrl && ctrl.signal })
+      .then(function (r) {
+        return r.json().catch(function () {
+          if (r.status === 404 || r.status === 405 || r.status === 501) {
+            return { erreur: "Cette page n'est pas servie par le serveur du projet, donc le professeur IA n'est pas joignable. Utilise le site en ligne (linguaboost-prototype.vercel.app) ou lance « npm run dev » puis ouvre http://localhost:3000/maquettes/professeur.html.", fatale: true };
+          }
+          return { erreur: 'Réponse du serveur illisible (code ' + r.status + ').' };
+        });
+      })
       .then(function (res) {
-        typing.remove();
-        if (res.erreur || !res.donnees) {
-          state.history.pop(); // on retire le message non traité pour pouvoir le renvoyer
-          return afficherErreur(res.erreur || 'Erreur inconnue.');
-        }
+        if (res.erreur || !res.donnees) return echec(res.erreur || 'Erreur inconnue.', res.fatale);
         state.history.push({ role: 'assistant', content: res.brut });
         afficherReponse(res.donnees);
       })
-      .catch(function () { typing.remove(); state.history.pop(); afficherErreur('Impossible de joindre le serveur. Vérifie ta connexion.'); })
-      .then(function () { state.busy = false; $('send').disabled = false; $('input').focus(); });
+      .catch(function (err) {
+        echec(err && err.name === 'AbortError'
+          ? PROFS[state.prof].nom + " met trop de temps à répondre. Réessaie, ou envoie une demande plus courte."
+          : 'Impossible de joindre le serveur. Vérifie ta connexion internet.');
+      })
+      .then(function () { clearTimeout(minuteur); typing.remove(); state.busy = false; $('send').disabled = false; $('input').focus(); });
   }
 
-  function afficherErreur(msg) {
-    var e = el('p', { class: 'error', role: 'alert' }, '⚠️ ' + msg);
+  // Le message non traité est mis de côté : le bouton « Réessayer » le renvoie tel quel.
+  function echec(msg, fatale) {
+    var enAttente = state.history.pop();
+    afficherErreur(msg, fatale ? null : function () {
+      state.history.push(enAttente);
+      envoyer();
+    });
+  }
+
+  function afficherErreur(msg, reessayer) {
+    var e = el('div', { class: 'error', role: 'alert' });
+    e.appendChild(document.createTextNode('⚠️ ' + msg + ' '));
+    if (reessayer) {
+      var b = el('button', { class: 'btn btn-ghost btn-sm', type: 'button', style: 'margin-top:8px;' }, '↻ Réessayer');
+      b.addEventListener('click', function () { if (state.busy) return; e.remove(); reessayer(); });
+      e.appendChild(b);
+    }
     $('thread').appendChild(e); e.scrollIntoView({ block: 'end' });
   }
 
@@ -328,15 +353,27 @@
   });
 
   // ---- Voix (navigateur) ----
+  // Voix exacte (pt-PT), sinon une voix de la même langue (pt-BR) : beaucoup d'appareils n'ont pas toutes les variantes.
+  function voixPour(lang) {
+    var norm = function (v) { return v.lang.replace('_', '-').toLowerCase(); }, toutes = speechSynthesis.getVoices();
+    return toutes.filter(function (v) { return norm(v) === lang.toLowerCase(); })[0] ||
+      toutes.filter(function (v) { return norm(v).split('-')[0] === lang.split('-')[0].toLowerCase(); })[0] || null;
+  }
+  var avertiVoix = false;
   function parler(texte) {
     if (!window.speechSynthesis) return;
     speechSynthesis.cancel();
     var u = new SpeechSynthesisUtterance(texte);
     u.lang = variantInfo()[2];
-    var voix = speechSynthesis.getVoices().filter(function (v) { return v.lang.replace('_', '-') === u.lang; })[0];
+    var voix = voixPour(u.lang);
     if (voix) u.voice = voix;
+    else if (speechSynthesis.getVoices().length && !avertiVoix) {
+      avertiVoix = true;
+      afficherErreur("Aucune voix en " + PROFS[state.prof].langue.toLowerCase() + " n'est installée sur cet appareil : la lecture risque d'être muette ou avec un mauvais accent. Utilise Chrome ou Edge (voix en ligne incluses), ou ajoute une voix dans Windows : Paramètres → Heure et langue → Voix.");
+    }
     speechSynthesis.speak(u);
   }
+  if (window.speechSynthesis) speechSynthesis.getVoices(); // lance le chargement des voix
   var Reco = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (Reco) {
     var reco = null;
@@ -351,7 +388,14 @@
         $('input').value = (base ? base + ' ' : '') + t;
       };
       reco.onend = function () { reco = null; $('mic').setAttribute('aria-pressed', 'false'); };
-      reco.onerror = function () { afficherErreur("Micro indisponible (autorise l'accès au micro dans le navigateur)."); };
+      reco.onerror = function (ev) {
+        if (ev.error === 'no-speech' || ev.error === 'aborted') return;
+        afficherErreur(ev.error === 'not-allowed' || ev.error === 'service-not-allowed'
+          ? "Micro refusé : autorise l'accès au micro (icône à gauche de l'adresse du site), puis réessaie."
+          : ev.error === 'language-not-supported'
+            ? 'La dictée dans cette langue n\'est pas prise en charge par ce navigateur. Essaie avec Chrome ou Edge.'
+            : 'Micro indisponible (' + ev.error + '). Essaie avec Chrome ou Edge.');
+      };
       $('mic').setAttribute('aria-pressed', 'true');
       reco.start();
     });

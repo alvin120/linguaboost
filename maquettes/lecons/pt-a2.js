@@ -1,6 +1,10 @@
 // Lição A2 « À l'hôtel » — portugais (variantes Brésil / Portugal).
 window.LECONS = window.LECONS || {};
-window.LECONS.pt = {
+window.LECONS['pt-A2'] = {
+  niveau: 'A2', theme: "À l'hôtel", etape1: "Camille arrive à son hôtel",
+  intro: "Camille arrive le soir à son hôtel, à {ville}.",
+  indiceOrdre: "le réceptionniste accueille Camille, puis Camille donne son nom.",
+  badge: { nom: 'Check-in', icone: '🛎️' },
   lang: 'pt', langue: 'portugais', prof: 'rafael', profNom: 'Rafael', profInitiale: 'R',
   titre: 'Unidade 3 · No hotel',
   variantes: [

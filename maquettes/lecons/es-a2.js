@@ -1,6 +1,10 @@
 // Lección A2 « À l'hôtel » — espagnol (variantes Espagne / Amérique latine, ici le Mexique).
 window.LECONS = window.LECONS || {};
-window.LECONS.es = {
+window.LECONS['es-A2'] = {
+  niveau: 'A2', theme: "À l'hôtel", etape1: "Camille arrive à son hôtel",
+  intro: "Camille arrive le soir à son hôtel, à {ville}.",
+  indiceOrdre: "la réceptionniste accueille Camille, puis Camille donne son nom.",
+  badge: { nom: 'Check-in', icone: '🛎️' },
   lang: 'es', langue: 'espagnol', prof: 'lucia', profNom: 'Lucía', profInitiale: 'L',
   titre: 'Unidad 3 · En el hotel',
   variantes: [

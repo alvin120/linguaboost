@@ -57,6 +57,11 @@
   .chip[aria-pressed="true"] { background: var(--ok-soft); border-color: var(--ok); }
   .table-scroll { overflow-x: auto; }
   .typing { align-self: flex-start; color: var(--muted); font-style: italic; }
+  .notice { align-self: center; font-size: 13px; font-weight: 600; color: var(--muted); background: var(--surface-2); padding: 4px 12px; border-radius: 999px; margin: 0; }
+  .niveaux { display: flex; gap: 4px; }
+  .niveaux .btn { padding: 6px 10px; }
+  .hide-sm { display: none; }
+  @media (min-width: 640px) { .hide-sm { display: inline; } }
   .error { align-self: stretch; background: var(--err-soft); padding: 12px 14px; border-radius: var(--radius-sm); font-size: 14px; }
   .estimate { background: var(--warn-soft); padding: 10px 12px; border-radius: var(--radius-sm); font-size: 14px; }
 
@@ -76,6 +81,10 @@
     <div class="who">
       <span class="avatar" id="top-avatar" aria-hidden="true">E</span>
       <div style="min-width:0;"><strong id="top-name">Professeur IA</strong><small id="top-info">Choisis ton professeur</small></div>
+    </div>
+    <div class="niveaux" id="niveaux" role="group" aria-label="Changer de niveau" hidden>
+      <button class="btn btn-ghost btn-sm" id="lvl-down" type="button" title="Plus facile" aria-label="Plus facile (niveau inférieur)">−<span class="hide-sm"> Facile</span></button>
+      <button class="btn btn-ghost btn-sm" id="lvl-up" type="button" title="Plus difficile" aria-label="Plus difficile (niveau supérieur)">+<span class="hide-sm"> Difficile</span></button>
     </div>
     <button class="btn btn-ghost btn-sm" id="end" type="button" hidden>Terminer</button>
     <button class="icon-btn" id="theme-toggle" type="button" aria-label="Basculer le mode sombre">🌓</button>
@@ -167,17 +176,23 @@
   }
   document.querySelectorAll('.prof-opt').forEach(function (b) { b.addEventListener('click', function () { selectProf(b.dataset.prof); }); });
 
-  // Réglages pré-remplis par un lien (?prof=lucia&mode=jeu_de_role&niveau=B1&variante=LATAM&sujet=…)
-  var params = new URLSearchParams(location.search);
-  selectProf(PROFS[params.get('prof')] ? params.get('prof') : 'emma');
+  // Réglages pré-remplis par un lien (?prof=lucia&mode=jeu_de_role&niveau=B1&variante=LATAM&sujet=…),
+  // sinon par « Mon parcours » (parcours.html).
+  var params = new URLSearchParams(location.search), parcours = null;
+  try { parcours = JSON.parse(localStorage.getItem('lb-parcours')); } catch (e) {}
+  var PROF_DE_LANGUE = { en: 'emma', es: 'lucia', pt: 'rafael' };
+  selectProf(PROFS[params.get('prof')] ? params.get('prof') : (parcours && PROF_DE_LANGUE[parcours.langue]) || 'emma');
+  var memeLangue = parcours && PROF_DE_LANGUE[parcours.langue] === state.prof;
   function preRemplir(id, valeur) {
     var sel = $(id);
     if (valeur && Array.prototype.some.call(sel.options, function (o) { return (o.value || o.textContent) === valeur; })) sel.value = valeur;
   }
-  preRemplir('f-variante', params.get('variante'));
-  preRemplir('f-niveau', params.get('niveau'));
+  preRemplir('f-variante', params.get('variante') || (memeLangue && parcours.variante));
+  preRemplir('f-niveau', params.get('niveau') || (memeLangue && parcours.niveau));
   preRemplir('f-mode', params.get('mode'));
-  preRemplir('f-objectif', params.get('objectif'));
+  preRemplir('f-objectif', params.get('objectif') || (parcours && parcours.objectif));
+  $('f-prenom').value = (params.get('prenom') || (parcours && parcours.prenom) || '').slice(0, 40);
+  $('f-interets').value = (params.get('interets') || (parcours && parcours.interets) || '').slice(0, 200);
   var sujet = (params.get('sujet') || '').slice(0, 300);
   if (sujet) OUVERTURE = OUVERTURE.replace(/\]$/, ' Situation demandée : ' + sujet + ']');
 
@@ -188,13 +203,33 @@
       prenom: $('f-prenom').value.trim(), interets: $('f-interets').value.trim()
     };
     $('autospeak').checked = state.session.canal === 'vocal';
-    var p = PROFS[state.prof], v = variantInfo();
-    $('top-name').textContent = p.nom;
-    $('top-info').textContent = p.langue + ' · ' + v[1] + ' · ' + state.session.niveau + ' · ' + MODES[state.session.mode];
-    $('setup').hidden = true; $('chat').classList.add('on'); $('end').hidden = false;
+    $('top-name').textContent = PROFS[state.prof].nom;
+    majInfo();
+    $('setup').hidden = true; $('chat').classList.add('on'); $('end').hidden = false; $('niveaux').hidden = false;
     state.history = [{ role: 'user', content: OUVERTURE }];
     envoyer();
   });
+  function majInfo() {
+    var p = PROFS[state.prof], v = variantInfo(), i = NIVEAUX.indexOf(state.session.niveau);
+    $('top-info').textContent = p.langue + ' · ' + v[1] + ' · ' + state.session.niveau + ' · ' + MODES[state.session.mode];
+    $('lvl-down').disabled = i <= 0; $('lvl-up').disabled = i >= NIVEAUX.length - 1;
+  }
+
+  // ---- Changer de niveau pendant la séance ----
+  var NIVEAUX = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+  function changerNiveau(sens) {
+    if (state.busy || !state.session) return;
+    var i = NIVEAUX.indexOf(state.session.niveau) + sens;
+    if (i < 0 || i >= NIVEAUX.length) return;
+    state.session.niveau = NIVEAUX[i];
+    majInfo();
+    var avis = el('p', { class: 'notice', role: 'status' }, (sens > 0 ? '⬆️ Plus difficile : ' : '⬇️ Plus facile : ') + 'niveau ' + NIVEAUX[i] + '.');
+    $('thread').appendChild(avis);
+    state.history.push({ role: 'user', content: '[Réglage de la séance : je passe au niveau ' + NIVEAUX[i] + '. Adapte ta façon de parler, tes explications et tes exercices à ce niveau à partir de maintenant, dis-le-moi en une phrase, puis continue l\'activité.]' });
+    envoyer();
+  }
+  $('lvl-down').addEventListener('click', function () { changerNiveau(-1); });
+  $('lvl-up').addEventListener('click', function () { changerNiveau(1); });
 
   // ---- Échanges ----
   function envoyer() {

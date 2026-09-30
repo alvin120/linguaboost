@@ -121,6 +121,8 @@
   .gap-ex { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 17px; }
 
   /* Pratique, production, bilan */
+  .level-select { min-height: 36px; padding: 4px 8px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface-2); font-weight: 700; font-size: 14px; cursor: pointer; }
+  .custom-note { background: var(--warn-soft); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 14px; margin-bottom: 16px; }
   .g-h3 { margin-top: 24px; font-size: 18px; }
   .ex-title { font-size: 18px; margin-bottom: 8px; }
   .ex-help { font-size: 14px; }
@@ -167,9 +169,11 @@
     <a class="icon-btn" href="accueil.html" aria-label="Quitter la leçon et revenir à l'accueil">✕</a>
     <div class="lesson-title">
       <strong id="lesson-title"></strong>
-      <small><span class="pill" style="padding:1px 8px;font-size:12px;">A2</span> Voyage · À l'hôtel · ≈ 25 min au total</small>
+      <small><span class="pill" style="padding:1px 8px;font-size:12px;" id="lvl-pill"></span> <span id="lesson-theme"></span> · ≈ 25 min au total</small>
     </div>
     <div class="top-actions">
+      <label class="sr-only" for="level-select">Niveau de la leçon</label>
+      <select id="level-select" class="level-select" title="Changer de niveau"></select>
       <div class="segmented" role="group" id="variants" aria-label="Variante"></div>
       <button class="icon-btn hide-mobile" id="theme-toggle" type="button" aria-label="Basculer le mode sombre">🌓</button>
     </div>
@@ -186,8 +190,8 @@
     <!-- 1. DÉCOUVERTE -->
     <section class="panel active" id="step-1" aria-labelledby="h-1">
       <p class="eyebrow">Étape 1 · Découverte</p>
-      <h2 id="h-1">Camille arrive à son hôtel</h2>
-      <p class="intro">Camille arrive le soir à son hôtel, à <span data-v="city"></span>. Écoutez d'abord sans lire, puis une deuxième fois avec la transcription. Touchez un mot souligné pour voir sa traduction.</p>
+      <h2 id="h-1"></h2>
+      <p class="intro"><span id="intro-1"></span> Écoutez d'abord sans lire, puis une deuxième fois avec la transcription. Touchez un mot souligné pour voir sa traduction.</p>
 
       <div class="card block">
         <div class="player">
@@ -219,7 +223,7 @@
     <!-- 3. VOCABULAIRE -->
     <section class="panel" id="step-3" aria-labelledby="h-3">
       <p class="eyebrow">Étape 3 · Vocabulaire</p>
-      <h2 id="h-3">12 expressions pour l'hôtel</h2>
+      <h2 id="h-3"></h2>
       <p class="intro">Touchez ＋ pour ajouter une expression à vos révisions. Les expressions ratées au bilan y sont ajoutées automatiquement.</p>
       <ul class="vocab" id="vocab"></ul>
     </section>
@@ -311,7 +315,7 @@
     <section class="panel" id="step-8" aria-labelledby="h-8">
       <p class="eyebrow">Étape 8 · Bilan</p>
       <h2 id="h-8">Mini-quiz de fin de leçon</h2>
-      <p class="intro">8 questions. Les expressions ratées sont ajoutées à vos révisions. 6 bonnes réponses ou plus : badge « Check-in » !</p>
+      <p class="intro" id="bilan-intro"></p>
       <div class="card block" id="final-quiz"></div>
       <div class="card block result" id="final-result" hidden></div>
     </section>
@@ -335,6 +339,11 @@
       <h3>💬 Une question ?</h3>
       <p style="font-size:14px;" id="ask-text"></p>
       <a class="btn btn-ghost btn-sm" id="ask-link" href="professeur.html">Ouvrir le chat</a>
+    </div>
+    <div class="card aside-card">
+      <h3>✏️ Personnaliser</h3>
+      <p style="font-size:14px;" id="edit-text">Modifiez le dialogue, le vocabulaire ou les questions de cette leçon.</p>
+      <div class="ex-actions" style="margin:0;"><a class="btn btn-ghost btn-sm" id="edit-link" href="editeur.html">Modifier la leçon</a><button class="btn btn-ghost btn-sm" id="edit-reset" type="button" hidden>Revenir à l'original</button></div>
     </div>
     <div class="card aside-card">
       <h3>🌍 Autres langues</h3>
@@ -363,17 +372,46 @@
   </div>
 </div>
 
-<script src="lecons/en.js"></script>
-<script src="lecons/es.js"></script>
-<script src="lecons/pt.js"></script>
+<script src="lecons/en-a1.js"></script>
+<script src="lecons/en-a2.js"></script>
+<script src="lecons/en-b1.js"></script>
+<script src="lecons/es-a1.js"></script>
+<script src="lecons/es-a2.js"></script>
+<script src="lecons/es-b1.js"></script>
+<script src="lecons/pt-a1.js"></script>
+<script src="lecons/pt-a2.js"></script>
+<script src="lecons/pt-b1.js"></script>
 <script>
 (function () {
-  // ---- Leçon choisie : lecon.html?langue=en|es|pt ----
-  var LANGUE = new URLSearchParams(location.search).get('langue');
-  if (!window.LECONS[LANGUE]) LANGUE = 'en';
-  var L = window.LECONS[LANGUE];
+  // ---- Leçon choisie : lecon.html?langue=en|es|pt&niveau=A1|A2|B1 ----
+  // Sans paramètre, on suit « Mon parcours » (parcours.html), sinon anglais A2.
   var NOMS = { en: 'Anglais', es: 'Espagnol', pt: 'Portugais' };
+  var ORDRE = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+  var params = new URLSearchParams(location.search), parcours = null;
+  try { parcours = JSON.parse(localStorage.getItem('lb-parcours')); } catch (e) {}
+  var LANGUE = params.get('langue') || (parcours && parcours.langue);
+  if (!NOMS[LANGUE]) LANGUE = 'en';
+  function niveauxDispo(lg) { return ORDRE.filter(function (n) { return window.LECONS[lg + '-' + n]; }); }
+  // Niveau demandé, ramené au niveau disponible le plus proche (B2 → B1…).
+  function niveauLecon(lg, voulu) {
+    var dispo = niveauxDispo(lg), i = ORDRE.indexOf(voulu);
+    if (i < 0) return dispo.indexOf('A2') !== -1 ? 'A2' : dispo[0];
+    for (var k = i; k >= 0; k--) if (dispo.indexOf(ORDRE[k]) !== -1) return ORDRE[k];
+    return dispo[0];
+  }
+  var NIVEAU = niveauLecon(LANGUE, params.get('niveau') || (parcours && parcours.langue === LANGUE ? parcours.niveau : 'A2'));
+  var ID = LANGUE + '-' + NIVEAU;
+  var L = window.LECONS[ID];
   document.documentElement.dataset.lang = LANGUE;
+
+  // Modifications faites dans l'éditeur (editeur.html), enregistrées dans ce navigateur.
+  var CLE_PERSO = 'lb-lecon-perso-' + ID, perso = null;
+  try { perso = JSON.parse(localStorage.getItem(CLE_PERSO)); } catch (e) {}
+  if (perso && typeof perso === 'object') {
+    ['titre', 'theme', 'etape1', 'intro', 'conseil', 'dialogue', 'vocabulaire', 'comprehension', 'bilan'].forEach(function (k) {
+      if (perso[k] != null) L[k] = perso[k];
+    });
+  } else perso = null;
 
   var dialogue = L.dialogue, glossary = L.glossaire, vocab = L.vocabulaire;
   var steps = ['Découverte', 'Compréhension', 'Vocabulaire', 'Grammaire', 'Pratique', 'Production', 'Culture', 'Bilan'];
@@ -406,9 +444,32 @@
   }
 
   // ---- Textes fixes de la leçon ----
-  document.title = L.titre + ' — Leçon A2';
+  document.title = L.titre + ' — Leçon ' + NIVEAU;
   document.getElementById('lesson-title').textContent = L.titre;
-  document.getElementById('banner').textContent = "Version de démonstration : leçon d'" + L.langue + ' A2.';
+  document.getElementById('lvl-pill').textContent = NIVEAU;
+  document.getElementById('lesson-theme').textContent = L.theme;
+  document.getElementById('banner').textContent = "Version de démonstration : leçon d'" + L.langue + ' ' + NIVEAU + '.';
+  document.getElementById('h-1').textContent = L.etape1;
+  document.getElementById('h-3').textContent = L.vocabulaire.length + ' expressions · ' + L.theme.toLowerCase();
+  var seuil = Math.ceil(L.bilan.length * 0.75);
+  document.getElementById('bilan-intro').textContent = L.bilan.length + ' questions. Les expressions ratées sont ajoutées à vos révisions. ' + seuil + ' bonnes réponses ou plus : badge « ' + L.badge.nom + ' » !';
+  // Sélecteur de niveau : change de leçon en gardant la langue.
+  var selNiv = document.getElementById('level-select');
+  niveauxDispo(LANGUE).forEach(function (n) {
+    var o = el('option', { value: n }, 'Niveau ' + n); if (n === NIVEAU) o.selected = true; selNiv.appendChild(o);
+  });
+  selNiv.addEventListener('change', function () { location.href = 'lecon.html?langue=' + LANGUE + '&niveau=' + selNiv.value; });
+  // Lien vers l'éditeur, et retour à l'original si la leçon a été modifiée.
+  document.getElementById('edit-link').href = 'editeur.html?lecon=' + ID;
+  if (perso) {
+    document.getElementById('edit-text').textContent = 'Vous avez modifié cette leçon (dans ce navigateur).';
+    var reset = document.getElementById('edit-reset'); reset.hidden = false;
+    reset.addEventListener('click', function () {
+      if (!confirm('Supprimer vos modifications et revenir à la leçon d\'origine ?')) return;
+      try { localStorage.removeItem(CLE_PERSO); } catch (e) {}
+      location.reload();
+    });
+  }
   document.getElementById('variants').setAttribute('aria-label', "Variante d'" + L.langue);
   L.variantes.forEach(function (v) {
     var b = el('button', { type: 'button', 'data-variant': v.k, 'aria-pressed': 'false' }, v.label);
@@ -429,18 +490,20 @@
   document.getElementById('roleplay-title').textContent = '🎭 Jeu de rôle avec ' + L.profNom;
   document.getElementById('roleplay-text').textContent = L.jeuDeRole.texte;
   document.getElementById('write-consigne').innerHTML = L.redaction.consigne;
-  var write = document.getElementById('write'); write.lang = L.lang; write.placeholder = L.redaction.placeholder;
+  var write = document.getElementById('write'); write.lang = L.lang;
   document.getElementById('h-7').textContent = L.cultureTitre;
   document.getElementById('culture').innerHTML = L.culture;
   document.getElementById('tip-avatar').textContent = L.profInitiale;
   document.getElementById('tip-title').textContent = 'Le conseil de ' + L.profNom;
-  document.getElementById('tip-text').innerHTML = L.conseil;
+  // Un texte modifié dans l'éditeur est affiché tel quel (jamais interprété comme du HTML).
+  if (perso && perso.conseil != null) document.getElementById('tip-text').textContent = L.conseil;
+  else document.getElementById('tip-text').innerHTML = L.conseil;
   document.getElementById('ask-text').textContent = 'Demandez à ' + L.profNom + " d'expliquer une phrase du dialogue.";
-  document.getElementById('ask-link').href = 'professeur.html?prof=' + L.prof + '&niveau=A2';
+  document.getElementById('ask-link').href = 'professeur.html?prof=' + L.prof + '&niveau=' + NIVEAU;
   ['order-picked', 'order-pool', 'gaps', 'gram-ex', 'pop-word'].forEach(function (id) { document.getElementById(id).lang = L.lang; });
-  Object.keys(window.LECONS).forEach(function (k) {
-    if (k === LANGUE) return;
-    document.getElementById('other-langs').appendChild(el('a', { class: 'btn btn-ghost btn-sm', href: 'lecon.html?langue=' + k }, NOMS[k]));
+  Object.keys(NOMS).forEach(function (k) {
+    if (k === LANGUE || !niveauxDispo(k).length) return;
+    document.getElementById('other-langs').appendChild(el('a', { class: 'btn btn-ghost btn-sm', href: 'lecon.html?langue=' + k + '&niveau=' + NIVEAU }, NOMS[k]));
   });
 
   // ---- Synthèse vocale (voix du navigateur) ----
@@ -499,7 +562,7 @@
       row.appendChild(who); row.appendChild(text);
       box.appendChild(row);
     });
-    document.querySelector('[data-v="city"]').textContent = pick(L.ville);
+    document.getElementById('intro-1').textContent = L.intro.split('{ville}').join(pick(L.ville) || '');
   }
 
   document.getElementById('toggle-fr').addEventListener('change', function (e) {
@@ -535,7 +598,7 @@
   document.getElementById('transcript').addEventListener('click', function (e) {
     var b = e.target.closest('.word'); if (!b) return;
     var g = glossary[b.dataset.key];
-    currentWord = { en: pick(g.word), save: g.v != null ? pick(vocab[g.v].en) : pick(g.word) };
+    currentWord = { en: pick(g.word), save: g.v != null && vocab[g.v] ? pick(vocab[g.v].en) : pick(g.word) };
     document.getElementById('pop-word').textContent = pick(g.word);
     document.getElementById('pop-ipa').textContent = (g.ipa ? pick(g.ipa) + ' · ' : '') + variante().label;
     document.getElementById('pop-tr').textContent = pick(g.tr);
@@ -674,7 +737,7 @@
       if (!orderXp) { orderXp = true; addXp(10); }
     } else {
       fb.className = 'feedback ko';
-      fb.textContent = '❌ ' + bad + ' réplique' + (bad > 1 ? 's sont mal placées' : ' est mal placée') + '. Indice : la réceptionniste accueille Camille, puis Camille donne son nom.';
+      fb.textContent = '❌ ' + bad + ' réplique' + (bad > 1 ? 's sont mal placées' : ' est mal placée') + '. Indice : ' + L.indiceOrdre;
     }
   });
 
@@ -777,7 +840,7 @@
 
   // ---- Étape 6 : production ----
   function updateRoleplayLink() {
-    var q = 'prof=' + L.prof + '&mode=jeu_de_role&niveau=A2&objectif=voyage&variante=' + variante().code + '&sujet=' + encodeURIComponent(L.jeuDeRole.sujet);
+    var q = 'prof=' + L.prof + '&mode=jeu_de_role&niveau=' + NIVEAU + '&objectif=voyage&variante=' + variante().code + '&sujet=' + encodeURIComponent(L.jeuDeRole.sujet);
     document.getElementById('roleplay-link').href = 'professeur.html?' + q;
   }
   var writeXp = false;
@@ -805,9 +868,9 @@
     renderQuestions('final-quiz', L.bilan, true, function (good, missed) {
       missed.forEach(addSaved);
       var box = document.getElementById('final-result'); box.innerHTML = ''; box.hidden = false;
-      var passed = good >= 6;
-      if (passed) box.appendChild(el('div', { class: 'badge', 'aria-hidden': 'true' }, '🛎️'));
-      box.appendChild(el('h3', null, passed ? 'Badge « Check-in » débloqué !' : 'Leçon terminée'));
+      var passed = good >= seuil;
+      if (passed) box.appendChild(el('div', { class: 'badge', 'aria-hidden': 'true' }, L.badge.icone));
+      box.appendChild(el('h3', null, passed ? 'Badge « ' + L.badge.nom + ' » débloqué !' : 'Leçon terminée'));
       box.appendChild(el('p', null, 'Score : ' + good + ' / ' + L.bilan.length + ' · ' + state.xp + ' XP gagnés dans cette leçon.'));
       box.appendChild(el('p', { class: 'muted' }, missed.length ? missed.length + ' expression(s) ajoutée(s) à vos révisions (colonne de droite).' : 'Aucune erreur : rien à ajouter aux révisions.'));
       var act = el('div', { class: 'ex-actions', style: 'justify-content:center;' });
@@ -857,6 +920,7 @@
     document.querySelectorAll('[data-variant]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.variant === v); });
     if (synth) synth.cancel(); playing = false; document.getElementById('play-all').textContent = '▶ Écouter tout';
     pop.hidden = true;
+    write.placeholder = pick(L.redaction.placeholder);
     renderTranscript(); renderVocab(); renderGramEx(); renderGaps(); resetOrder(); renderShadow(); updateRoleplayLink(); updateTtsNote();
   }
 
@@ -869,8 +933,8 @@
   });
 
   setVariant(state.variant);
-  renderQuestions('quiz', L.comprehension, false);
-  renderQuestions('culture-quiz', L.cultureQuiz, false);
+  renderQuestions('quiz', L.comprehension, true);
+  renderQuestions('culture-quiz', L.cultureQuiz, true);
   renderFinal(); renderSteps(); go(1);
   document.getElementById('h-1').removeAttribute('tabindex');
 })();

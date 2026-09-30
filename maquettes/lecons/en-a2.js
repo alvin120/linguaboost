@@ -1,7 +1,11 @@
 // Leçon A2 « À l'hôtel » — anglais (variantes US / UK).
 // Un objet {us:…, uk:…} donne le texte propre à chaque variante ; une simple chaîne vaut pour les deux.
 window.LECONS = window.LECONS || {};
-window.LECONS.en = {
+window.LECONS['en-A2'] = {
+  niveau: 'A2', theme: "À l'hôtel", etape1: "Camille arrive à son hôtel",
+  intro: "Camille arrive le soir à son hôtel, à {ville}.",
+  indiceOrdre: "la réceptionniste accueille Camille, puis Camille donne son nom.",
+  badge: { nom: 'Check-in', icone: '🛎️' },
   lang: 'en', langue: 'anglais', prof: 'emma', profNom: 'Emma', profInitiale: 'E',
   titre: 'Unit 3 · At the hotel',
   variantes: [

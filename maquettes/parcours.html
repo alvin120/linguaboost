@@ -119,8 +119,8 @@
     C1: 'Autonome : vous vous exprimez avec précision, y compris au travail ou dans les études.',
     C2: 'Maîtrise : vous comprenez presque tout et nuancez comme un natif.'
   };
-  var LECONS = ['A1', 'A2', 'B1']; // niveaux qui ont déjà une leçon
-  var THEMES = { A1: 'Au café', A2: 'À l\'hôtel', B1: 'Réclamation à l\'hôtel' };
+  var LECONS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']; // niveaux qui ont une leçon
+  var THEMES = { A1: 'Au café', A2: 'À l\'hôtel', B1: 'Réclamation à l\'hôtel', B2: 'Entretien d\'embauche', C1: 'Négociation commerciale', C2: 'Débat : le surtourisme' };
   var $ = function (id) { return document.getElementById(id); };
   function el(tag, attrs, text) {
     var n = document.createElement(tag);
@@ -159,7 +159,7 @@
   }
   function renderLevels() {
     var box = $('levels'); box.innerHTML = '';
-    Object.keys(NIVEAUX).forEach(function (n) { box.appendChild(radio('niveau', n, n, LECONS.indexOf(n) !== -1 ? 'leçon' : 'prof IA', n === p.niveau)); });
+    Object.keys(NIVEAUX).forEach(function (n) { box.appendChild(radio('niveau', n, n, 'leçon + prof', n === p.niveau)); });
     $('level-desc').textContent = NIVEAUX[p.niveau];
     // Résultat du test de niveau pour cette langue, s'il existe.
     var t = lire('lb-niveau-' + p.langue), s = $('suggest'); s.innerHTML = '';

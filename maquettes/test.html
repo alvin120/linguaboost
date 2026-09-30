@@ -239,7 +239,7 @@
 
     var niveauProf = niveau === 'Pré-A1' ? 'A1' : niveau;
     var actions = el('div', { class: 'actions' });
-    var nivLecon = ['A1', 'A2', 'B1'].indexOf(niveauProf) !== -1 ? niveauProf : 'B1';
+    var nivLecon = niveauProf;
     actions.appendChild(el('a', { class: 'btn btn-primary', href: 'lecon.html?langue=' + state.key + '&niveau=' + nivLecon }, 'Essayer la leçon ' + nivLecon));
     actions.appendChild(el('a', { class: 'btn btn-ghost', href: 'professeur.html?prof=' + t.prof + '&niveau=' + niveauProf }, 'Parler avec ' + { emma: 'Emma', lucia: 'Lucía', rafael: 'Rafael' }[t.prof] + ' (niveau ' + niveauProf + ')'));
     actions.appendChild(el('a', { class: 'btn btn-ghost', href: 'parcours.html?langue=' + state.key + '&niveau=' + niveauProf }, 'Enregistrer dans mon parcours'));

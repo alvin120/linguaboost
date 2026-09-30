@@ -21,8 +21,19 @@ const { default: professeur } = await import('./api/professeur.js');
 const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.md': 'text/plain; charset=utf-8' };
 const PORT = Number(process.env.PORT) || 3000;
 
+// En-têtes de sécurité de vercel.json, appliqués aussi en local (sauf HSTS et upgrade-insecure-requests, réservés au HTTPS).
+const regles = (JSON.parse(fs.readFileSync(path.join(racine, 'vercel.json'), 'utf8')).headers || [])
+  .map((r) => ({ re: new RegExp('^' + r.source.replace(/\(\.\*\)/g, '.*') + '$'), headers: r.headers }));
+function enTetes(res, chemin) {
+  for (const r of regles) if (r.re.test(chemin)) for (const h of r.headers) {
+    if (h.key === 'Strict-Transport-Security') continue;
+    res.setHeader(h.key, h.key === 'Content-Security-Policy' ? h.value.replace(/;\s*upgrade-insecure-requests/, '') : h.value);
+  }
+}
+
 http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
+  enTetes(res, url.pathname);
 
   if (url.pathname === '/api/professeur') {
     let corps = '';

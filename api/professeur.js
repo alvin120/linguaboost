@@ -8,9 +8,14 @@ const MAX_MESSAGES = 40;        // historique renvoyé par le client
 const MAX_CARACTERES = 4000;    // par message (un texte à corriger peut être long)
 const MAX_CHAMP = 300;          // champs du profil
 
+// La clé peut aussi s'appeler LANGUE1 (nom donné dans les réglages Vercel).
+function cleApi() {
+  return (process.env.ANTHROPIC_API_KEY || process.env.LANGUE1 || '').trim();
+}
+
 let client;
 function getClient() {
-  if (!client) client = new Anthropic();
+  if (!client) client = new Anthropic({ apiKey: cleApi() });
   return client;
 }
 
@@ -52,7 +57,7 @@ export default async function handler(req, res) {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ erreur: 'Méthode non autorisée.' });
   }
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!cleApi()) {
     return res.status(500).json({ erreur: 'Clé ANTHROPIC_API_KEY absente côté serveur. Ajoutez-la dans les variables d\'environnement (Vercel ou fichier .env local).' });
   }
 

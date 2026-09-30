@@ -3,3 +3,8 @@ dev-server.mjs
 .env
 .env.example
 node_modules
+index.html
+linguaboost.html
+linguaboost.css
+linguaboost.js
+LIRE MOI.txt

@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test de niveau — LinguaBoost</title>
+<meta name="description" content="Test de niveau gratuit en anglais, espagnol ou portugais : 15 questions, niveau CECRL indicatif de A1 à C1.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%2210%22 fill=%22%236D28D9%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-family=%22Arial%22 font-weight=%22700%22 font-size=%2220%22 fill=%22white%22 text-anchor=%22middle%22%3EL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<script>try{var t=localStorage.getItem('lb-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<style>
+  .topbar { position: sticky; top: 0; z-index: 30; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .topbar .row { display: flex; align-items: center; gap: 10px; min-height: 60px; }
+  .topbar strong { flex: 1; }
+  .progress { height: 4px; background: var(--surface-2); }
+  .progress span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+  main { padding: 32px 16px 64px; max-width: 720px; }
+  h1 { font-size: clamp(28px, 5vw, 40px); }
+  .langs { display: grid; gap: 12px; margin: 24px 0; }
+  @media (min-width: 640px) { .langs { grid-template-columns: repeat(3, 1fr); } }
+  .lang-opt { padding: 20px; border: 2px solid var(--border); border-radius: var(--radius); background: var(--surface); cursor: pointer; text-align: left; width: 100%; }
+  .lang-opt:hover { border-color: var(--accent); }
+  .lang-opt strong { display: block; font-size: 18px; margin-top: 6px; }
+  .lang-opt small { color: var(--muted); }
+  .q-card { padding: 24px; }
+  .q-meta { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  .q-text { font-size: 20px; font-weight: 600; margin-bottom: 16px; }
+  .options { display: grid; gap: 8px; }
+  .option { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 10px 14px; text-align: left; width: 100%;
+    border: 2px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); cursor: pointer; font-size: 16px; }
+  .option:hover { border-color: var(--accent); }
+  .option .key { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; background: var(--surface-2); font-weight: 700; font-size: 13px; flex-shrink: 0; }
+  .skip { margin-top: 16px; }
+  .level { font-family: var(--font-display); font-size: 72px; line-height: 1; color: var(--accent); margin: 8px 0; }
+  .bands { list-style: none; padding: 0; margin: 20px 0; display: grid; gap: 8px; }
+  .bands li { display: grid; grid-template-columns: 44px 1fr 48px; align-items: center; gap: 12px; font-size: 14px; }
+  .bar { height: 10px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+  .bar span { display: block; height: 100%; background: var(--accent); }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .review { margin-top: 28px; }
+  .review details { padding: 4px 16px; margin-bottom: 8px; }
+  .review summary { cursor: pointer; padding: 10px 0; font-weight: 600; }
+  .review ol { padding-left: 20px; font-size: 15px; }
+  .review .ok { color: var(--ok); } .review .ko { color: var(--err); }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="topbar">
+  <div class="container row">
+    <a class="icon-btn" href="accueil.html" aria-label="Retour à l'accueil">←</a>
+    <strong>Test de niveau</strong>
+    <button class="icon-btn" id="theme-toggle" type="button" aria-label="Basculer le mode sombre">🌓</button>
+  </div>
+  <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+</header>
+
+<main id="contenu" class="container">
+  <!-- Choix de la langue -->
+  <section id="intro">
+    <p class="eyebrow">Gratuit · sans compte · environ 5 minutes</p>
+    <h1>Quel est votre niveau ?</h1>
+    <p class="muted" style="font-size:18px;">15 questions de grammaire et de vocabulaire, de plus en plus difficiles, du niveau A1 au niveau C1. Si vous ne savez pas, touchez « Je ne sais pas » : c'est plus fiable que de deviner.</p>
+    <div class="langs" role="group" aria-label="Langue à tester">
+      <button class="lang-opt" type="button" data-test="en" data-lang="en"><span aria-hidden="true">🇬🇧🇺🇸</span><strong>Anglais</strong><small>avec Emma</small></button>
+      <button class="lang-opt" type="button" data-test="es" data-lang="es"><span aria-hidden="true">🇪🇸🌎</span><strong>Espagnol</strong><small>avec Lucía</small></button>
+      <button class="lang-opt" type="button" data-test="pt" data-lang="pt"><span aria-hidden="true">🇧🇷🇵🇹</span><strong>Portugais</strong><small>avec Rafael</small></button>
+    </div>
+    <p class="note">Résultat indicatif, basé sur le Cadre européen commun de référence (CECRL). Ce n'est pas une certification officielle.</p>
+  </section>
+
+  <!-- Question -->
+  <section id="quiz" hidden aria-live="polite">
+    <div class="card q-card">
+      <div class="q-meta"><span id="q-num"></span><span id="q-lang"></span></div>
+      <p class="q-text" id="q-text"></p>
+      <div class="options" id="q-opts"></div>
+      <button class="btn btn-ghost btn-sm skip" id="q-skip" type="button">Je ne sais pas</button>
+    </div>
+  </section>
+
+  <!-- Résultat -->
+  <section id="result" hidden></section>
+</main>
+
+<script>
+(function () {
+  // Chaque niveau a 3 questions ; « a » est l'index de la bonne réponse.
+  var TESTS = {
+    en: { nom: 'Anglais', prof: 'emma', lang: 'en', questions: [
+      ['A1', 'She ___ a teacher.', ['is', 'are', 'am'], 0],
+      ['A1', 'I ___ coffee every morning.', ['drink', 'drinks', 'drinking'], 0],
+      ['A1', 'Where ___ you from?', ['are', 'is', 'do'], 0],
+      ['A2', 'Yesterday I ___ to the cinema.', ['went', 'go', 'have gone'], 0],
+      ['A2', "There isn't ___ milk in the fridge.", ['any', 'some', 'many'], 0],
+      ['A2', 'She is ___ than her brother.', ['taller', 'more tall', 'tallest'], 0],
+      ['B1', 'I have lived here ___ 2015.', ['since', 'for', 'from'], 0],
+      ['B1', 'If it rains tomorrow, we ___ at home.', ['will stay', 'would stay', 'stayed'], 0],
+      ['B1', 'Can you give me some ___?', ['advice', 'advices', 'an advice'], 0],
+      ['B2', 'By the time we arrived, the film ___.', ['had already started', 'already starts', 'has already started'], 0],
+      ['B2', "I'd rather you ___ smoke in here.", ["didn't", "don't", "won't"], 0],
+      ['B2', '« Actually » signifie…', ['en fait', 'actuellement', 'exactement'], 0],
+      ['C1', 'Hardly ___ the house when it started to rain.', ['had I left', 'I had left', 'I left'], 0],
+      ['C1', 'The meeting has been ___ until next week.', ['put off', 'put out', 'put up'], 0],
+      ['C1', 'Were I in your position, I ___ accept the offer.', ['would', 'will', 'am'], 0]
+    ]},
+    es: { nom: 'Espagnol', prof: 'lucia', lang: 'es', questions: [
+      ['A1', 'Yo ___ francés.', ['soy', 'estoy', 'tengo'], 0],
+      ['A1', '¿Cuántos años ___?', ['tienes', 'eres', 'estás'], 0],
+      ['A1', 'Me ___ el chocolate.', ['gusta', 'gusto', 'gustan'], 0],
+      ['A2', 'Ayer ___ al cine con mis amigos.', ['fui', 'iba', 'voy'], 0],
+      ['A2', 'La sopa ___ fría, no me gusta así.', ['está', 'es', 'hay'], 0],
+      ['A2', '¿___ un banco cerca de aquí?', ['Hay', 'Está', 'Es'], 0],
+      ['B1', 'Cuando ___ a Madrid, te llamaré.', ['llegue', 'llegaré', 'llego'], 0],
+      ['B1', 'Este regalo es ___ ti.', ['para', 'por', 'a'], 0],
+      ['B1', '« Estoy constipado » signifie…', ['je suis enrhumé', 'je suis constipé', 'je suis fatigué'], 0],
+      ['B2', 'Si ___ más tiempo, viajaría más.', ['tuviera', 'tendría', 'tengo'], 0],
+      ['B2', 'Busco a alguien que ___ hablar alemán.', ['sepa', 'sabe', 'sabrá'], 0],
+      ['B2', 'Me alegro de que ___ venido.', ['hayas', 'has', 'habías'], 0],
+      ['C1', 'De ___ sabido, no habría venido.', ['haberlo', 'saberlo', 'haber'], 0],
+      ['C1', 'No es que no ___ ayudarte, es que no puedo.', ['quiera', 'quiero', 'querré'], 0],
+      ['C1', '« Estar hasta las narices » signifie…', ['en avoir assez', 'avoir le nez bouché', 'être très curieux'], 0]
+    ]},
+    pt: { nom: 'Portugais', prof: 'rafael', lang: 'pt-BR', questions: [
+      ['A1', 'Eu ___ francês.', ['sou', 'estou', 'tenho'], 0],
+      ['A1', 'Eu ___ 25 anos.', ['tenho', 'sou', 'estou'], 0],
+      ['A1', 'Ela mora ___ Paris.', ['em', 'no', 'na'], 0],
+      ['A2', 'Ontem eu ___ ao cinema.', ['fui', 'ia', 'vou'], 0],
+      ['A2', 'O livro está ___ mesa.', ['na', 'no', 'em a'], 0],
+      ['A2', 'Nós ___ português todos os dias.', ['estudamos', 'estudam', 'estuda'], 0],
+      ['B1', 'Quando eu ___ tempo, vou te visitar.', ['tiver', 'tenho', 'terei'], 0],
+      ['B1', '« Esquisito » signifie…', ['bizarre', 'exquis', 'esquissé'], 0],
+      ['B1', 'Espero que você ___ bem.', ['esteja', 'está', 'estará'], 0],
+      ['B2', 'Se eu ___ rico, compraria uma casa na praia.', ['fosse', 'for', 'seria'], 0],
+      ['B2', 'É importante nós ___ mais.', ['estudarmos', 'estudamos', 'estudemos'], 0],
+      ['B2', 'Quando ___ as férias, vamos viajar.', ['chegarem', 'chegam', 'chegariam'], 0],
+      ['C1', 'Caso você ___ interesse, entre em contato.', ['tenha', 'tiver', 'tem'], 0],
+      ['C1', 'Ele fala como se ___ o dono da empresa.', ['fosse', 'for', 'é'], 0],
+      ['C1', '« Pisar na bola » signifie…', ['faire une gaffe', 'jouer au football', 'marcher sur un ballon'], 0]
+    ]}
+  };
+  var NIVEAUX = ['A1', 'A2', 'B1', 'B2', 'C1'];
+  var DESCRIPTIONS = {
+    'Pré-A1': 'Vous débutez : le parcours A1 vous fera acquérir les bases, pas à pas, avec des consignes en français.',
+    A1: 'Vous comprenez des phrases très simples. Prochaine étape : parler de votre passé et de vos projets (A2).',
+    A2: 'Vous vous débrouillez dans les situations courantes : se présenter, réserver, commander. Prochaine étape : raconter et donner votre avis (B1).',
+    B1: 'Vous êtes autonome en voyage et pouvez raconter une expérience. Prochaine étape : argumenter et nuancer (B2).',
+    B2: 'Vous discutez avec aisance et comprenez l\'essentiel d\'un texte complexe. Prochaine étape : maîtriser les registres et les expressions (C1).',
+    C1: 'Vous vous exprimez avec aisance et précision. Travaillez les nuances, l\'argot et la préparation d\'examens (C2).'
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+  function el(tag, attrs, text) {
+    var n = document.createElement(tag);
+    Object.keys(attrs || {}).forEach(function (k) { if (k === 'class') n.className = attrs[k]; else n.setAttribute(k, attrs[k]); });
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function shuffled(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+
+  var state = { test: null, i: 0, answers: [] };
+
+  document.querySelectorAll('[data-test]').forEach(function (b) {
+    b.addEventListener('click', function () { start(b.dataset.test); });
+  });
+
+  function start(key) {
+    state = { key: key, test: TESTS[key], i: 0, answers: [] };
+    document.documentElement.dataset.lang = key;
+    $('intro').hidden = true; $('result').hidden = true; $('quiz').hidden = false;
+    show();
+  }
+
+  function show() {
+    var t = state.test, q = t.questions[state.i];
+    $('bar').style.width = (state.i / t.questions.length * 100) + '%';
+    $('q-num').textContent = 'Question ' + (state.i + 1) + ' sur ' + t.questions.length;
+    $('q-lang').textContent = t.nom;
+    var txt = $('q-text'); txt.textContent = q[1];
+    // Les questions « signifie… » sont en français, les autres dans la langue testée.
+    if (/signifie/.test(q[1])) txt.removeAttribute('lang'); else txt.setAttribute('lang', t.lang);
+    var box = $('q-opts'); box.innerHTML = '';
+    shuffled([0, 1, 2]).forEach(function (oi, pos) {
+      var b = el('button', { class: 'option', type: 'button' });
+      b.appendChild(el('span', { class: 'key', 'aria-hidden': 'true' }, 'ABC'[pos]));
+      var label = el('span', null, q[2][oi]);
+      if (!/signifie/.test(q[1])) label.setAttribute('lang', t.lang);
+      b.appendChild(label);
+      b.addEventListener('click', function () { answer(oi); });
+      box.appendChild(b);
+    });
+    box.querySelector('.option').focus({ preventScroll: true });
+  }
+  $('q-skip').addEventListener('click', function () { answer(-1); });
+
+  function answer(oi) {
+    state.answers.push(oi);
+    state.i++;
+    if (state.i < state.test.questions.length) show(); else finish();
+  }
+
+  function finish() {
+    var t = state.test;
+    $('bar').style.width = '100%';
+    var parNiveau = NIVEAUX.map(function (niv) {
+      var qs = [], ok = 0;
+      t.questions.forEach(function (q, i) { if (q[0] === niv) { qs.push(i); if (state.answers[i] === q[3]) ok++; } });
+      return { niv: niv, ok: ok, total: qs.length };
+    });
+    // Niveau atteint : dernier palier réussi (au moins 2 sur 3) sans palier raté avant lui.
+    var niveau = 'Pré-A1';
+    for (var k = 0; k < parNiveau.length; k++) { if (parNiveau[k].ok >= 2) niveau = parNiveau[k].niv; else break; }
+    var total = state.answers.filter(function (a, i) { return a === t.questions[i][3]; }).length;
+    try { localStorage.setItem('lb-niveau-' + state.key, JSON.stringify({ niveau: niveau, date: new Date().toISOString().slice(0, 10) })); } catch (e) {}
+
+    var r = $('result'); r.innerHTML = ''; r.hidden = false; $('quiz').hidden = true;
+    r.appendChild(el('p', { class: 'eyebrow' }, 'Résultat · ' + t.nom));
+    r.appendChild(el('h1', null, 'Votre niveau estimé'));
+    r.appendChild(el('div', { class: 'level' }, niveau));
+    r.appendChild(el('p', null, DESCRIPTIONS[niveau]));
+    r.appendChild(el('p', { class: 'muted' }, total + ' bonnes réponses sur ' + t.questions.length + '. Estimation indicative, pas une certification officielle.'));
+
+    var ul = el('ul', { class: 'bands', 'aria-label': 'Détail par niveau' });
+    parNiveau.forEach(function (p) {
+      var li = el('li'); li.appendChild(el('strong', null, p.niv));
+      var bar = el('div', { class: 'bar', 'aria-hidden': 'true' }), fill = el('span'); fill.style.width = (p.ok / p.total * 100) + '%';
+      bar.appendChild(fill); li.appendChild(bar);
+      li.appendChild(el('span', null, p.ok + ' / ' + p.total));
+      ul.appendChild(li);
+    });
+    r.appendChild(ul);
+
+    var niveauProf = niveau === 'Pré-A1' ? 'A1' : niveau;
+    var actions = el('div', { class: 'actions' });
+    if (state.key === 'en') actions.appendChild(el('a', { class: 'btn btn-primary', href: 'lecon.html' }, 'Essayer une leçon A2'));
+    actions.appendChild(el('a', { class: 'btn ' + (state.key === 'en' ? 'btn-ghost' : 'btn-primary'), href: 'professeur.html?prof=' + t.prof + '&niveau=' + niveauProf }, 'Parler avec ' + { emma: 'Emma', lucia: 'Lucía', rafael: 'Rafael' }[t.prof] + ' (niveau ' + niveauProf + ')'));
+    var again = el('button', { class: 'btn btn-ghost', type: 'button' }, 'Tester une autre langue');
+    again.addEventListener('click', function () { r.hidden = true; $('intro').hidden = false; $('bar').style.width = '0'; document.documentElement.removeAttribute('data-lang'); window.scrollTo(0, 0); });
+    actions.appendChild(again);
+    r.appendChild(actions);
+
+    // Correction détaillée
+    var rev = el('div', { class: 'review' }), det = el('details', { class: 'card' });
+    det.appendChild(el('summary', null, 'Voir la correction'));
+    var ol = el('ol');
+    t.questions.forEach(function (q, i) {
+      var ok = state.answers[i] === q[3], li = el('li');
+      li.appendChild(el('span', { class: ok ? 'ok' : 'ko' }, ok ? '✅ ' : '❌ '));
+      li.appendChild(el('span', /signifie/.test(q[1]) ? null : { lang: t.lang }, q[1].replace('___', '[' + q[2][q[3]] + ']')));
+      if (/signifie/.test(q[1])) li.appendChild(document.createTextNode(' ' + q[2][q[3]]));
+      li.appendChild(el('span', { class: 'note' }, ' · ' + q[0]));
+      ol.appendChild(li);
+    });
+    det.appendChild(ol); rev.appendChild(det); r.appendChild(rev);
+    r.querySelector('h1').setAttribute('tabindex', '-1'); r.querySelector('h1').focus();
+    window.scrollTo(0, 0);
+  }
+
+  $('theme-toggle').addEventListener('click', function () {
+    var root = document.documentElement;
+    var dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('lb-theme', root.dataset.theme); } catch (e) {}
+  });
+
+  // Lien direct vers une langue : test.html?langue=es
+  var l = new URLSearchParams(location.search).get('langue');
+  if (TESTS[l]) start(l);
+})();
+</script>
+</body>
+</html>

@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%2210%22 fill=%22%236D28D9%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-family=%22Arial%22 font-weight=%22700%22 font-size=%2220%22 fill=%22white%22 text-anchor=%22middle%22%3EL%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="styles.css">
 <script>try{var t=localStorage.getItem('lb-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 <style>
@@ -165,7 +166,20 @@
     $('top-avatar').textContent = PROFS[key].initiale;
   }
   document.querySelectorAll('.prof-opt').forEach(function (b) { b.addEventListener('click', function () { selectProf(b.dataset.prof); }); });
-  selectProf('emma');
+
+  // Réglages pré-remplis par un lien (?prof=lucia&mode=jeu_de_role&niveau=B1&variante=LATAM&sujet=…)
+  var params = new URLSearchParams(location.search);
+  selectProf(PROFS[params.get('prof')] ? params.get('prof') : 'emma');
+  function preRemplir(id, valeur) {
+    var sel = $(id);
+    if (valeur && Array.prototype.some.call(sel.options, function (o) { return (o.value || o.textContent) === valeur; })) sel.value = valeur;
+  }
+  preRemplir('f-variante', params.get('variante'));
+  preRemplir('f-niveau', params.get('niveau'));
+  preRemplir('f-mode', params.get('mode'));
+  preRemplir('f-objectif', params.get('objectif'));
+  var sujet = (params.get('sujet') || '').slice(0, 300);
+  if (sujet) OUVERTURE = OUVERTURE.replace(/\]$/, ' Situation demandée : ' + sujet + ']');
 
   $('start').addEventListener('click', function () {
     state.session = {

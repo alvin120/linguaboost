@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Informations — LinguaBoost</title>
+<meta name="description" content="Mentions légales, confidentialité, cookies, conditions d'utilisation et contact de LinguaBoost.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%2210%22 fill=%22%236D28D9%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-family=%22Arial%22 font-weight=%22700%22 font-size=%2220%22 fill=%22white%22 text-anchor=%22middle%22%3EL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<script>try{var t=localStorage.getItem('lb-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<style>
+  .topbar { position: sticky; top: 0; z-index: 30; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .topbar .row { display: flex; align-items: center; gap: 10px; min-height: 60px; }
+  .topbar strong { flex: 1; }
+  .layout { display: grid; gap: 24px; padding-top: 24px; padding-bottom: 64px; }
+  @media (min-width: 900px) { .layout { grid-template-columns: 220px 1fr; padding-top: 40px; } }
+  .toc ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  @media (min-width: 900px) { .toc ul { flex-direction: column; position: sticky; top: 84px; } }
+  .toc a { display: block; padding: 8px 12px; border-radius: var(--radius-sm); color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; }
+  .toc a:hover { background: var(--surface-2); color: var(--text); }
+  article { max-width: 720px; }
+  article section { padding: 24px; margin-bottom: 20px; scroll-margin-top: 80px; }
+  article h2 { font-size: 26px; }
+  article h3 { font-size: 17px; margin-top: 18px; }
+  .todo { background: var(--warn-soft); padding: 1px 6px; border-radius: 4px; font-weight: 600; }
+  .soon { display: grid; gap: 12px; }
+  @media (min-width: 640px) { .soon { grid-template-columns: repeat(3, 1fr); } }
+  .soon div { padding: 16px; border-radius: var(--radius-sm); background: var(--surface-2); }
+  .soon p { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="topbar">
+  <div class="container row">
+    <a class="icon-btn" href="accueil.html" aria-label="Retour à l'accueil">←</a>
+    <strong>Informations</strong>
+    <button class="icon-btn" id="theme-toggle" type="button" aria-label="Basculer le mode sombre">🌓</button>
+  </div>
+</header>
+
+<div class="container layout">
+  <nav class="toc" aria-label="Sommaire">
+    <ul>
+      <li><a href="#bientot">Bientôt disponible</a></li>
+      <li><a href="#contact">Contact et démo</a></li>
+      <li><a href="#mentions">Mentions légales</a></li>
+      <li><a href="#confidentialite">Confidentialité (RGPD)</a></li>
+      <li><a href="#cookies">Cookies</a></li>
+      <li><a href="#cgu">CGU</a></li>
+      <li><a href="#cgv">CGV</a></li>
+    </ul>
+  </nav>
+
+  <article id="contenu">
+    <section class="card" id="bientot" aria-labelledby="h-bientot">
+      <h2 id="h-bientot">Bientôt disponible</h2>
+      <p>LinguaBoost est en version de démonstration. Vous pouvez déjà utiliser gratuitement, sans compte :</p>
+      <ul>
+        <li><a href="test.html">le test de niveau</a> (anglais, espagnol, portugais) ;</li>
+        <li><a href="lecon.html">la leçon A2 « At the hotel »</a>, en anglais américain ou britannique ;</li>
+        <li><a href="professeur.html">les professeurs IA</a> Emma, Lucía et Rafael.</li>
+      </ul>
+      <div class="soon">
+        <div><strong>🔐 Comptes</strong><p>Connexion, sauvegarde de la progression et des révisions sur tous vos appareils.</p></div>
+        <div><strong>⭐ Premium</strong><p>Parcours complet A1 → C2, professeur IA illimité, examens blancs. Essai de 7 jours.</p></div>
+        <div><strong>📰 Blog</strong><p>Conseils de méthode, faux amis, préparation au TOEIC, au DELE et au CELPE-Bras.</p></div>
+      </div>
+    </section>
+
+    <section class="card" id="contact" aria-labelledby="h-contact">
+      <h2 id="h-contact">Contact et demande de démo</h2>
+      <p>Une question, une école ou une entreprise intéressée par des licences ? Écrivez-nous en précisant votre structure, le nombre d'apprenants et les langues souhaitées.</p>
+      <p><strong>E-mail :</strong> <span class="todo">[adresse de contact à compléter]</span></p>
+    </section>
+
+    <section class="card" id="mentions" aria-labelledby="h-mentions">
+      <h2 id="h-mentions">Mentions légales</h2>
+      <h3>Éditeur du site</h3>
+      <p><span class="todo">[Nom ou raison sociale]</span>, <span class="todo">[forme juridique, capital]</span>, <span class="todo">[adresse]</span>, <span class="todo">[SIREN / RCS]</span>.<br>Directeur de la publication : <span class="todo">[nom]</span>. Contact : voir la rubrique <a href="#contact">Contact</a>.</p>
+      <h3>Hébergement</h3>
+      <p>Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com.</p>
+      <h3>Propriété intellectuelle</h3>
+      <p>Les contenus pédagogiques (dialogues, exercices, textes) sont originaux. TOEIC, DELE, SIELE, CELPE-Bras, IELTS et Cambridge sont des marques de leurs propriétaires respectifs ; LinguaBoost n'y est pas affilié.</p>
+    </section>
+
+    <section class="card" id="confidentialite" aria-labelledby="h-conf">
+      <h2 id="h-conf">Confidentialité (RGPD)</h2>
+      <h3>Ce que nous collectons</h3>
+      <p>Dans cette version, <strong>aucun compte n'est créé et aucune donnée personnelle n'est enregistrée sur nos serveurs</strong>. Votre progression, votre niveau estimé et vos préférences (thème, variante) restent dans votre navigateur.</p>
+      <h3>Professeur IA</h3>
+      <p>Quand vous discutez avec un professeur IA, vos messages et les réglages de la séance (niveau, prénom et centres d'intérêt si vous les indiquez) sont transmis à notre fournisseur d'IA, Anthropic, uniquement pour générer la réponse. L'historique de la conversation n'est pas conservé par LinguaBoost : il disparaît quand vous fermez la page. N'y indiquez pas d'informations sensibles.</p>
+      <h3>Vos droits</h3>
+      <p>Vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition. Pour l'exercer, écrivez-nous (voir <a href="#contact">Contact</a>). Vous pouvez aussi saisir la CNIL (cnil.fr).</p>
+    </section>
+
+    <section class="card" id="cookies" aria-labelledby="h-cookies">
+      <h2 id="h-cookies">Cookies</h2>
+      <p>Le site n'utilise <strong>ni cookie publicitaire ni outil de mesure d'audience</strong>. Il enregistre seulement dans votre navigateur (stockage local) : le thème clair ou sombre, la variante d'anglais choisie et le résultat de votre dernier test de niveau. Ces données ne quittent pas votre appareil ; vous pouvez les effacer depuis les réglages de votre navigateur.</p>
+    </section>
+
+    <section class="card" id="cgu" aria-labelledby="h-cgu">
+      <h2 id="h-cgu">Conditions générales d'utilisation</h2>
+      <p>Le site est proposé gratuitement, en version de démonstration, sans garantie de disponibilité. Les scores et niveaux affichés (test de niveau, estimations TOEIC, DELE, CELPE-Bras) sont indicatifs et ne remplacent pas une certification officielle.</p>
+      <p>Les réponses des professeurs IA sont générées automatiquement et peuvent contenir des erreurs. Il est interdit d'utiliser le service pour produire des contenus illicites ou pour contourner son fonctionnement. Le service est accessible dès 15 ans.</p>
+    </section>
+
+    <section class="card" id="cgv" aria-labelledby="h-cgv">
+      <h2 id="h-cgv">Conditions générales de vente</h2>
+      <p>Aucune offre payante n'est commercialisée pour l'instant : les prix affichés sur la page d'accueil sont indicatifs. Les conditions de vente (abonnement, droit de rétractation de 14 jours, résiliation) seront publiées ici avant l'ouverture de l'offre Premium.</p>
+    </section>
+  </article>
+</div>
+
+<script>
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    var root = document.documentElement;
+    var dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('lb-theme', root.dataset.theme); } catch (e) {}
+  });
+</script>
+</body>
+</html>

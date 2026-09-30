@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/", "destination": "/maquettes/accueil.html", "permanent": false }
+  ]
+}

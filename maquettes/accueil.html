@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%2210%22 fill=%22%236D28D9%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-family=%22Arial%22 font-weight=%22700%22 font-size=%2220%22 fill=%22white%22 text-anchor=%22middle%22%3EL%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="styles.css">
 <script>try{var t=localStorage.getItem('lb-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 <style>
@@ -152,14 +153,14 @@
 </head>
 <body>
 <a class="skip-link" href="#contenu">Aller au contenu</a>
-<div class="mock-banner">Maquette LinguaBoost (livrable 2). Contenus et prix indicatifs.</div>
+<div class="mock-banner">Version de démonstration de LinguaBoost. Prix indicatifs.</div>
 
 <header class="site-header">
   <div class="container header-row">
     <a class="logo" href="accueil.html" aria-label="LinguaBoost, accueil"><span class="logo-mark" aria-hidden="true">L</span>LinguaBoost</a>
     <nav class="main-nav" aria-label="Navigation principale">
       <a href="#langues">Langues</a>
-      <a href="#test">Test de niveau</a>
+      <a href="test.html">Test de niveau</a>
       <a href="#examens">Examens</a>
       <a href="#tarifs">Tarifs</a>
       <a href="#entreprises">Entreprises</a>
@@ -167,20 +168,20 @@
     </nav>
     <button class="icon-btn" id="theme-toggle" type="button" aria-label="Basculer le mode sombre">🌓</button>
     <div class="header-cta">
-      <a class="btn btn-ghost btn-sm" href="#">Se connecter</a>
-      <a class="btn btn-primary btn-sm" href="#test">Commencer gratuitement</a>
+      <a class="btn btn-ghost btn-sm" href="infos.html#bientot">Se connecter</a>
+      <a class="btn btn-primary btn-sm" href="test.html">Commencer gratuitement</a>
     </div>
     <details class="mobile-menu">
       <summary class="icon-btn" aria-label="Ouvrir le menu">☰</summary>
       <nav class="mobile-panel" aria-label="Navigation mobile">
         <a href="#langues">Langues</a>
-        <a href="#test">Test de niveau</a>
+        <a href="test.html">Test de niveau</a>
         <a href="#examens">Examens</a>
         <a href="#tarifs">Tarifs</a>
         <a href="#entreprises">Entreprises</a>
         <a href="#faq">FAQ</a>
-        <a href="#">Se connecter</a>
-        <a class="btn btn-primary" href="#test">Commencer gratuitement</a>
+        <a href="infos.html#bientot">Se connecter</a>
+        <a class="btn btn-primary" href="test.html">Commencer gratuitement</a>
       </nav>
     </details>
   </div>
@@ -196,11 +197,11 @@
         <h1>Parlez <span class="hl-en">anglais</span>, <span class="hl-es">espagnol</span> ou <span class="hl-pt">portugais</span>, 15 minutes par jour.</h1>
         <p class="lead">Des situations réelles, des professeurs IA natifs qui vous corrigent avec bienveillance, et des révisions calculées pour ne plus rien oublier. Préparez aussi le TOEIC, le DELE ou le CELPE-Bras.</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="#langues">Tester mon niveau gratuitement</a>
+          <a class="btn btn-primary" href="test.html">Tester mon niveau gratuitement</a>
           <a class="btn btn-ghost" href="lecon.html">Voir une leçon</a>
         </div>
         <ul class="hero-trust">
-          <li>Test adaptatif de 15 à 20 min</li>
+          <li>Test de niveau en 5 minutes</li>
           <li>Sans carte bancaire</li>
           <li>Sur mobile et ordinateur</li>
         </ul>
@@ -259,7 +260,7 @@
             <div><dt>Examens</dt><dd>DELE A1 → C2 · SIELE</dd></div>
             <div><dt>Pièges travaillés</dt><dd>jota, r roulé (pero / perro), b et v, ser et estar, subjonctif, faux amis (embarazada, constipado)</dd></div>
           </dl>
-          <a class="btn btn-primary" href="#">Commencer l'espagnol</a>
+          <a class="btn btn-primary" href="professeur.html?prof=lucia">Commencer l'espagnol</a>
         </article>
 
         <article class="card lang-card" data-lang="pt">
@@ -274,7 +275,7 @@
             <div><dt>Examens</dt><dd>CELPE-Bras · CAPLE (option)</dd></div>
             <div><dt>Pièges travaillés</dt><dd>voyelles nasales, ão, lh et nh, r initial, avó et avô, futur du subjonctif</dd></div>
           </dl>
-          <a class="btn btn-primary" href="#">Commencer le portugais</a>
+          <a class="btn btn-primary" href="professeur.html?prof=rafael">Commencer le portugais</a>
         </article>
       </div>
     </div>
@@ -288,7 +289,7 @@
         <h2 id="how-titre">De votre niveau réel à la conversation</h2>
       </div>
       <ol class="steps">
-        <li class="card"><h3>Test de positionnement</h3><p>15 à 20 minutes, adaptatif : grammaire, vocabulaire, écoute, lecture et une courte production écrite.</p></li>
+        <li class="card"><h3>Test de positionnement</h3><p>15 questions de grammaire et de vocabulaire, du niveau A1 au niveau C1, pour situer votre niveau CECRL.</p></li>
         <li class="card"><h3>Parcours sur mesure</h3><p>Votre niveau CECRL par compétence et un parcours construit selon votre objectif : voyage, travail ou examen.</p></li>
         <li class="card"><h3>Pratique quotidienne</h3><p>Révisions, une étape de leçon et un mini-défi. Entre 10 et 30 minutes, surtout sur mobile.</p></li>
         <li class="card"><h3>Conversation réelle</h3><p>Jeux de rôle avec votre professeur IA (hôtel, entretien, négociation), et correction détaillée à la fin.</p></li>
@@ -400,19 +401,19 @@
           <h3>Gratuit</h3>
           <div class="amount">0 € <small>pour toujours</small></div>
           <ul><li>Test de niveau complet</li><li>1ʳᵉ unité de chaque niveau</li><li>10 exercices par jour</li><li>5 messages par jour au professeur IA</li></ul>
-          <a class="btn btn-ghost" href="#test">Commencer</a>
+          <a class="btn btn-ghost" href="test.html">Commencer</a>
         </article>
         <article class="card price featured">
           <h3>Premium</h3>
           <div class="amount">12,99 € <small>/ mois · ou 89 € / an</small></div>
           <ul><li>Tout le parcours A1 → C2, dans les 3 langues</li><li>Professeur IA illimité, texte et voix</li><li>Corrections IA détaillées</li><li>Entraînement aux examens par partie</li></ul>
-          <a class="btn btn-primary" href="#">Essayer 7 jours</a>
+          <a class="btn btn-primary" href="infos.html#bientot">Essayer 7 jours</a>
         </article>
         <article class="card price" id="entreprises">
           <h3>Entreprise &amp; écoles</h3>
           <div class="amount" style="font-size:30px;">Sur devis</div>
           <ul><li>Licences par salarié ou par élève</li><li>Tableau de bord RH ou professeur</li><li>Anglais pro, tourisme et hôtellerie</li><li>Devoirs, suivi et exports PDF</li></ul>
-          <a class="btn btn-ghost" href="#">Demander une démo</a>
+          <a class="btn btn-ghost" href="infos.html#contact">Demander une démo</a>
         </article>
       </div>
       <p class="note" style="margin-top:16px;">Pack examen (TOEIC, DELE, CELPE-Bras) : préparation intensive de 4 à 8 semaines, avec examens blancs complets.</p>
@@ -425,7 +426,7 @@
       <div class="section-head"><p class="eyebrow">FAQ</p><h2 id="faq-titre">Questions fréquentes</h2></div>
       <div class="faq">
         <details class="card"><summary>Combien de temps faut-il par jour ?</summary><p>Entre 10 et 30 minutes. L'application vous propose une session adaptée au temps que vous avez choisi, et les révisions sont calculées pour tenir dans ce temps.</p></details>
-        <details class="card"><summary>Je suis grand débutant, est-ce pour moi ?</summary><p>Oui. Vous pouvez passer le test et commencer directement en A1. Les consignes et les explications sont en français jusqu'au niveau A2.</p></details>
+        <details class="card"><summary>Je suis grand débutant, est-ce pour moi ?</summary><p>Oui. Vous pouvez <a href="test.html">passer le test</a> et commencer directement en A1. Les consignes et les explications sont en français jusqu'au niveau A2.</p></details>
         <details class="card"><summary>Le score TOEIC, DELE ou CELPE-Bras est-il officiel ?</summary><p>Non. C'est une estimation indicative, calculée à partir d'exercices originaux au format officiel. Seuls les organismes officiels délivrent la certification.</p></details>
         <details class="card"><summary>Anglais britannique ou américain ? Espagnol d'Espagne ou d'Amérique latine ?</summary><p>C'est vous qui choisissez. Chaque dialogue existe dans les deux variantes principales et les différences sont signalées. Vous pouvez changer à tout moment.</p></details>
       </div>
@@ -436,8 +437,8 @@
     <div class="container">
       <div class="final-cta">
         <h2>Quel est votre vrai niveau ?</h2>
-        <p class="muted">Découvrez-le en 15 minutes, gratuitement et sans créer de compte.</p>
-        <a class="btn btn-primary" href="#langues" style="margin-top:8px;">Passer le test de niveau</a>
+        <p class="muted">Découvrez-le en 5 minutes, gratuitement et sans créer de compte.</p>
+        <a class="btn btn-primary" href="test.html" style="margin-top:8px;">Passer le test de niveau</a>
       </div>
     </div>
   </section>
@@ -448,14 +449,10 @@
     <div>
       <a class="logo" href="accueil.html"><span class="logo-mark" aria-hidden="true">L</span>LinguaBoost</a>
       <p style="margin-top:12px;">Anglais, espagnol et portugais pour les francophones, du niveau A1 au niveau C2.</p>
-      <label for="ui-lang" class="note">Langue de l'interface</label><br>
-      <select id="ui-lang" style="margin-top:4px;padding:8px;border-radius:8px;border:1px solid var(--border);background:var(--surface);">
-        <option>Français</option><option>English</option><option>Español</option><option>Português</option>
-      </select>
     </div>
-    <div><h4>Apprendre</h4><ul><li><a href="#">Anglais</a></li><li><a href="#">Espagnol</a></li><li><a href="#">Portugais</a></li><li><a href="#">Test de niveau</a></li><li><a href="#">Blog</a></li></ul></div>
-    <div><h4>Examens</h4><ul><li><a href="#">TOEIC</a></li><li><a href="#">DELE · SIELE</a></li><li><a href="#">CELPE-Bras</a></li><li><a href="#">Entreprises</a></li><li><a href="#">Contact</a></li></ul></div>
-    <div><h4>Légal</h4><ul><li><a href="#">Mentions légales</a></li><li><a href="#">Confidentialité (RGPD)</a></li><li><a href="#">Cookies</a></li><li><a href="#">CGU</a></li><li><a href="#">CGV</a></li></ul></div>
+    <div><h4>Apprendre</h4><ul><li><a href="lecon.html">Anglais</a></li><li><a href="professeur.html?prof=lucia">Espagnol</a></li><li><a href="professeur.html?prof=rafael">Portugais</a></li><li><a href="test.html">Test de niveau</a></li><li><a href="infos.html#bientot">Blog</a></li></ul></div>
+    <div><h4>Examens</h4><ul><li><a href="professeur.html?prof=emma&amp;mode=simulation_examen&amp;objectif=examen">TOEIC</a></li><li><a href="professeur.html?prof=lucia&amp;mode=simulation_examen&amp;objectif=examen">DELE · SIELE</a></li><li><a href="professeur.html?prof=rafael&amp;mode=simulation_examen&amp;objectif=examen">CELPE-Bras</a></li><li><a href="#entreprises">Entreprises</a></li><li><a href="infos.html#contact">Contact</a></li></ul></div>
+    <div><h4>Légal</h4><ul><li><a href="infos.html#mentions">Mentions légales</a></li><li><a href="infos.html#confidentialite">Confidentialité (RGPD)</a></li><li><a href="infos.html#cookies">Cookies</a></li><li><a href="infos.html#cgu">CGU</a></li><li><a href="infos.html#cgv">CGV</a></li></ul></div>
   </div>
 </footer>
 

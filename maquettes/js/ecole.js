@@ -394,3 +394,46 @@
     newsForm.reset();
   });
 })();
+
+// Cours par niveau : le choix de la langue met à jour les titres et les liens.
+(function () {
+  var groupe = document.querySelector('.levels-langs');
+  if (!groupe) return;
+  var DATA = {
+    en: { prof: 'Emma', lang: 'en', titres: { A1: 'Unit 1 · At the café', A2: 'Unit 3 · At the hotel', B1: 'Unit 7 · A problem with the room', B2: 'Unit 9 · The job interview', C1: 'Unit 12 · Closing the deal', C2: 'Unit 15 · A heated debate' } },
+    es: { prof: 'Lucía', lang: 'es', titres: { A1: 'Unidad 1 · En la cafetería', A2: 'Unidad 3 · En el hotel', B1: 'Unidad 7 · Un problema con la habitación', B2: 'Unidad 9 · La entrevista de trabajo', C1: 'Unidad 12 · Cerrar el trato', C2: 'Unidad 15 · Un debate encendido' } },
+    pt: { prof: 'Rafael', lang: 'pt-BR', titres: { A1: 'Unidade 1 · No café', A2: 'Unidade 3 · No hotel', B1: 'Unidade 7 · Um problema no quarto', B2: 'Unidade 9 · A entrevista de emprego', C1: 'Unidade 12 · Fechar o negócio', C2: 'Unidade 15 · Um debate aceso' } }
+  };
+  var boutons = Array.prototype.slice.call(groupe.querySelectorAll('[data-level-lang]'));
+  function choisir(code, focus) {
+    var d = DATA[code];
+    boutons.forEach(function (b) {
+      var actif = b.dataset.levelLang === code;
+      b.setAttribute('aria-checked', actif ? 'true' : 'false');
+      b.tabIndex = actif ? 0 : -1;
+      if (actif && focus) b.focus();
+    });
+    document.querySelectorAll('.level-card').forEach(function (carte) {
+      var n = carte.dataset.level, q = '?langue=' + code + '&niveau=' + n;
+      var unite = carte.querySelector('[data-level-unit]');
+      unite.textContent = d.titres[n];
+      unite.lang = d.lang;
+      carte.querySelector('[data-level-lecon]').href = 'lecon.html' + q;
+      carte.querySelector('[data-level-3d]').href = 'cours-3d.html' + q;
+      carte.querySelector('[data-level-prof]').textContent = d.prof;
+    });
+  }
+  groupe.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-level-lang]');
+    if (b) choisir(b.dataset.levelLang);
+  });
+  groupe.addEventListener('keydown', function (e) {
+    var i = boutons.indexOf(document.activeElement);
+    if (i < 0) return;
+    var pas = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    if (!pas) return;
+    e.preventDefault();
+    choisir(boutons[(i + pas + boutons.length) % boutons.length].dataset.levelLang, true);
+  });
+  choisir('en');
+})();

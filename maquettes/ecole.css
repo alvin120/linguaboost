@@ -458,3 +458,21 @@ button, input, select { font: inherit; color: inherit; }
   .steps-line span { transform: none; }
   .btn:hover, .icon-btn:hover, .lang-card:hover, .teacher:hover, .quiz-option:hover { transform: none; }
 }
+
+/* 5 bis. Cours par niveau */
+.levels-langs { margin: -8px 0 28px; }
+.levels { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+@media (min-width: 680px) { .levels { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .levels { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+.level-card { position: relative; display: flex; flex-direction: column; padding: 26px 24px 22px; border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); transition: transform .3s var(--ease), box-shadow .3s var(--ease); }
+.level-card:hover, .level-card:focus-within { transform: translateY(-4px); box-shadow: var(--shadow); }
+.level-tag { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; font-size: 14px; font-weight: 700; color: var(--muted); }
+.level-code { display: inline-grid; place-items: center; min-width: 44px; height: 44px; padding: 0 8px; border-radius: 12px; background: var(--night); color: var(--on-night); font-size: 18px; font-weight: 700; }
+.level-card h3 { font-size: 24px; margin-bottom: 6px; }
+.level-unit { margin: 0 0 10px; font-size: 15px; font-style: italic; color: var(--night-text); }
+.level-card > p:not(.level-tag):not(.level-unit) { color: var(--muted); font-size: 16px; margin-bottom: 16px; }
+.level-links { margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+.level-links .card-link { margin-top: 0; padding-top: 0; }
+.level-links .card-link::after { content: none; }
+.level-3d { position: relative; z-index: 1; display: inline-block; padding: 11px 14px; line-height: 1.4; border-radius: 999px; background: var(--sage-soft); color: var(--text); font-size: 15px; font-weight: 600; text-decoration: none; transition: background-color .2s; }
+.level-3d:hover { background: var(--sage); color: var(--on-sage); }

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="fr" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cours 3D — LinguaBoost</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%2210%22 fill=%22%231A4F96%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-family=%22Arial%22 font-weight=%22700%22 font-size=%2220%22 fill=%22white%22 text-anchor=%22middle%22%3EL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="fx.css">
+<script src="js/theme.js"></script>
+<script src="js/mesure.js"></script>
+<style>
+  body { min-height: 100vh; min-height: 100dvh; }
+  .topbar { position: sticky; top: 0; z-index: 30; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .topbar .row { display: flex; align-items: center; gap: 10px; min-height: 60px; }
+  .topbar .who { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; }
+  .topbar strong { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .topbar small { color: var(--muted); display: block; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font-weight: 800; flex-shrink: 0; }
+  .progress { height: 4px; background: var(--surface-2); }
+  .progress span { display: block; height: 100%; background: var(--accent); width: 0; transition: width .4s; }
+  .sel { min-height: 36px; padding: 4px 8px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface-2); font-weight: 600; font-size: 14px; cursor: pointer; color: var(--text); }
+  .hide-mobile { display: none; }
+  @media (min-width: 760px) { .hide-mobile { display: inline-flex; } }
+
+  .layout { display: grid; gap: 20px; padding-top: 20px; padding-bottom: 40px; }
+  .layout > * { min-width: 0; }
+  @media (min-width: 1000px) { .layout { grid-template-columns: 1fr 280px; padding-top: 28px; } }
+
+  /* Scène */
+  .stage { position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 16 / 9; background: #DCE6F0; border: 1px solid var(--border); box-shadow: var(--shadow); }
+  @media (max-width: 640px) { .stage { aspect-ratio: 4 / 5; } }
+  .stage canvas { display: block; width: 100%; height: 100%; touch-action: pan-y; cursor: grab; }
+  .stage canvas:active { cursor: grabbing; }
+  .stage-hint { position: absolute; right: 10px; bottom: 10px; font-size: 12px; color: #2B3A4F; background: rgba(255,255,255,.75); padding: 3px 10px; border-radius: 999px; pointer-events: none; }
+  /* Carte de départ en bas, pour laisser voir le professeur */
+  .start { position: absolute; inset: auto 0 0 0; display: flex; justify-content: center; padding: 16px; background: linear-gradient(180deg, transparent, rgba(11,20,36,.45)); }
+  .start[hidden] { display: none; }
+  .start-card { background: var(--surface-solid); color: var(--text); border-radius: var(--radius); padding: 14px 18px; max-width: 620px; width: 100%; box-shadow: var(--shadow); display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .start-card > div { flex: 1; min-width: 220px; }
+  .start-card h1 { font-size: clamp(18px, 2.4vw, 22px); margin: 0 0 2px; }
+  .start-card p { color: var(--muted); margin: 0; font-size: 14px; }
+  .no-3d canvas, .no-3d .stage-hint { display: none; }
+  .no-3d { aspect-ratio: auto; min-height: 220px; background: #1F4537; }
+  .board-text { padding: 20px 24px; color: #F5F2E8; }
+  .stage:not(.no-3d) .board-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+  .board-text strong { font-family: var(--font-display); font-size: 22px; display: block; margin-bottom: 8px; }
+  .board-text p { margin: 4px 0; }
+  .board-text .b-cible, .board-text .b-grand { color: #FFE7A0; font-weight: 600; font-size: 20px; }
+  .board-text .b-fr { font-style: italic; color: #CFE6DA; }
+
+  /* Sous-titres */
+  .subtitle { margin-top: 14px; padding: 14px 18px; display: flex; gap: 12px; align-items: flex-start; }
+  .subtitle .who { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  .subtitle p { margin: 2px 0 0; font-size: 18px; }
+  .subtitle p.cible { color: var(--accent); font-weight: 600; font-size: 20px; }
+  .repeat { margin-top: 12px; padding: 12px 16px; border-radius: var(--radius-sm); background: var(--accent-soft); }
+  .repeat[hidden], .repeat-result[hidden] { display: none; }
+  .repeat-head { font-weight: 600; display: flex; gap: 10px; align-items: center; }
+  .repeat-status { margin: 6px 0 0; font-size: 15px; }
+  .repeat-status:empty { display: none; }
+  .repeat-result { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+  .said-words { margin: 0; font-size: 20px; font-weight: 600; }
+  .w-ok { color: var(--ok); }
+  .w-ko { color: var(--err); text-decoration: underline wavy; text-underline-offset: 4px; }
+  .said { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
+  .repeat .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--err); animation: pulse 1s infinite; flex-shrink: 0; }
+  @keyframes pulse { 50% { opacity: .3; } }
+  @media (prefers-reduced-motion: reduce) { .repeat .dot { animation: none; } }
+
+  /* Réponses du quiz */
+  .answers { margin-top: 12px; }
+  .answers[hidden] { display: none; }
+  .answers-label { font-weight: 600; margin: 0 0 8px; }
+  .answers-grid { display: grid; gap: 8px; }
+  @media (min-width: 720px) { .answers-grid { grid-template-columns: repeat(3, 1fr); } }
+  .option { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 10px 14px; text-align: left; border: 2px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); cursor: pointer; width: 100%; font-size: 16px; color: var(--text); }
+  .option:hover:not(:disabled) { border-color: var(--accent); }
+  .option .key { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; background: var(--surface-2); font-weight: 700; font-size: 13px; flex-shrink: 0; }
+  .option.correct { border-color: var(--ok); background: var(--ok-soft); }
+  .option.wrong { border-color: var(--err); background: var(--err-soft); }
+  .option:disabled { cursor: default; }
+
+  .controls { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .controls[hidden] { display: none; }
+  .controls .spacer { flex: 1; }
+  .sound { display: flex; gap: 6px; align-items: center; font-size: 14px; cursor: pointer; }
+  .warn { margin-top: 12px; background: var(--warn-soft); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 14px; }
+  .warn[hidden] { display: none; }
+  .end-card { margin-top: 14px; padding: 18px 20px; }
+  .end-card[hidden] { display: none; }
+  .end-card h2 { font-size: 22px; margin: 0 0 4px; }
+  .end-card .ex-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+  /* Colonne */
+  .side-card { padding: 18px; margin-bottom: 16px; }
+  .side-card h2 { font-size: 15px; margin: 0 0 10px; }
+  .chapters { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .chap-btn { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-weight: 500; font-size: 14px; color: var(--muted); text-align: left; }
+  .chap-btn .num { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .chap-btn[aria-current="step"] { border-color: var(--accent); color: var(--text); font-weight: 700; background: var(--accent-soft); }
+  .chap-btn[aria-current="step"] .num { background: var(--accent); color: var(--on-accent); }
+  .chap-btn.done .num { background: var(--ok); color: var(--on-accent); }
+  .side-card p { font-size: 14px; margin: 0 0 10px; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#contenu">Aller au cours</a>
+
+<header class="topbar">
+  <div class="container row">
+    <a class="icon-btn" href="accueil.html" aria-label="Quitter le cours et revenir à l'accueil">✕</a>
+    <div class="who">
+      <span class="avatar" id="top-avatar" aria-hidden="true">E</span>
+      <div style="min-width:0;"><strong id="top-name">Cours 3D</strong><small id="top-info"></small></div>
+    </div>
+    <label class="sr-only" for="lang-select">Langue</label>
+    <select id="lang-select" class="sel hide-mobile"></select>
+    <label class="sr-only" for="level-select">Niveau</label>
+    <select id="level-select" class="sel"></select>
+    <div class="segmented hide-mobile" role="group" id="variants" aria-label="Variante"></div>
+    <button class="icon-btn" id="theme-toggle" type="button" aria-label="Basculer le mode sombre">🌓</button>
+  </div>
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+</header>
+
+<main id="contenu" class="container layout">
+  <div>
+    <div class="stage" id="stage">
+      <canvas id="stage-canvas" aria-label="Salle de classe en 3D : le professeur et le tableau" role="img"></canvas>
+      <span class="stage-hint" aria-hidden="true">Glisse pour tourner · double-clic pour recentrer</span>
+      <div class="board-text" id="board-text" aria-label="Contenu du tableau"></div>
+      <p id="no-3d-msg" class="note" style="color:#CFE6DA;padding:0 24px 16px;margin:0;" hidden>La 3D n'est pas disponible sur cet appareil : le contenu du tableau s'affiche ici, et le cours fonctionne normalement.</p>
+      <div class="start" id="start">
+        <div class="start-card">
+          <div>
+            <h1 id="start-title"></h1>
+            <p id="start-sub"></p>
+          </div>
+          <button class="btn btn-primary" id="start-btn" type="button">▶ Commencer le cours</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card subtitle" aria-live="polite">
+      <div style="min-width:0;">
+        <span class="who" id="sub-who">Sous-titres</span>
+        <p id="sub-text">Le professeur t'attend. Monte le son 🔊</p>
+      </div>
+    </div>
+    <div class="repeat" id="repeat" hidden aria-live="polite">
+      <div class="repeat-head"><span class="dot" aria-hidden="true"></span><span>À toi : répète à voix haute « <span id="repeat-expr"></span> »</span></div>
+      <p class="repeat-status" id="repeat-status"></p>
+      <div class="repeat-result" id="repeat-result" hidden></div>
+    </div>
+    <div class="answers" id="answers" hidden></div>
+    <p class="warn" id="voice-warn" hidden></p>
+
+    <div class="controls" id="controls" hidden>
+      <button class="btn btn-ghost btn-sm" id="prev" type="button">← Précédent</button>
+      <button class="btn btn-primary btn-sm" id="pause" type="button" aria-pressed="false">⏸ Pause</button>
+      <button class="btn btn-ghost btn-sm" id="next" type="button">Suivant →</button>
+      <button class="btn btn-ghost btn-sm" id="replay" type="button">↻ Réécouter</button>
+      <span class="spacer"></span>
+      <div class="segmented" role="group" aria-label="Vitesse de la voix">
+        <button type="button" data-rate="0.8" aria-pressed="false">Lent</button>
+        <button type="button" data-rate="1" aria-pressed="true">Normal</button>
+      </div>
+      <label class="sound"><input type="checkbox" id="sound" checked style="width:18px;height:18px;"> Son</label>
+      <label class="sound" id="mic-label" hidden title="Le professeur écoute ta répétition et corrige ta prononciation"><input type="checkbox" id="mic" checked style="width:18px;height:18px;"> 🎙️ Micro</label>
+    </div>
+
+    <div class="card end-card" id="end-card" hidden>
+      <h2>Cours terminé 🎉</h2>
+      <p id="end-score" style="margin:0;"></p>
+      <div class="ex-actions">
+        <a class="btn btn-primary btn-sm" id="link-lecon" href="lecon.html">Leçon complète (exercices)</a>
+        <a class="btn btn-ghost btn-sm" id="link-prof" href="professeur.html">Parler avec le professeur</a>
+        <button class="btn btn-ghost btn-sm" id="restart" type="button">Recommencer le cours</button>
+      </div>
+    </div>
+  </div>
+
+  <aside aria-label="Plan du cours">
+    <div class="card side-card">
+      <h2>Plan du cours</h2>
+      <ol class="chapters" id="chapters"></ol>
+    </div>
+    <div class="card side-card">
+      <h2>Comment ça marche</h2>
+      <p>Le professeur parle, écrit au tableau et te pose des questions. Les sous-titres affichent tout ce qu'il dit.</p>
+      <p>Raccourcis : ← et → pour changer d'étape.</p>
+      <p class="note" id="mic-note" style="margin:0;" hidden>🎙️ Au vocabulaire, le professeur écoute ta répétition et te dit quels mots revoir. Le navigateur envoie ta voix à son service de reconnaissance (Google pour Chrome, Microsoft pour Edge) ; rien n'est enregistré par LinguaBoost. Tu peux couper le micro à tout moment.</p>
+    </div>
+  </aside>
+</main>
+
+<script src="lecons/en-a1.js"></script>
+<script src="lecons/en-a2.js"></script>
+<script src="lecons/en-b1.js"></script>
+<script src="lecons/en-b2.js"></script>
+<script src="lecons/en-c1.js"></script>
+<script src="lecons/en-c2.js"></script>
+<script src="lecons/es-a1.js"></script>
+<script src="lecons/es-a2.js"></script>
+<script src="lecons/es-b1.js"></script>
+<script src="lecons/es-b2.js"></script>
+<script src="lecons/es-c1.js"></script>
+<script src="lecons/es-c2.js"></script>
+<script src="lecons/pt-a1.js"></script>
+<script src="lecons/pt-a2.js"></script>
+<script src="lecons/pt-b1.js"></script>
+<script src="lecons/pt-b2.js"></script>
+<script src="lecons/pt-c1.js"></script>
+<script src="lecons/pt-c2.js"></script>
+<script src="js/progres.js"></script>
+<script src="vendor/three.min.js"></script>
+<script src="js/cours3d-scene.js"></script>
+<script src="js/cours3d.js"></script>
+</body>
+</html>

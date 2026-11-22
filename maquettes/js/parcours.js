@@ -108,6 +108,7 @@
       ul.appendChild(li);
     }
     item('📘', 'Leçon ' + nl + ' · ' + THEMES[nl], nl === p.niveau ? '8 étapes, environ 25 min : faites-en ' + Math.max(1, Math.round(p.minutes / 8)) + ' par jour.' : 'Pas encore de leçon ' + p.niveau + ' : la leçon ' + nl + ' pour réviser, et le professeur IA à votre niveau.', 'lecon.html?langue=' + p.langue + '&niveau=' + nl, 'Ouvrir');
+    item('🎓', 'Cours 3D avec ' + L.profNom, 'La leçon ' + nl + ' en classe : ' + L.profNom + ' parle, écrit au tableau et vous interroge. Environ 10 min.', 'cours-3d.html?langue=' + p.langue + '&niveau=' + nl, 'Suivre');
     item('💬', 'Conversation avec ' + L.profNom, 'Réglée sur le niveau ' + p.niveau + (p.prenom ? ', pour ' + p.prenom : '') + '. ' + (p.minutes >= 20 ? '10 minutes par jour.' : '5 minutes par jour.'), lienProf(''), 'Parler');
     if (p.objectif === 'examen') item('🎯', 'Simulation d\'examen', { en: 'TOEIC, IELTS ou Cambridge', es: 'DELE ou SIELE', pt: 'CELPE-Bras ou CAPLE' }[p.langue] + ', avec un score estimé.', lienProf('&mode=simulation_examen'), 'Commencer');
     else item('🎭', 'Jeu de rôle', 'Une situation de ' + p.objectif + ' avec ' + L.profNom + '.', lienProf('&mode=jeu_de_role'), 'Jouer');

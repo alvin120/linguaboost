@@ -8,9 +8,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%2210%22 fill=%22%236D28D9%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-family=%22Arial%22 font-weight=%22700%22 font-size=%2220%22 fill=%22white%22 text-anchor=%22middle%22%3EL%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%2210%22 fill=%22%231A4F96%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-family=%22Arial%22 font-weight=%22700%22 font-size=%2220%22 fill=%22white%22 text-anchor=%22middle%22%3EL%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="fx.css">
 <script src="js/theme.js"></script>
+<script src="js/fx/core.js"></script>
+<script src="js/mesure.js"></script>
 <style>
   body { padding-bottom: 88px; }
   /* Barre du haut */
@@ -332,6 +335,11 @@
       </div>
     </div>
     <div class="card aside-card">
+      <h3>🎓 Cours en 3D</h3>
+      <p style="font-size:14px;" id="cours3d-text">Suivez cette leçon en classe, avec le professeur qui parle et écrit au tableau.</p>
+      <a class="btn btn-primary btn-sm" id="cours3d-link" href="cours-3d.html">Lancer le cours 3D</a>
+    </div>
+    <div class="card aside-card">
       <h3>🔁 Ajouté à vos révisions</h3>
       <ul class="saved" id="saved"><li class="muted">Rien pour l'instant.</li></ul>
     </div>
@@ -390,6 +398,10 @@
 <script src="lecons/pt-b2.js"></script>
 <script src="lecons/pt-c1.js"></script>
 <script src="lecons/pt-c2.js"></script>
+<script src="js/progres.js"></script>
+<script src="js/fx/onde.js"></script>
 <script src="js/lecon.js"></script>
+<script src="js/fx/quiz-fx.js"></script>
+<script src="js/fx/flashcards.js"></script>
 </body>
 </html>

@@ -3,459 +3,767 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LinguaBoost — Anglais, espagnol, portugais</title>
-<meta name="description" content="Apprenez l'anglais, l'espagnol ou le portugais en 10 à 30 minutes par jour : test de niveau gratuit, parcours A1 à C2, professeurs IA natifs, préparation TOEIC, DELE et CELPE-Bras.">
+<title>LinguaBoost — Anglais, espagnol, portugais, chinois et japonais en ligne avec des profs natifs</title>
+<meta name="description" content="Parle anglais, espagnol, portugais brésilien, chinois ou japonais avec confiance en 3 mois. Cours en direct avec des profs natifs, plan personnalisé, suivi de progression. Ton premier cours est offert.">
+<link rel="canonical" href="https://www.linguaboost.fr/">
+<meta name="theme-color" content="#EAF4FF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B1424" media="(prefers-color-scheme: dark)">
+
+<!-- Open Graph / réseaux sociaux -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="LinguaBoost">
+<meta property="og:title" content="Parle une nouvelle langue avec confiance en 3 mois — LinguaBoost">
+<meta property="og:description" content="Cours en direct avec des profs natifs, pensés pour les adultes et les pros. Ton cours d'essai est gratuit.">
+<meta property="og:url" content="https://www.linguaboost.fr/">
+<meta property="og:image" content="https://www.linguaboost.fr/og-image.webp">
+<meta name="twitter:card" content="summary_large_image">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%2210%22 fill=%22%236D28D9%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-family=%22Arial%22 font-weight=%22700%22 font-size=%2220%22 fill=%22white%22 text-anchor=%22middle%22%3EL%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css">
-<script src="js/theme.js"></script>
-<style>
-  /* En-tête */
-  .site-header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
-  .header-row { display: flex; align-items: center; gap: 12px; min-height: 64px; }
-  .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 19px; color: var(--text); text-decoration: none; margin-right: auto; }
-  .logo-mark { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, var(--en), var(--brand) 50%, var(--es)); display: grid; place-items: center; color: #fff; font-size: 16px; }
-  .main-nav { display: none; gap: 4px; }
-  .main-nav a { color: var(--muted); text-decoration: none; padding: 8px 12px; border-radius: 999px; font-weight: 500; font-size: 15px; }
-  .main-nav a:hover { color: var(--text); background: var(--surface-2); }
-  .header-cta { display: none; }
-  .mobile-menu summary { list-style: none; }
-  .mobile-menu summary::-webkit-details-marker { display: none; }
-  .mobile-menu[open] .mobile-panel { display: flex; }
-  .mobile-panel { display: none; position: absolute; left: 0; right: 0; top: 64px; flex-direction: column; gap: 4px; padding: 12px 16px 20px; background: var(--surface); border-bottom: 1px solid var(--border); box-shadow: var(--shadow); }
-  .mobile-panel a { padding: 12px; border-radius: var(--radius-sm); color: var(--text); text-decoration: none; font-weight: 500; }
-  .mobile-panel a:hover { background: var(--surface-2); }
-  @media (min-width: 1100px) {
-    .main-nav, .header-cta { display: flex; }
-    .header-cta { gap: 8px; }
-    .mobile-menu { display: none; }
-  }
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:ital,opsz,wght@0,9..144,500..700;1,9..144,500&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Cpath d=%22M6 4h20a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H14l-7 6v-6H6a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z%22 fill=%22%231A4F96%22/%3E%3Ccircle cx=%2223%22 cy=%2214%22 r=%224%22 fill=%22%236CB8FF%22/%3E%3C/svg%3E">
+<link rel="stylesheet" href="ecole.css">
+<!-- Thème appliqué avant le rendu pour éviter le flash -->
+<script src="js/accueil-init.js"></script>
+<script src="js/ecole.js" defer></script>
 
-  section { padding: 64px 0; }
-  @media (min-width: 768px) { section { padding: 96px 0; } }
-  .section-head { max-width: 680px; margin-bottom: 40px; }
-  .section-head h2 { font-size: clamp(28px, 4vw, 40px); }
-  .section-head p { color: var(--muted); font-size: 18px; }
-
-  /* Hero */
-  .hero { padding-top: 40px; }
-  .hero-grid { display: grid; gap: 48px; align-items: center; }
-  @media (min-width: 960px) { .hero-grid { grid-template-columns: 1.15fr .85fr; } .hero { padding-top: 72px; } }
-  .hero h1 { font-size: clamp(36px, 6vw, 60px); }
-  .hero h1 .hl-en { color: var(--en); } .hero h1 .hl-es { color: var(--es); } .hero h1 .hl-pt { color: var(--pt); }
-  .hero .lead { font-size: 19px; color: var(--muted); max-width: 560px; }
-  .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 20px; }
-  .hero-trust { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; color: var(--muted); padding: 0; margin: 0; list-style: none; }
-  .hero-trust li::before { content: "✓ "; color: var(--ok); font-weight: 700; }
-
-  /* Téléphone : écran « Aujourd'hui » */
-  .phone { max-width: 340px; margin: 0 auto; padding: 14px; border-radius: 40px; background: #26232F; box-shadow: 0 30px 60px rgba(28,27,34,.25); }
-  .phone-screen { background: var(--bg); border-radius: 28px; padding: 20px 16px; display: grid; gap: 12px; }
-  .today-top { display: flex; justify-content: space-between; align-items: center; }
-  .today-top strong { font-size: 20px; }
-  .streak { font-weight: 700; color: var(--es); }
-  .goal { height: 8px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
-  .goal span { display: block; height: 100%; width: 60%; background: var(--brand); border-radius: 99px; }
-  .task { display: flex; gap: 12px; align-items: center; padding: 12px; }
-  .task-ico { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); font-size: 20px; flex-shrink: 0; }
-  .task b { display: block; font-size: 15px; } .task small { color: var(--muted); font-size: 13px; }
-  .tabbar { display: flex; justify-content: space-around; padding-top: 8px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); text-align: center; }
-  .tabbar span { display: grid; gap: 2px; } .tabbar .on { color: var(--brand); font-weight: 700; }
-
-  /* Langues */
-  .lang-grid { display: grid; gap: 20px; }
-  @media (min-width: 860px) { .lang-grid { grid-template-columns: repeat(3, 1fr); } }
-  .lang-card { padding: 28px; display: flex; flex-direction: column; gap: 14px; border-top: 5px solid var(--accent); }
-  .lang-card h3 { font-size: 24px; margin: 0; display: flex; align-items: center; gap: 10px; }
-  .teacher { display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: var(--radius-sm); background: var(--accent-soft); }
-  .avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font-weight: 800; font-size: 18px; flex-shrink: 0; }
-  .teacher q { font-style: italic; font-size: 14px; display: block; }
-  .teacher small { color: var(--muted); font-size: 13px; }
-  .lang-card dl { margin: 0; display: grid; gap: 8px; font-size: 14px; }
-  .lang-card dt { font-weight: 700; } .lang-card dd { margin: 0; color: var(--muted); }
-  .lang-card .btn { margin-top: auto; }
-
-  /* Étapes */
-  .steps { display: grid; gap: 16px; counter-reset: step; padding: 0; margin: 0; list-style: none; }
-  @media (min-width: 768px) { .steps { grid-template-columns: repeat(4, 1fr); } }
-  .steps li { padding: 24px; counter-increment: step; }
-  .steps li::before { content: counter(step); display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--brand-soft); color: var(--brand); font-weight: 800; margin-bottom: 12px; }
-  .steps h3 { font-size: 18px; } .steps p { color: var(--muted); font-size: 15px; margin: 0; }
-
-  /* Méthode */
-  .method-grid { display: grid; gap: 16px; }
-  @media (min-width: 640px) { .method-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 960px) { .method-grid { grid-template-columns: repeat(3, 1fr); } }
-  .method-grid article { padding: 22px; }
-  .method-grid .ico { font-size: 26px; margin-bottom: 8px; }
-  .method-grid h3 { font-size: 17px; } .method-grid p { color: var(--muted); font-size: 15px; margin: 0; }
-
-  /* Professeur IA */
-  .ai-grid { display: grid; gap: 40px; align-items: center; }
-  @media (min-width: 960px) { .ai-grid { grid-template-columns: .9fr 1.1fr; } }
-  .ai-list { padding: 0; margin: 20px 0 0; list-style: none; display: grid; gap: 10px; }
-  .ai-list li { display: flex; gap: 10px; } .ai-list li::before { content: "→"; color: var(--accent); font-weight: 700; }
-  .chat { padding: 20px; display: grid; gap: 12px; }
-  .chat-head { display: flex; gap: 10px; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-  .chat-head .avatar { width: 40px; height: 40px; font-size: 15px; }
-  .bubble { max-width: 88%; padding: 10px 14px; border-radius: 18px; font-size: 15px; }
-  .bubble.me { justify-self: end; background: var(--accent); color: var(--on-accent); border-bottom-right-radius: 6px; }
-  .bubble.bot { background: var(--surface-2); border-bottom-left-radius: 6px; }
-  .corrections { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; font-size: 14px; }
-  .corrections h4 { margin: 0; padding: 8px 12px; background: var(--accent-soft); color: var(--accent); font-size: 14px; }
-  .corrections table { width: 100%; border-collapse: collapse; }
-  .corrections th, .corrections td { text-align: left; padding: 8px 12px; border-top: 1px solid var(--border); vertical-align: top; }
-  .corrections th { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
-  .corrections del { color: var(--err); } .corrections ins { color: var(--ok); text-decoration: none; font-weight: 600; }
-  .table-scroll { overflow-x: auto; }
-
-  /* Examens */
-  .exam-grid { display: grid; gap: 20px; }
-  @media (min-width: 860px) { .exam-grid { grid-template-columns: repeat(3, 1fr); } }
-  .exam-card { padding: 26px; display: flex; flex-direction: column; gap: 10px; }
-  .exam-card h3 { font-size: 22px; margin: 0; }
-  .exam-card ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 15px; }
-  .exam-score { font-family: var(--font-display); font-size: 34px; color: var(--accent); }
-  .disclaimer { margin-top: 24px; padding: 14px 16px; border-radius: var(--radius-sm); background: var(--warn-soft); font-size: 14px; }
-
-  /* Tarifs */
-  .price-grid { display: grid; gap: 20px; }
-  @media (min-width: 860px) { .price-grid { grid-template-columns: repeat(3, 1fr); align-items: stretch; } }
-  .price { padding: 28px; display: flex; flex-direction: column; gap: 12px; }
-  .price.featured { border: 2px solid var(--brand); position: relative; }
-  .price.featured::before { content: "Le plus choisi"; position: absolute; top: -13px; left: 24px; background: var(--brand); color: var(--on-accent); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 99px; }
-  .price h3 { margin: 0; font-size: 20px; }
-  .amount { font-family: var(--font-display); font-size: 40px; line-height: 1; }
-  .amount small { font-family: var(--font); font-size: 15px; color: var(--muted); }
-  .price ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: 15px; }
-  .price li::before { content: "✓ "; color: var(--ok); font-weight: 700; }
-  .price .btn { margin-top: auto; }
-
-  /* FAQ */
-  .faq { max-width: 760px; display: grid; gap: 12px; }
-  .faq details { padding: 4px 20px; }
-  .faq summary { cursor: pointer; font-weight: 600; padding: 14px 0; min-height: 44px; }
-  .faq details p { color: var(--muted); }
-
-  .final-cta { text-align: center; padding: 56px 24px; background: var(--brand-soft); border-radius: 28px; }
-  .final-cta h2 { font-size: clamp(28px, 4vw, 40px); }
-
-  footer { border-top: 1px solid var(--border); padding: 40px 0; font-size: 14px; color: var(--muted); }
-  .footer-grid { display: grid; gap: 24px; grid-template-columns: repeat(2, 1fr); }
-  @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr repeat(3, 1fr); } }
-  footer h4 { color: var(--text); font-size: 14px; margin: 0 0 8px; }
-  footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-  footer a { color: var(--muted); text-decoration: none; } footer a:hover { color: var(--text); text-decoration: underline; }
-  .mock-banner { background: var(--text); color: var(--bg); text-align: center; font-size: 13px; padding: 6px 16px; }
-</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.linguaboost.fr/#org",
+      "name": "LinguaBoost",
+      "url": "https://www.linguaboost.fr/",
+      "logo": "https://www.linguaboost.fr/logo.png",
+      "description": "École de langues en ligne pour adultes et professionnels : anglais, espagnol, portugais brésilien, chinois mandarin et japonais.",
+      "sameAs": ["https://www.instagram.com/linguaboost", "https://www.linkedin.com/company/linguaboost", "https://www.youtube.com/@linguaboost"],
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "2318" }
+    },
+    {
+      "@type": "Course",
+      "name": "Anglais en ligne avec un prof natif",
+      "description": "Cours d'anglais en direct, du niveau A1 au C2, anglais général et anglais des affaires.",
+      "inLanguage": "en",
+      "provider": { "@id": "https://www.linguaboost.fr/#org" },
+      "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "online", "courseWorkload": "PT45M" },
+      "offers": { "@type": "Offer", "category": "Paid", "price": "59", "priceCurrency": "EUR" }
+    },
+    {
+      "@type": "Course",
+      "name": "Espagnol en ligne avec un prof natif",
+      "description": "Cours d'espagnol en direct, du niveau A1 au C2, espagnol d'Espagne et d'Amérique latine.",
+      "inLanguage": "es",
+      "provider": { "@id": "https://www.linguaboost.fr/#org" },
+      "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "online", "courseWorkload": "PT45M" },
+      "offers": { "@type": "Offer", "category": "Paid", "price": "59", "priceCurrency": "EUR" }
+    },
+    {
+      "@type": "Course",
+      "name": "Portugais brésilien en ligne avec un prof natif",
+      "description": "Cours de portugais brésilien en direct, du niveau A1 au C2, conversation et expatriation.",
+      "inLanguage": "pt-BR",
+      "provider": { "@id": "https://www.linguaboost.fr/#org" },
+      "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "online", "courseWorkload": "PT45M" },
+      "offers": { "@type": "Offer", "category": "Paid", "price": "59", "priceCurrency": "EUR" }
+    },
+    {
+      "@type": "Course",
+      "name": "Chinois mandarin en ligne avec un prof natif",
+      "description": "Cours de chinois mandarin en direct, du HSK 1 au HSK 6 : pinyin, tons, caractères et chinois des affaires.",
+      "inLanguage": "zh",
+      "provider": { "@id": "https://www.linguaboost.fr/#org" },
+      "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "online", "courseWorkload": "PT45M" },
+      "offers": { "@type": "Offer", "category": "Paid", "price": "59", "priceCurrency": "EUR" }
+    },
+    {
+      "@type": "Course",
+      "name": "Japonais en ligne avec un prof natif",
+      "description": "Cours de japonais en direct, du JLPT N5 au N1 : kana, kanji, keigo et conversation.",
+      "inLanguage": "ja",
+      "provider": { "@id": "https://www.linguaboost.fr/#org" },
+      "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "online", "courseWorkload": "PT45M" },
+      "offers": { "@type": "Offer", "category": "Paid", "price": "59", "priceCurrency": "EUR" }
+    }
+  ]
+}
+</script>
 </head>
 <body>
-<a class="skip-link" href="#contenu">Aller au contenu</a>
-<div class="mock-banner">Version de démonstration de LinguaBoost. Prix indicatifs.</div>
 
-<header class="site-header">
+<!-- Drapeaux ronds réutilisables -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="flag-fr" viewBox="0 0 32 32"><rect width="11" height="32" fill="#002654"/><rect x="11" width="10" height="32" fill="#fff"/><rect x="21" width="11" height="32" fill="#CE1126"/></symbol>
+  <symbol id="flag-en" viewBox="0 0 32 32"><rect width="32" height="32" fill="#012169"/><path d="M0 0L32 32M32 0L0 32" stroke="#fff" stroke-width="6"/><path d="M0 0L32 32M32 0L0 32" stroke="#C8102E" stroke-width="2"/><path d="M16 0V32M0 16H32" stroke="#fff" stroke-width="10"/><path d="M16 0V32M0 16H32" stroke="#C8102E" stroke-width="6"/></symbol>
+  <symbol id="flag-us" viewBox="0 0 32 32"><rect width="32" height="32" fill="#fff"/><g fill="#B22234"><rect width="32" height="2.46"/><rect y="4.92" width="32" height="2.46"/><rect y="9.85" width="32" height="2.46"/><rect y="14.77" width="32" height="2.46"/><rect y="19.69" width="32" height="2.46"/><rect y="24.62" width="32" height="2.46"/><rect y="29.54" width="32" height="2.46"/></g><rect width="15" height="17.2" fill="#3C3B6E"/></symbol>
+  <symbol id="flag-es" viewBox="0 0 32 32"><rect width="32" height="32" fill="#AA151B"/><rect y="8" width="32" height="16" fill="#F1BF00"/></symbol>
+  <symbol id="flag-ar" viewBox="0 0 32 32"><rect width="32" height="32" fill="#74ACDF"/><rect y="10.7" width="32" height="10.6" fill="#fff"/><circle cx="16" cy="16" r="3" fill="#F6B40E"/></symbol>
+  <symbol id="flag-br" viewBox="0 0 32 32"><rect width="32" height="32" fill="#009C3B"/><path d="M16 5L29 16L16 27L3 16Z" fill="#FFDF00"/><circle cx="16" cy="16" r="6" fill="#002776"/><path d="M10.3 14.8c3.6-.9 8.1-.3 11.5 1.8" stroke="#fff" stroke-width="1.2" fill="none"/></symbol>
+  <symbol id="flag-cn" viewBox="0 0 32 32"><rect width="32" height="32" fill="#DE2910"/><path d="M11 6l1.7 5.2h5.5l-4.4 3.2 1.7 5.2-4.5-3.2-4.5 3.2 1.7-5.2-4.4-3.2h5.5z" fill="#FFDE00"/></symbol>
+  <symbol id="flag-jp" viewBox="0 0 32 32"><rect width="32" height="32" fill="#fff"/><circle cx="16" cy="16" r="8" fill="#BC002D"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<!-- 1. En-tête -->
+<header class="site-header" id="haut">
   <div class="container header-row">
-    <a class="logo" href="accueil.html" aria-label="LinguaBoost, accueil"><span class="logo-mark" aria-hidden="true">L</span>LinguaBoost</a>
-    <nav class="main-nav" aria-label="Navigation principale">
-      <a href="parcours.html">Mon parcours</a> <a href="#langues">Langues</a>
-      <a href="test.html">Test de niveau</a>
-      <a href="#examens">Examens</a>
-      <a href="#tarifs">Tarifs</a>
-      <a href="#entreprises">Entreprises</a>
-      <a href="#faq">FAQ</a>
+    <a class="logo" href="#haut" aria-label="LinguaBoost, retour en haut de page">
+      <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 4h20a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H14l-7 6v-6H6a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="var(--night)"/><circle cx="23" cy="14" r="4" fill="var(--coral)"/></svg>
+      <span>Lingua<em>Boost</em></span>
+    </a>
+
+    <nav class="main-nav" id="menu" aria-label="Navigation principale">
+      <ul>
+        <li><a href="#langues">Langues</a></li>
+        <li><a href="#methode">Méthode</a></li>
+        <li><a href="#tarifs">Tarifs</a></li>
+        <li><a href="#profs">Professeurs</a></li>
+        <li><a href="#blog">Blog</a></li>
+      </ul>
+      <a class="btn btn-primary nav-cta" href="#essai">Cours d'essai gratuit <svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </nav>
-    <button class="icon-btn" id="theme-toggle" type="button" aria-label="Basculer le mode sombre">🌓</button>
-    <div class="header-cta">
-      <a class="btn btn-ghost btn-sm" href="infos.html#bientot">Se connecter</a>
-      <a class="btn btn-primary btn-sm" href="test.html">Commencer gratuitement</a>
-    </div>
-    <details class="mobile-menu">
-      <summary class="icon-btn" aria-label="Ouvrir le menu">☰</summary>
-      <nav class="mobile-panel" aria-label="Navigation mobile">
-        <a href="parcours.html">Mon parcours</a> <a href="#langues">Langues</a>
-        <a href="test.html">Test de niveau</a>
-        <a href="#examens">Examens</a>
-        <a href="#tarifs">Tarifs</a>
-        <a href="#entreprises">Entreprises</a>
-        <a href="#faq">FAQ</a>
-        <a href="infos.html#bientot">Se connecter</a>
-        <a class="btn btn-primary" href="test.html">Commencer gratuitement</a>
-      </nav>
-    </details>
+
+    <button class="icon-btn theme-toggle" type="button" aria-label="Activer le mode sombre" data-theme-toggle>
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="ico-moon"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z" fill="currentColor"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="ico-sun"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <button class="icon-btn burger" type="button" aria-controls="menu" aria-expanded="false" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
 <main id="contenu">
 
-  <!-- HERO -->
-  <section class="hero" id="test">
-    <div class="container hero-grid">
-      <div>
-        <p class="eyebrow">Pour les francophones · A1 → C2</p>
-        <h1>Parlez <span class="hl-en">anglais</span>, <span class="hl-es">espagnol</span> ou <span class="hl-pt">portugais</span>, 15 minutes par jour.</h1>
-        <p class="lead">Des situations réelles, des professeurs IA natifs qui vous corrigent avec bienveillance, et des révisions calculées pour ne plus rien oublier. Préparez aussi le TOEIC, le DELE ou le CELPE-Bras.</p>
-        <div class="hero-ctas">
-          <a class="btn btn-primary" href="test.html">Tester mon niveau gratuitement</a>
-          <a class="btn btn-ghost" href="lecon.html">Voir une leçon</a>
+<!-- 2. Hero -->
+<section class="hero" aria-labelledby="hero-titre">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Cours en direct avec des profs natifs</p>
+      <h1 id="hero-titre">Parle <span class="marker">anglais</span> avec confiance en&nbsp;3&nbsp;mois.</h1>
+      <p class="lead">Fini les cours qui t'endorment. Un prof natif rien que pour toi, un plan taillé pour ta vie pro, et le jour où <strong>tu oses enfin parler en réunion</strong>.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary btn-lg" href="#essai">Réserver mon cours d'essai gratuit <svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-secondary btn-lg" href="#test">Tester mon niveau</a>
+      </div>
+      <ul class="hero-reassure">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg> Sans carte bancaire</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg> 45 min, en visio</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg> Éligible CPF</li>
+      </ul>
+    </div>
+
+    <div class="hero-visual" aria-label="Aperçu d'un cours en direct">
+      <div class="call-card">
+        <div class="call-top">
+          <span class="live"><span aria-hidden="true"></span> En direct</span>
+          <span class="call-time">Mardi · 18h30 · 45 min</span>
         </div>
-        <ul class="hero-trust">
-          <li>Test de niveau en 5 minutes</li>
-          <li>Sans carte bancaire</li>
-          <li>Sur mobile et ordinateur</li>
+        <div class="call-body">
+          <span class="avatar avatar-xl" style="--h1:#BFE0FF;--h2:#4DA3FF" role="img" aria-label="Portrait de Beatriz, professeure">BE</span>
+          <div class="call-who">
+            <strong>Beatriz</strong>
+            <span>Prof · São Paulo</span>
+          </div>
+        </div>
+
+        <div class="bubble bubble-hello" data-hello>
+          <span class="sr-only">Bonjour se dit Hello en anglais, Hola en espagnol, Olá en portugais, Nǐ hǎo en chinois et Konnichiwa en japonais.</span>
+          <svg class="flag" aria-hidden="true" data-hello-flag><use href="#flag-fr"/></svg>
+          <span class="hello-word" aria-hidden="true" data-hello-word>Bonjour</span>
+          <button class="listen" type="button" data-hello-listen aria-label="Écouter la prononciation"><svg aria-hidden="true"><use href="#i-sound"/></svg></button>
+        </div>
+
+        <div class="bubble bubble-reply">
+          Tudo bem ? On reprend là où tu t'étais arrêté·e&nbsp;😊
+        </div>
+      </div>
+      <div class="float-chip chip-level"><span class="badge">B1 → B2</span> en 12 semaines</div>
+      <div class="float-chip chip-streak">🔥 6 semaines d'affilée</div>
+    </div>
+  </div>
+
+  <!-- Bande de confiance -->
+  <div class="container">
+    <div class="trust reveal">
+      <dl class="trust-stats">
+        <div><dt>Élèves accompagnés</dt><dd>12&nbsp;400+</dd></div>
+        <div><dt>Note moyenne</dt><dd>4,9<span>/5</span> <span class="stars" aria-hidden="true">★★★★★</span></dd></div>
+        <div><dt>Profs natifs certifiés</dt><dd>49</dd></div>
+      </dl>
+      <div class="trust-logos">
+        <p>Ils forment leurs équipes avec nous</p>
+        <ul>
+          <li>Northwind</li>
+          <li class="lg-serif">Atelier Lumen</li>
+          <li class="lg-caps">Groupe Vasco</li>
+          <li>kairos<b>.</b>conseil</li>
+          <li class="lg-serif">Maison Ondine</li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
 
-      <div class="phone" aria-label="Aperçu de l'application : écran Aujourd'hui" role="img">
-        <div class="phone-screen" data-lang="en" aria-hidden="true">
-          <div class="today-top"><strong>Aujourd'hui</strong><span class="streak">🔥 12 jours</span></div>
-          <div>
-            <div class="goal"><span></span></div>
-            <small class="muted">Objectif du jour : 9 / 15 min</small>
-          </div>
-          <div class="card task"><span class="task-ico">🔁</span><div><b>12 cartes à réviser</b><small>≈ 4 min</small></div></div>
-          <div class="card task"><span class="task-ico">🏨</span><div><b>A2 · At the hotel</b><small>Étape 2 sur 8 : Compréhension</small></div></div>
-          <div class="card task"><span class="task-ico">👂</span><div><b>Défi : ship ou sheep ?</b><small>Paires minimales · 2 min</small></div></div>
-          <div class="card task" data-lang="es"><span class="task-ico">💬</span><div><b>Lucía t'attend</b><small>Jeu de rôle : au restaurant</small></div></div>
-          <div class="tabbar"><span class="on">🏠<br>Aujourd'hui</span><span>🗺️<br>Parcours</span><span>🔁<br>Réviser</span><span>💬<br>Prof</span><span>📊<br>Progrès</span></div>
+<!-- 3. Choisis ta langue -->
+<section class="section" id="langues" aria-labelledby="langues-titre">
+  <div class="container">
+    <div class="section-head section-head-row reveal">
+      <div>
+        <p class="kicker">Choisis ta langue</p>
+        <h2 id="langues-titre">Cinq langues, des dizaines d'accents, <span class="marker">un seul objectif</span>&nbsp;: que tu parles.</h2>
+      </div>
+      <div class="carousel-nav">
+        <button class="icon-btn" type="button" data-carousel-prev="langues" aria-label="Langues précédentes"><svg aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow"/></svg></button>
+        <button class="icon-btn" type="button" data-carousel-next="langues" aria-label="Langues suivantes"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <ul class="carousel" data-carousel="langues" aria-label="Langues enseignées" tabindex="0">
+      <li class="lang-card">
+        <div class="lang-flags">
+          <svg class="flag flag-lg" aria-hidden="true"><use href="#flag-en"/></svg>
+          <svg class="flag flag-sm" aria-hidden="true"><use href="#flag-us"/></svg>
         </div>
+        <h3>Anglais</h3>
+        <p class="lang-meta"><span class="badge">14 profs natifs</span> <span class="badge badge-ghost">A1 → C2</span></p>
+        <p class="say">
+          <span class="foreign" lang="en">Nice to meet you</span>
+          <button class="listen" type="button" data-say="Nice to meet you" data-lang="en-GB" aria-label="Écouter « Nice to meet you »"><svg aria-hidden="true"><use href="#i-sound"/></svg></button>
+        </p>
+        <p>Réunions, pitchs, mails qui ne sonnent plus traduits. Accents britannique, américain, australien.</p>
+        <a class="card-link" href="#essai" data-pick-lang="en">Essai gratuit en anglais <svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </li>
+
+      <li class="lang-card">
+        <div class="lang-flags">
+          <svg class="flag flag-lg" aria-hidden="true"><use href="#flag-es"/></svg>
+          <svg class="flag flag-sm" aria-hidden="true"><use href="#flag-ar"/></svg>
+        </div>
+        <h3>Espagnol</h3>
+        <p class="lang-meta"><span class="badge">13 profs natifs</span> <span class="badge badge-ghost">A1 → C2</span></p>
+        <p class="say">
+          <span class="foreign" lang="es">¿Quedamos mañana?</span>
+          <button class="listen" type="button" data-say="¿Quedamos mañana?" data-lang="es-ES" aria-label="Écouter « ¿Quedamos mañana? »"><svg aria-hidden="true"><use href="#i-sound"/></svg></button>
+        </p>
+        <p>De Madrid à Buenos Aires : l'espagnol des clients, des collègues et des vacances qui durent.</p>
+        <a class="card-link" href="#essai" data-pick-lang="es">Essai gratuit en espagnol <svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </li>
+
+      <li class="lang-card">
+        <div class="lang-flags">
+          <svg class="flag flag-lg" aria-hidden="true"><use href="#flag-br"/></svg>
+        </div>
+        <h3>Portugais brésilien</h3>
+        <p class="lang-meta"><span class="badge">11 profs natifs</span> <span class="badge badge-ghost">A1 → C2</span></p>
+        <p class="say">
+          <span class="foreign" lang="pt-BR">Que saudade!</span>
+          <button class="listen" type="button" data-say="Que saudade!" data-lang="pt-BR" aria-label="Écouter « Que saudade! »"><svg aria-hidden="true"><use href="#i-sound"/></svg></button>
+        </p>
+        <p>Pour ton expatriation, ta belle-famille ou ce marché brésilien que ta boîte vise depuis un an.</p>
+        <a class="card-link" href="#essai" data-pick-lang="pt">Essai gratuit en portugais <svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </li>
+
+      <li class="lang-card">
+        <div class="lang-flags">
+          <svg class="flag flag-lg" aria-hidden="true"><use href="#flag-cn"/></svg>
+        </div>
+        <h3>Chinois mandarin</h3>
+        <p class="lang-meta"><span class="badge">6 profs natifs</span> <span class="badge badge-ghost">HSK 1 → 6</span></p>
+        <p class="say">
+          <span class="foreign" lang="zh-CN">很高兴认识你</span>
+          <button class="listen" type="button" data-say="很高兴认识你" data-lang="zh-CN" aria-label="Écouter « Hěn gāoxìng rènshi nǐ »"><svg aria-hidden="true"><use href="#i-sound"/></svg></button>
+        </p>
+        <p>Pinyin, tons et caractères pas à pas. Pour tes fournisseurs, tes salons à Shanghai et tes collègues de Shenzhen.</p>
+        <a class="card-link" href="#essai" data-pick-lang="zh">Essai gratuit en chinois <svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </li>
+
+      <li class="lang-card">
+        <div class="lang-flags">
+          <svg class="flag flag-lg" aria-hidden="true"><use href="#flag-jp"/></svg>
+        </div>
+        <h3>Japonais</h3>
+        <p class="lang-meta"><span class="badge">5 profs natifs</span> <span class="badge badge-ghost">JLPT N5 → N1</span></p>
+        <p class="say">
+          <span class="foreign" lang="ja">よろしくお願いします</span>
+          <button class="listen" type="button" data-say="よろしくお願いします" data-lang="ja-JP" aria-label="Écouter « Yoroshiku onegaishimasu »"><svg aria-hidden="true"><use href="#i-sound"/></svg></button>
+        </p>
+        <p>Les kana dès la première semaine, le keigo pour le bureau, et assez d'aisance pour vivre ton voyage au Japon.</p>
+        <a class="card-link" href="#essai" data-pick-lang="ja">Essai gratuit en japonais <svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </li>
+  </ul>
+  <div class="carousel-dots" data-carousel-dots="langues"></div>
+</section>
+
+<!-- 4. Test de niveau -->
+<section class="section section-tint" id="test" aria-labelledby="test-titre">
+  <div class="container test-grid">
+    <div class="section-head reveal">
+      <p class="kicker">Test de niveau express</p>
+      <h2 id="test-titre">Trois questions. Trente secondes. Ton niveau, <span class="marker">sans jugement</span>.</h2>
+      <p>Une première idée de ton niveau sur l'échelle européenne, de A1 à C2. Ton prof l'affinera pendant le cours d'essai.</p>
+    </div>
+
+    <div class="quiz reveal" data-quiz>
+      <div class="quiz-langs" role="radiogroup" aria-label="Langue du test">
+        <button type="button" role="radio" aria-checked="true" data-quiz-lang="en"><svg class="flag" aria-hidden="true"><use href="#flag-en"/></svg> Anglais</button>
+        <button type="button" role="radio" aria-checked="false" data-quiz-lang="es"><svg class="flag" aria-hidden="true"><use href="#flag-es"/></svg> Espagnol</button>
+        <button type="button" role="radio" aria-checked="false" data-quiz-lang="pt"><svg class="flag" aria-hidden="true"><use href="#flag-br"/></svg> Portugais</button>
+        <button type="button" role="radio" aria-checked="false" data-quiz-lang="zh"><svg class="flag" aria-hidden="true"><use href="#flag-cn"/></svg> Chinois</button>
+        <button type="button" role="radio" aria-checked="false" data-quiz-lang="ja"><svg class="flag" aria-hidden="true"><use href="#flag-jp"/></svg> Japonais</button>
+      </div>
+
+      <div class="quiz-step" data-quiz-step>
+        <div class="quiz-progress" aria-hidden="true"><span data-quiz-bar></span></div>
+        <p class="quiz-count" data-quiz-count>Question 1 sur 3</p>
+        <fieldset>
+          <legend class="quiz-q" data-quiz-q></legend>
+          <div class="quiz-options" data-quiz-options></div>
+        </fieldset>
+      </div>
+
+      <div class="quiz-result" data-quiz-result hidden>
+        <p class="quiz-count">Ton niveau estimé</p>
+        <div class="gauge">
+          <svg viewBox="0 0 120 70" aria-hidden="true">
+            <path class="gauge-track" d="M10 62 A50 50 0 0 1 110 62" pathLength="100"/>
+            <path class="gauge-fill" d="M10 62 A50 50 0 0 1 110 62" pathLength="100" data-gauge/>
+          </svg>
+          <p class="gauge-level" aria-live="polite"><span data-level>B1</span></p>
+        </div>
+        <ol class="gauge-scale" aria-hidden="true"><li>A1</li><li>A2</li><li>B1</li><li>B2</li><li>C1</li><li>C2</li></ol>
+        <p class="quiz-verdict" data-verdict></p>
+        <a class="btn btn-primary btn-lg" href="#essai" data-quiz-cta>Réserver mon essai gratuit <svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <button class="btn-text" type="button" data-quiz-restart>Refaire le test</button>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- LANGUES -->
-  <section id="langues" aria-labelledby="langues-titre">
-    <div class="container">
-      <div class="section-head">
-        <p class="eyebrow">Choisissez votre langue</p>
-        <h2 id="langues-titre">Trois langues, trois professeurs natifs</h2>
-        <p>Choisissez aussi votre variante. Vous pouvez en changer à tout moment, et les différences sont toujours signalées.</p>
-      </div>
-      <div class="lang-grid">
-        <article class="card lang-card" data-lang="en">
-          <h3><span aria-hidden="true">🇬🇧🇺🇸</span> Anglais</h3>
-          <div class="teacher">
-            <span class="avatar" aria-hidden="true">E</span>
-            <div><strong>Emma</strong> <small>· Londres · examinatrice TOEIC, IELTS, Cambridge</small>
-              <q lang="en">Mistakes are proof that you're trying.</q></div>
-          </div>
-          <dl>
-            <div><dt>Variantes</dt><dd>🇺🇸 US · 🇬🇧 UK · écoute : Australie, Irlande, Inde</dd></div>
-            <div><dt>Examens</dt><dd>TOEIC L&amp;R et S&amp;W · IELTS · B2 First · C1 Advanced</dd></div>
-            <div><dt>Pièges travaillés</dt><dd>« th », h aspiré, voyelles longues et courtes (ship / sheep), faux amis (actually, eventually)</dd></div>
-          </dl>
-          <a class="btn btn-primary" href="lecon.html?langue=en">Commencer l'anglais</a>
-        </article>
-
-        <article class="card lang-card" data-lang="es">
-          <h3><span aria-hidden="true">🇪🇸🌎</span> Espagnol</h3>
-          <div class="teacher">
-            <span class="avatar" aria-hidden="true">L</span>
-            <div><strong>Lucía</strong> <small>· Madrid · examinatrice DELE et SIELE</small>
-              <q lang="es">¡Poco a poco, pero sin pausa!</q></div>
-          </div>
-          <dl>
-            <div><dt>Variantes</dt><dd>🇪🇸 Espagne · 🌎 Amérique latine (Mexique, Argentine, Colombie)</dd></div>
-            <div><dt>Examens</dt><dd>DELE A1 → C2 · SIELE</dd></div>
-            <div><dt>Pièges travaillés</dt><dd>jota, r roulé (pero / perro), b et v, ser et estar, subjonctif, faux amis (embarazada, constipado)</dd></div>
-          </dl>
-          <a class="btn btn-primary" href="lecon.html?langue=es">Commencer l'espagnol</a>
-        </article>
-
-        <article class="card lang-card" data-lang="pt">
-          <h3><span aria-hidden="true">🇧🇷🇵🇹</span> Portugais</h3>
-          <div class="teacher">
-            <span class="avatar" aria-hidden="true">R</span>
-            <div><strong>Rafael</strong> <small>· São Paulo · examinateur CELPE-Bras</small>
-              <q lang="pt-BR">Bora praticar? Errar faz parte!</q></div>
-          </div>
-          <dl>
-            <div><dt>Variantes</dt><dd>🇧🇷 Brésil · 🇵🇹 Portugal</dd></div>
-            <div><dt>Examens</dt><dd>CELPE-Bras · CAPLE (option)</dd></div>
-            <div><dt>Pièges travaillés</dt><dd>voyelles nasales, ão, lh et nh, r initial, avó et avô, futur du subjonctif</dd></div>
-          </dl>
-          <a class="btn btn-primary" href="lecon.html?langue=pt">Commencer le portugais</a>
-        </article>
-      </div>
+<!-- 5. La méthode -->
+<section class="section" id="methode" aria-labelledby="methode-titre">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="kicker">La méthode</p>
+      <h2 id="methode-titre">Pas de manuel poussiéreux. <span class="marker">Ta vraie vie</span>, en cours.</h2>
     </div>
-  </section>
 
-  <!-- COMMENT ÇA MARCHE -->
-  <section aria-labelledby="how-titre" style="background: var(--surface-2);">
-    <div class="container">
-      <div class="section-head">
-        <p class="eyebrow">Comment ça marche</p>
-        <h2 id="how-titre">De votre niveau réel à la conversation</h2>
-      </div>
-      <ol class="steps">
-        <li class="card"><h3>Test de positionnement</h3><p>15 questions de grammaire et de vocabulaire, du niveau A1 au niveau C1, pour situer votre niveau CECRL.</p></li>
-        <li class="card"><h3>Parcours sur mesure</h3><p>Choisissez votre niveau (A1 à C2), votre objectif et votre temps par jour dans <a href="parcours.html">Mon parcours</a>, et modifiez-les quand vous voulez.</p></li>
-        <li class="card"><h3>Pratique quotidienne</h3><p>Révisions, une étape de leçon et un mini-défi. Entre 10 et 30 minutes, surtout sur mobile.</p></li>
-        <li class="card"><h3>Conversation réelle</h3><p>Jeux de rôle avec votre professeur IA (hôtel, entretien, négociation), et correction détaillée à la fin.</p></li>
+    <div class="steps" data-steps>
+      <div class="steps-line" aria-hidden="true"><span data-steps-line></span></div>
+      <ol>
+        <li class="step reveal">
+          <span class="step-num" aria-hidden="true">1</span>
+          <div class="step-ill" aria-hidden="true">🎯</div>
+          <h3>Le test</h3>
+          <p>15 minutes à l'oral avec ton prof pour situer ton niveau et ce qui te bloque vraiment.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num" aria-hidden="true">2</span>
+          <div class="step-ill" aria-hidden="true">🗺️</div>
+          <h3>Ton plan sur mesure</h3>
+          <p>Tes réunions, ton secteur, ton voyage de juin. On construit le programme autour de toi.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num" aria-hidden="true">3</span>
+          <div class="step-ill" aria-hidden="true">💬</div>
+          <h3>Des cours en direct</h3>
+          <p>45 minutes de visio où c'est toi qui parles 70 % du temps. Le soir, le midi, quand tu veux.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num" aria-hidden="true">4</span>
+          <div class="step-ill" aria-hidden="true">📈</div>
+          <h3>Une progression visible</h3>
+          <p>Un bilan chaque mois, des enregistrements de tes cours, et un niveau qui monte pour de vrai.</p>
+        </li>
       </ol>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- MÉTHODE -->
-  <section aria-labelledby="methode-titre">
-    <div class="container">
-      <div class="section-head">
-        <p class="eyebrow">La méthode</p>
-        <h2 id="methode-titre">Apprendre comme on vit la langue</h2>
-        <p>Une leçon par niveau, de A1 à C2, du café à la négociation. Chaque leçon suit 8 étapes : découverte, compréhension, vocabulaire, grammaire, pratique, production, culture et bilan.</p>
-      </div>
-      <div class="method-grid">
-        <article class="card"><div class="ico" aria-hidden="true">🎯</div><h3>Des tâches réelles</h3><p>Réserver, commander, se plaindre, négocier : on apprend en agissant (approche actionnelle du CECRL).</p></article>
-        <article class="card"><div class="ico" aria-hidden="true">🔁</div><h3>Répétition espacée</h3><p>Chaque erreur revient au bon moment, juste avant l'oubli.</p></article>
-        <article class="card"><div class="ico" aria-hidden="true">🇫🇷</div><h3>Pensé pour les francophones</h3><p>Faux amis, pièges de prononciation, erreurs typiques : tout est comparé au français.</p></article>
-        <article class="card"><div class="ico" aria-hidden="true">🧩</div><h3>Des expressions, pas des listes</h3><p>Des blocs prêts à l'emploi (« I have a reservation under the name… ») plutôt que des mots isolés.</p></article>
-        <article class="card"><div class="ico" aria-hidden="true">🌊</div><h3>Immersion progressive</h3><p>Consignes en français en A1-A2, bilingues en B1, 100 % dans la langue dès B2.</p></article>
-        <article class="card"><div class="ico" aria-hidden="true">🎙️</div><h3>Oral dès le début</h3><p>Shadowing, paires minimales et score de prononciation mot par mot.</p></article>
-      </div>
+<!-- 6. Formules -->
+<section class="section section-tint" id="tarifs" aria-labelledby="tarifs-titre">
+  <div class="container">
+    <div class="section-head section-head-center reveal">
+      <p class="kicker">Formules</p>
+      <h2 id="tarifs-titre">Un rythme qui tient <span class="marker">dans ta semaine</span>.</h2>
+      <p>Sans engagement sur le mensuel. Le premier cours est offert, quelle que soit la formule.</p>
     </div>
-  </section>
 
-  <!-- PROFESSEUR IA -->
-  <section aria-labelledby="ia-titre" style="background: var(--surface-2);">
-    <div class="container ai-grid">
-      <div>
-        <p class="eyebrow">Professeur IA</p>
-        <h2 id="ia-titre" style="font-size: clamp(28px,4vw,40px);">Parlez librement. Corrigé avec bienveillance.</h2>
-        <p class="muted" style="font-size:18px;">Emma, Lucía et Rafael s'adaptent à votre niveau, relancent la conversation et terminent chaque échange par un tableau clair : erreur, correction, explication.</p>
-        <ul class="ai-list">
-          <li>Conversation libre, ou jeux de rôle (aéroport, entretien, réunion)</li>
-          <li>Simulation de l'oral du DELE ou du CELPE-Bras</li>
-          <li>Mémoire de vos erreurs récurrentes et de vos centres d'intérêt</li>
-          <li>Texte ou voix</li>
+    <div class="billing reveal" role="group" aria-label="Période de facturation">
+      <button type="button" aria-pressed="true" data-billing="month">Mensuel</button>
+      <button type="button" aria-pressed="false" data-billing="quarter">Trimestriel <span class="badge">−15 %</span></button>
+    </div>
+
+    <ul class="plans">
+      <li class="plan reveal">
+        <h3>Découverte</h3>
+        <p class="plan-for">Pour reprendre en douceur</p>
+        <p class="price"><span class="amount" data-month="59" data-quarter="50">59</span>&nbsp;€<span class="per">/mois</span></p>
+        <p class="price-note" data-note-month="Sans engagement" data-note-quarter="Soit 150 € par trimestre">Sans engagement</p>
+        <ul class="features">
+          <li>4 cours de 45 min par mois</li>
+          <li>Prof natif attitré</li>
+          <li>Exercices entre les cours</li>
         </ul>
-        <a class="btn btn-primary" href="professeur.html" style="margin-top:24px;">Parler avec un professeur</a>
-      </div>
+        <a class="btn btn-secondary btn-block" href="#essai">Commencer l'essai</a>
+      </li>
+      <li class="plan plan-featured reveal">
+        <p class="plan-tag">Le plus choisi</p>
+        <h3>Intensif</h3>
+        <p class="plan-for">Pour un vrai déclic en 3 mois</p>
+        <p class="price"><span class="amount" data-month="149" data-quarter="127">149</span>&nbsp;€<span class="per">/mois</span></p>
+        <p class="price-note" data-note-month="Sans engagement" data-note-quarter="Soit 381 € par trimestre">Sans engagement</p>
+        <ul class="features">
+          <li>12 cours de 45 min par mois</li>
+          <li>Plan personnalisé et bilan mensuel</li>
+          <li>Enregistrement de tes cours</li>
+          <li>Clubs de conversation illimités</li>
+        </ul>
+        <a class="btn btn-primary btn-block" href="#essai">Commencer l'essai <svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </li>
+      <li class="plan reveal">
+        <h3>Business</h3>
+        <p class="plan-for">Pour performer au travail</p>
+        <p class="price"><span class="amount" data-month="239" data-quarter="203">239</span>&nbsp;€<span class="per">/mois</span></p>
+        <p class="price-note" data-note-month="Facture entreprise, éligible CPF" data-note-quarter="Soit 609 € par trimestre, éligible CPF">Facture entreprise, éligible CPF</p>
+        <ul class="features">
+          <li>16 cours de 45 min par mois</li>
+          <li>Vocabulaire de ton secteur</li>
+          <li>Simulations de réunions et de pitchs</li>
+          <li>Suivi RH et attestation de niveau</li>
+        </ul>
+        <a class="btn btn-secondary btn-block" href="#essai">Commencer l'essai</a>
+      </li>
+    </ul>
+  </div>
+</section>
 
-      <div class="card chat" data-lang="es" aria-label="Exemple de conversation avec Lucía, niveau A2">
-        <div class="chat-head">
-          <span class="avatar" aria-hidden="true">L</span>
-          <div><strong>Lucía</strong><br><small class="muted">Conversation libre · A2 · 🇪🇸 Espagne</small></div>
+<!-- 7. Professeurs -->
+<section class="section" id="profs" aria-labelledby="profs-titre">
+  <div class="container">
+    <div class="section-head section-head-row reveal">
+      <div>
+        <p class="kicker">Professeurs</p>
+        <h2 id="profs-titre">Des profs natifs, <span class="marker">pas des robots</span>.</h2>
+      </div>
+      <div class="carousel-nav">
+        <button class="icon-btn" type="button" data-carousel-prev="profs" aria-label="Professeurs précédents"><svg aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow"/></svg></button>
+        <button class="icon-btn" type="button" data-carousel-next="profs" aria-label="Professeurs suivants"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Portraits : remplacer les avatars par <img src="prof.webp" loading="lazy" decoding="async" width="96" height="96" alt="Portrait de …"> -->
+  <ul class="carousel" data-carousel="profs" aria-label="Nos professeurs" tabindex="0">
+    <li class="teacher">
+      <div class="teacher-head">
+        <span class="avatar avatar-lg" style="--h1:#CFE6FF;--h2:#1A4F96" role="img" aria-label="Portrait d'Emily">EM</span>
+        <svg class="flag teacher-flag" aria-hidden="true"><use href="#flag-en"/></svg>
+      </div>
+      <h3>Emily</h3>
+      <dl class="teacher-info">
+        <div><dt>Langue maternelle</dt><dd>Anglais</dd></div>
+        <div><dt>Accent</dt><dd>Britannique (Londres)</dd></div>
+        <div><dt>Spécialité</dt><dd>Anglais des affaires</dd></div>
+      </dl>
+      <a class="btn btn-primary btn-block" href="#essai" data-pick-lang="en">Réserver avec Emily</a>
+    </li>
+    <li class="teacher">
+      <div class="teacher-head">
+        <span class="avatar avatar-lg" style="--h1:#D6ECFF;--h2:#4DA3FF" role="img" aria-label="Portrait de Jake">JA</span>
+        <svg class="flag teacher-flag" aria-hidden="true"><use href="#flag-us"/></svg>
+      </div>
+      <h3>Jake</h3>
+      <dl class="teacher-info">
+        <div><dt>Langue maternelle</dt><dd>Anglais</dd></div>
+        <div><dt>Accent</dt><dd>Américain (Chicago)</dd></div>
+        <div><dt>Spécialité</dt><dd>Préparation TOEIC</dd></div>
+      </dl>
+      <a class="btn btn-primary btn-block" href="#essai" data-pick-lang="en">Réserver avec Jake</a>
+    </li>
+    <li class="teacher">
+      <div class="teacher-head">
+        <span class="avatar avatar-lg" style="--h1:#DDF1FF;--h2:#3D8FE0" role="img" aria-label="Portrait de Lucía">LU</span>
+        <svg class="flag teacher-flag" aria-hidden="true"><use href="#flag-es"/></svg>
+      </div>
+      <h3>Lucía</h3>
+      <dl class="teacher-info">
+        <div><dt>Langue maternelle</dt><dd>Espagnol</dd></div>
+        <div><dt>Accent</dt><dd>Andalou (Séville)</dd></div>
+        <div><dt>Spécialité</dt><dd>Conversation et voyage</dd></div>
+      </dl>
+      <a class="btn btn-primary btn-block" href="#essai" data-pick-lang="es">Réserver avec Lucía</a>
+    </li>
+    <li class="teacher">
+      <div class="teacher-head">
+        <span class="avatar avatar-lg" style="--h1:#CFE6FF;--h2:#2F7FD8" role="img" aria-label="Portrait de Mateo">MA</span>
+        <svg class="flag teacher-flag" aria-hidden="true"><use href="#flag-ar"/></svg>
+      </div>
+      <h3>Mateo</h3>
+      <dl class="teacher-info">
+        <div><dt>Langue maternelle</dt><dd>Espagnol</dd></div>
+        <div><dt>Accent</dt><dd>Rioplatense (Buenos Aires)</dd></div>
+        <div><dt>Spécialité</dt><dd>Négociation commerciale</dd></div>
+      </dl>
+      <a class="btn btn-primary btn-block" href="#essai" data-pick-lang="es">Réserver avec Mateo</a>
+    </li>
+    <li class="teacher">
+      <div class="teacher-head">
+        <span class="avatar avatar-lg" style="--h1:#BFE0FF;--h2:#4DA3FF" role="img" aria-label="Portrait de Beatriz">BE</span>
+        <svg class="flag teacher-flag" aria-hidden="true"><use href="#flag-br"/></svg>
+      </div>
+      <h3>Beatriz</h3>
+      <dl class="teacher-info">
+        <div><dt>Langue maternelle</dt><dd>Portugais</dd></div>
+        <div><dt>Accent</dt><dd>Paulistano (São Paulo)</dd></div>
+        <div><dt>Spécialité</dt><dd>Expatriation</dd></div>
+      </dl>
+      <a class="btn btn-primary btn-block" href="#essai" data-pick-lang="pt">Réserver avec Beatriz</a>
+    </li>
+    <li class="teacher">
+      <div class="teacher-head">
+        <span class="avatar avatar-lg" style="--h1:#DDF1FF;--h2:#2B6CC4" role="img" aria-label="Portrait de Thiago">TH</span>
+        <svg class="flag teacher-flag" aria-hidden="true"><use href="#flag-br"/></svg>
+      </div>
+      <h3>Thiago</h3>
+      <dl class="teacher-info">
+        <div><dt>Langue maternelle</dt><dd>Portugais</dd></div>
+        <div><dt>Accent</dt><dd>Nordestino (Recife)</dd></div>
+        <div><dt>Spécialité</dt><dd>Grands débutants</dd></div>
+      </dl>
+      <a class="btn btn-primary btn-block" href="#essai" data-pick-lang="pt">Réserver avec Thiago</a>
+    </li>
+    <li class="teacher">
+      <div class="teacher-head">
+        <span class="avatar avatar-lg" style="--h1:#D6ECFF;--h2:#1A4F96" role="img" aria-label="Portrait de Wei">WE</span>
+        <svg class="flag teacher-flag" aria-hidden="true"><use href="#flag-cn"/></svg>
+      </div>
+      <h3>Wei</h3>
+      <dl class="teacher-info">
+        <div><dt>Langue maternelle</dt><dd>Chinois mandarin</dd></div>
+        <div><dt>Accent</dt><dd>Pékinois (Pékin)</dd></div>
+        <div><dt>Spécialité</dt><dd>Chinois des affaires, HSK</dd></div>
+      </dl>
+      <a class="btn btn-primary btn-block" href="#essai" data-pick-lang="zh">Réserver avec Wei</a>
+    </li>
+    <li class="teacher">
+      <div class="teacher-head">
+        <span class="avatar avatar-lg" style="--h1:#CFE6FF;--h2:#1A4F96" role="img" aria-label="Portrait de Yuki">YU</span>
+        <svg class="flag teacher-flag" aria-hidden="true"><use href="#flag-jp"/></svg>
+      </div>
+      <h3>Yuki</h3>
+      <dl class="teacher-info">
+        <div><dt>Langue maternelle</dt><dd>Japonais</dd></div>
+        <div><dt>Accent</dt><dd>Standard (Tokyo)</dd></div>
+        <div><dt>Spécialité</dt><dd>Débutants et JLPT</dd></div>
+      </dl>
+      <a class="btn btn-primary btn-block" href="#essai" data-pick-lang="ja">Réserver avec Yuki</a>
+    </li>
+  </ul>
+  <div class="carousel-dots" data-carousel-dots="profs"></div>
+</section>
+
+<!-- 8. Témoignages -->
+<section class="section section-tint" aria-labelledby="avis-titre">
+  <div class="container">
+    <div class="section-head section-head-row reveal">
+      <div>
+        <p class="kicker">Témoignages</p>
+        <h2 id="avis-titre">Ils ont osé. <span class="marker">Et ça a changé</span> beaucoup de choses.</h2>
+      </div>
+      <div class="carousel-nav">
+        <button class="icon-btn" type="button" data-carousel-prev="avis" aria-label="Témoignages précédents"><svg aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow"/></svg></button>
+        <button class="icon-btn" type="button" data-carousel-next="avis" aria-label="Témoignages suivants"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <ul class="carousel" data-carousel="avis" aria-label="Témoignages d'élèves" tabindex="0">
+      <li class="quote">
+        <blockquote>
+          <p>« Pendant dix ans j'ai hoché la tête en visio avec Londres. Maintenant c'est moi qui présente les résultats du trimestre. »</p>
+        </blockquote>
+        <div class="quote-who">
+          <span class="avatar" style="--h1:#CFE6FF;--h2:#1A4F96" role="img" aria-label="Portrait de Claire">CL</span>
+          <div><strong>Claire</strong>, cheffe de projet<br><span class="level"><span class="badge badge-ghost">A2</span> → <span class="badge">B2</span> en 5 mois</span></div>
         </div>
-        <p class="bubble me" lang="es">Ayer fui a la playa y es muy bonito.</p>
-        <p class="bubble bot" lang="es">¡Qué bien! A mí también me encanta la playa. ¿Con quién fuiste? ¿Te bañaste o hacía demasiado frío?</p>
-        <div class="corrections">
-          <h4 lang="es">Correcciones</h4>
-          <div class="table-scroll">
-            <table>
-              <thead><tr><th>Erreur</th><th>Correction</th><th>Explication</th></tr></thead>
-              <tbody>
-                <tr><td lang="es"><del>es</del></td><td lang="es"><ins>era</ins></td><td>Pour <b>décrire</b> dans le passé, on emploie l'imparfait (<i lang="es">era</i>), comme en français « c'était ».</td></tr>
-                <tr><td lang="es"><del>bonito</del></td><td lang="es"><ins>bonita</ins></td><td><i lang="es">La playa</i> est féminin, donc l'adjectif s'accorde : <i lang="es">muy bonita</i>.</td></tr>
-              </tbody>
-            </table>
-          </div>
+      </li>
+      <li class="quote">
+        <blockquote>
+          <p>« Lucía a construit les cours autour de mes clients à Valence. Au bout de deux mois, je négociais sans traducteur. »</p>
+        </blockquote>
+        <div class="quote-who">
+          <span class="avatar" style="--h1:#D6ECFF;--h2:#4DA3FF" role="img" aria-label="Portrait de Karim">KA</span>
+          <div><strong>Karim</strong>, commercial export<br><span class="level"><span class="badge badge-ghost">B1</span> → <span class="badge">C1</span> en 7 mois</span></div>
         </div>
-        <p class="note" lang="es">✅ Phrase correcte : <b>Ayer fui a la playa y era muy bonita.</b></p>
-      </div>
-    </div>
-  </section>
+      </li>
+      <li class="quote">
+        <blockquote>
+          <p>« On part à Rio en septembre. Grâce à Thiago, je comprends enfin les blagues de ma belle-famille. Et j'en fais. »</p>
+        </blockquote>
+        <div class="quote-who">
+          <span class="avatar" style="--h1:#DDF1FF;--h2:#2B6CC4" role="img" aria-label="Portrait de Sophie">SO</span>
+          <div><strong>Sophie</strong>, infirmière<br><span class="level"><span class="badge badge-ghost">A1</span> → <span class="badge">B1</span> en 6 mois</span></div>
+        </div>
+      </li>
+      <li class="quote">
+        <blockquote>
+          <p>« Wei m'a appris à négocier avec nos fournisseurs à Shenzhen. Ils ont souri quand j'ai commencé en mandarin, et le prix a baissé. »</p>
+        </blockquote>
+        <div class="quote-who">
+          <span class="avatar" style="--h1:#CFE6FF;--h2:#2B6CC4" role="img" aria-label="Portrait de Julien">JU</span>
+          <div><strong>Julien</strong>, acheteur<br><span class="level"><span class="badge badge-ghost">A1</span> → <span class="badge">A2</span> en 4 mois</span></div>
+        </div>
+      </li>
+      <li class="quote">
+        <blockquote>
+          <p>« Je rêvais du Japon depuis l'adolescence. Avec Yuki, j'ai lu mes premiers kanji en trois semaines. Départ pour Kyoto en avril ! »</p>
+        </blockquote>
+        <div class="quote-who">
+          <span class="avatar" style="--h1:#E3F1FF;--h2:#4DA3FF" role="img" aria-label="Portrait de Léa">LÉ</span>
+          <div><strong>Léa</strong>, graphiste<br><span class="level"><span class="badge badge-ghost">A1</span> → <span class="badge">A2</span> en 5 mois</span></div>
+        </div>
+      </li>
+  </ul>
+  <div class="carousel-dots" data-carousel-dots="avis"></div>
+</section>
 
-  <!-- EXAMENS -->
-  <section id="examens" aria-labelledby="examens-titre">
-    <div class="container">
-      <div class="section-head">
-        <p class="eyebrow">Simulateurs d'examens</p>
-        <h2 id="examens-titre">Entraînez-vous au format officiel</h2>
-        <p>Des sujets originaux au format des épreuves, des examens blancs chronométrés et un score estimé détaillé par partie.</p>
-      </div>
-      <div class="exam-grid">
-        <article class="card exam-card" data-lang="en">
-          <span class="pill">Anglais</span>
-          <h3>TOEIC Listening &amp; Reading</h3>
-          <div class="exam-score">990 <small class="muted" style="font-size:16px;font-family:var(--font)">score maximum</small></div>
-          <ul><li>Maximum : 495 en écoute + 495 en lecture</li><li>Les 7 parties, stratégies et pièges</li><li>Examen blanc : 200 questions, environ 2 h</li><li>Options : S&amp;W (max. 400), IELTS (max. 9), B2 First, C1 Advanced</li></ul>
-        </article>
-        <article class="card exam-card" data-lang="es">
-          <span class="pill">Espagnol</span>
-          <h3>DELE A1 → C2 · SIELE</h3>
-          <div class="exam-score">C2 <small class="muted" style="font-size:16px;font-family:var(--font)">niveau maximum</small></div>
-          <ul><li>DELE : du A1 au C2 (maîtrise) · SIELE : max. 1 000 points</li><li>Les 4 épreuves, avec des grilles de type Cervantes</li><li>Oral simulé : préparation, monologue, conversation</li><li>Tâches originales pour chaque niveau</li></ul>
-        </article>
-        <article class="card exam-card" data-lang="pt">
-          <span class="pill">Portugais</span>
-          <h3>CELPE-Bras · CAPLE</h3>
-          <div class="exam-score" style="font-size:26px;">Avançado Superior <small class="muted" style="font-size:16px;font-family:var(--font)">niveau maximum</small></div>
-          <ul><li>Tâches intégrées : lire, écouter ou regarder, puis écrire</li><li>Interaction face à face à partir de documents déclencheurs</li><li>CELPE-Bras : de Intermediário à Avançado Superior · CAPLE : jusqu'au DUPLE (C2)</li></ul>
-        </article>
-      </div>
-      <p class="disclaimer">ℹ️ Les scores affichés sont des <strong>estimations indicatives</strong>. Ils ne remplacent pas une certification officielle. TOEIC, DELE, SIELE, CELPE-Bras, IELTS et Cambridge sont des marques de leurs propriétaires respectifs. LinguaBoost n'y est pas affilié.</p>
+<!-- 9. FAQ -->
+<section class="section" aria-labelledby="faq-titre">
+  <div class="container faq-grid">
+    <div class="section-head reveal">
+      <p class="kicker">FAQ</p>
+      <h2 id="faq-titre">Tes questions, <span class="marker">nos réponses</span>.</h2>
+      <p>Une autre question ? Écris-nous à <a href="mailto:bonjour@linguaboost.fr">bonjour@linguaboost.fr</a>, on répond en moins de 24 h.</p>
     </div>
-  </section>
+    <div class="faq reveal">
+      <details name="faq" open>
+        <summary>Le cours d'essai est-il vraiment gratuit ?</summary>
+        <p>Oui. 45 minutes avec un prof natif, sans carte bancaire. Si tu n'accroches pas, tu t'arrêtes là, sans rien payer.</p>
+      </details>
+      <details name="faq">
+        <summary>Je suis grand débutant, c'est pour moi ?</summary>
+        <p>Complètement. Nos profs adaptent le rythme et parlent français si besoin au début. Tu ne seras jamais lâché·e dans le grand bain.</p>
+      </details>
+      <details name="faq">
+        <summary>Comment se passent les cours ?</summary>
+        <p>En visio, depuis ton ordinateur ou ton téléphone. Tu réserves tes créneaux dans l'appli, de 7 h à 22 h, 7 jours sur 7.</p>
+      </details>
+      <details name="faq">
+        <summary>Puis-je utiliser mon CPF ou le budget formation de mon entreprise ?</summary>
+        <p>Oui. La formule Business est éligible au CPF et on établit des factures au nom de ton entreprise. On s'occupe des papiers avec ton service RH.</p>
+      </details>
+      <details name="faq">
+        <summary>Je peux changer de prof ?</summary>
+        <p>Quand tu veux, en un clic. Le courant doit passer : c'est la clé pour oser parler.</p>
+      </details>
+      <details name="faq">
+        <summary>Et si je dois annuler un cours ?</summary>
+        <p>Annule jusqu'à 12 h avant, ton cours est recrédité. Dans la formule trimestrielle, les cours non utilisés sont reportés au mois suivant.</p>
+      </details>
+    </div>
+  </div>
+</section>
 
-  <!-- TARIFS -->
-  <section id="tarifs" aria-labelledby="tarifs-titre" style="background: var(--surface-2);">
-    <div class="container">
-      <div class="section-head">
-        <p class="eyebrow">Tarifs</p>
-        <h2 id="tarifs-titre">Commencez gratuitement</h2>
-        <p>Prix indicatifs de la maquette, à définir.</p>
-      </div>
-      <div class="price-grid">
-        <article class="card price">
-          <h3>Gratuit</h3>
-          <div class="amount">0 € <small>pour toujours</small></div>
-          <ul><li>Test de niveau complet</li><li>1ʳᵉ unité de chaque niveau</li><li>10 exercices par jour</li><li>5 messages par jour au professeur IA</li></ul>
-          <a class="btn btn-ghost" href="test.html">Commencer</a>
-        </article>
-        <article class="card price featured">
-          <h3>Premium</h3>
-          <div class="amount">12,99 € <small>/ mois · ou 89 € / an</small></div>
-          <ul><li>Tout le parcours A1 → C2, dans les 3 langues</li><li>Professeur IA illimité, texte et voix</li><li>Corrections IA détaillées</li><li>Entraînement aux examens par partie</li></ul>
-          <a class="btn btn-primary" href="infos.html#bientot">Essayer 7 jours</a>
-        </article>
-        <article class="card price" id="entreprises">
-          <h3>Entreprise &amp; écoles</h3>
-          <div class="amount" style="font-size:30px;">Sur devis</div>
-          <ul><li>Licences par salarié ou par élève</li><li>Tableau de bord RH ou professeur</li><li>Anglais pro, tourisme et hôtellerie</li><li>Devoirs, suivi et exports PDF</li></ul>
-          <a class="btn btn-ghost" href="infos.html#contact">Demander une démo</a>
-        </article>
-      </div>
-      <p class="note" style="margin-top:16px;">Pack examen (TOEIC, DELE, CELPE-Bras) : préparation intensive de 4 à 8 semaines, avec examens blancs complets.</p>
+<!-- 10. Appel final -->
+<section class="final-cta" id="essai" aria-labelledby="essai-titre">
+  <div class="container final-grid">
+    <div class="reveal">
+      <h2 id="essai-titre">Dans 3 mois, tu pourrais <span class="marker marker-light">parler sans réfléchir</span>.</h2>
+      <p>Ou repousser encore. Ton premier cours est offert, ça ne coûte rien d'essayer.</p>
     </div>
-  </section>
+    <form class="trial-form reveal" data-trial-form novalidate>
+      <div class="field">
+        <label for="trial-name">Ton prénom</label>
+        <input id="trial-name" name="prenom" autocomplete="given-name" required>
+      </div>
+      <div class="field">
+        <label for="trial-email">Ton e-mail</label>
+        <input id="trial-email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="trial-lang">La langue que tu veux parler</label>
+        <select id="trial-lang" name="langue">
+          <option value="en">Anglais</option>
+          <option value="es">Espagnol</option>
+          <option value="pt">Portugais brésilien</option>
+          <option value="zh">Chinois mandarin</option>
+          <option value="ja">Japonais</option>
+        </select>
+      </div>
+      <input type="hidden" name="niveau" data-trial-level>
+      <button class="btn btn-primary btn-lg btn-block" type="submit">Réserver mon cours gratuit <svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <p class="form-msg" role="status" data-trial-msg></p>
+    </form>
+  </div>
+</section>
 
-  <!-- FAQ -->
-  <section id="faq" aria-labelledby="faq-titre">
-    <div class="container">
-      <div class="section-head"><p class="eyebrow">FAQ</p><h2 id="faq-titre">Questions fréquentes</h2></div>
-      <div class="faq">
-        <details class="card"><summary>Combien de temps faut-il par jour ?</summary><p>Entre 10 et 30 minutes. L'application vous propose une session adaptée au temps que vous avez choisi, et les révisions sont calculées pour tenir dans ce temps.</p></details>
-        <details class="card"><summary>Je suis grand débutant, est-ce pour moi ?</summary><p>Oui. Vous pouvez <a href="test.html">passer le test</a> et commencer directement en A1. Les consignes et les explications sont en français jusqu'au niveau A2.</p></details>
-        <details class="card"><summary>Le score TOEIC, DELE ou CELPE-Bras est-il officiel ?</summary><p>Non. C'est une estimation indicative, calculée à partir d'exercices originaux au format officiel. Seuls les organismes officiels délivrent la certification.</p></details>
-        <details class="card"><summary>Anglais britannique ou américain ? Espagnol d'Espagne ou d'Amérique latine ?</summary><p>C'est vous qui choisissez. Chaque dialogue existe dans les deux variantes principales et les différences sont signalées. Vous pouvez changer à tout moment.</p></details>
-      </div>
-    </div>
-  </section>
-
-  <section style="padding-top:0;">
-    <div class="container">
-      <div class="final-cta">
-        <h2>Quel est votre vrai niveau ?</h2>
-        <p class="muted">Découvrez-le en 5 minutes, gratuitement et sans créer de compte.</p>
-        <a class="btn btn-primary" href="test.html" style="margin-top:8px;">Passer le test de niveau</a>
-      </div>
-    </div>
-  </section>
 </main>
 
-<footer>
+<!-- 11. Pied de page -->
+<footer class="site-footer" id="blog">
   <div class="container footer-grid">
-    <div>
-      <a class="logo" href="accueil.html"><span class="logo-mark" aria-hidden="true">L</span>LinguaBoost</a>
-      <p style="margin-top:12px;">Anglais, espagnol et portugais pour les francophones, du niveau A1 au niveau C2.</p>
+    <div class="footer-brand">
+      <a class="logo" href="#haut">
+        <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 4h20a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H14l-7 6v-6H6a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="var(--night)"/><circle cx="23" cy="14" r="4" fill="var(--coral)"/></svg>
+        <span>Lingua<em>Boost</em></span>
+      </a>
+      <p>L'école de langues en ligne des adultes qui veulent enfin parler.</p>
+      <ul class="socials">
+        <li><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg></a></li>
+        <li><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="currentColor"/><path d="M7.5 10.5v6M7.5 7.5v.01M11 16.5v-6M11 13c0-1.7 1-2.6 2.4-2.6s2.1.9 2.1 2.6v3.5" stroke="var(--footer-bg)" stroke-width="2" stroke-linecap="round" fill="none"/></svg></a></li>
+        <li><a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4" fill="currentColor"/><path d="M10 9v6l5-3z" fill="var(--footer-bg)"/></svg></a></li>
+        <li><a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3-3.46M14 3c.4 2.6 2.2 4.2 5 4.5" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg></a></li>
+      </ul>
     </div>
-    <div><h4>Apprendre</h4><ul><li><a href="lecon.html">Anglais</a></li><li><a href="lecon.html?langue=es">Espagnol</a></li><li><a href="lecon.html?langue=pt">Portugais</a></li><li><a href="test.html">Test de niveau</a></li><li><a href="parcours.html">Mon parcours</a></li><li><a href="editeur.html">Éditeur de leçons</a></li><li><a href="infos.html#bientot">Blog</a></li></ul></div>
-    <div><h4>Examens</h4><ul><li><a href="professeur.html?prof=emma&amp;mode=simulation_examen&amp;objectif=examen">TOEIC</a></li><li><a href="professeur.html?prof=lucia&amp;mode=simulation_examen&amp;objectif=examen">DELE · SIELE</a></li><li><a href="professeur.html?prof=rafael&amp;mode=simulation_examen&amp;objectif=examen">CELPE-Bras</a></li><li><a href="#entreprises">Entreprises</a></li><li><a href="infos.html#contact">Contact</a></li></ul></div>
-    <div><h4>Légal</h4><ul><li><a href="infos.html#mentions">Mentions légales</a></li><li><a href="infos.html#confidentialite">Confidentialité (RGPD)</a></li><li><a href="infos.html#cookies">Cookies</a></li><li><a href="infos.html#cgu">CGU</a></li><li><a href="infos.html#cgv">CGV</a></li></ul></div>
+
+    <nav class="footer-links" aria-label="Liens du pied de page">
+      <div>
+        <h3>Apprendre</h3>
+        <ul><li><a href="#langues">Anglais</a></li><li><a href="#langues">Espagnol</a></li><li><a href="#langues">Portugais brésilien</a></li><li><a href="#langues">Chinois mandarin</a></li><li><a href="#langues">Japonais</a></li><li><a href="#test">Test de niveau</a></li></ul>
+      </div>
+      <div>
+        <h3>LinguaBoost</h3>
+        <ul><li><a href="#methode">Méthode</a></li><li><a href="#profs">Devenir prof</a></li><li><a href="#tarifs">Entreprises</a></li><li><a href="#blog">Blog</a></li></ul>
+      </div>
+      <div>
+        <h3>Aide</h3>
+        <ul><li><a href="#faq-titre">FAQ</a></li><li><a href="mailto:bonjour@linguaboost.fr">Contact</a></li><li><a href="#">Mentions légales</a></li><li><a href="#">Confidentialité</a></li></ul>
+      </div>
+    </nav>
+
+    <div class="footer-news">
+      <h3 id="news-titre">Une expression étrangère par semaine</h3>
+      <p>Chaque lundi, une expression, son audio et comment la placer au bureau.</p>
+      <form class="news-form" data-news-form aria-labelledby="news-titre" novalidate>
+        <label class="sr-only" for="news-email">Ton e-mail</label>
+        <input id="news-email" type="email" placeholder="ton@email.fr" autocomplete="email" required>
+        <button class="btn btn-primary" type="submit">S'inscrire</button>
+      </form>
+      <p class="form-msg" role="status" data-news-msg></p>
+
+      <label class="site-lang" for="site-lang">
+        <span>Langue du site</span>
+        <select id="site-lang">
+          <option value="fr" selected>Français</option>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="pt">Português</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2026 LinguaBoost. Fait avec ☕ entre Lyon, Séville, São Paulo et Tokyo.</p>
   </div>
 </footer>
 
-<script src="js/accueil.js"></script>
 </body>
 </html>

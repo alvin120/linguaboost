@@ -117,6 +117,8 @@
   else document.getElementById('tip-text').innerHTML = L.conseil;
   document.getElementById('ask-text').textContent = 'Demandez à ' + L.profNom + " d'expliquer une phrase du dialogue.";
   document.getElementById('ask-link').href = 'professeur.html?prof=' + L.prof + '&niveau=' + NIVEAU;
+  document.getElementById('cours3d-link').href = 'cours-3d.html?langue=' + LANGUE + '&niveau=' + NIVEAU;
+  document.getElementById('cours3d-text').textContent = 'Suivez cette leçon en classe avec ' + L.profNom + ', qui parle et écrit au tableau.';
   ['order-picked', 'order-pool', 'gaps', 'gram-ex', 'pop-word'].forEach(function (id) { document.getElementById(id).lang = L.lang; });
   Object.keys(NOMS).forEach(function (k) {
     if (k === LANGUE || !niveauxDispo(k).length) return;
@@ -486,6 +488,7 @@
       missed.forEach(addSaved);
       var box = document.getElementById('final-result'); box.innerHTML = ''; box.hidden = false;
       var passed = good >= seuil;
+      if (window.LBProgres) LBProgres.terminer(LANGUE, NIVEAU, good, L.bilan.length, passed ? L.badge : null);
       if (passed) box.appendChild(el('div', { class: 'badge', 'aria-hidden': 'true' }, L.badge.icone));
       box.appendChild(el('h3', null, passed ? 'Badge « ' + L.badge.nom + ' » débloqué !' : 'Leçon terminée'));
       box.appendChild(el('p', null, 'Score : ' + good + ' / ' + L.bilan.length + ' · ' + state.xp + ' XP gagnés dans cette leçon.'));
@@ -516,6 +519,7 @@
   }
   function go(n) {
     state.step = Math.max(1, Math.min(steps.length, n));
+    if (window.LBProgres) LBProgres.etape(LANGUE, NIVEAU, state.step);
     document.querySelectorAll('.panel').forEach(function (p) { p.classList.toggle('active', p.id === 'step-' + state.step); });
     document.getElementById('progress-bar').style.width = (state.step / steps.length * 100) + '%';
     document.getElementById('prev').disabled = state.step === 1;
@@ -528,7 +532,10 @@
   document.getElementById('prev').addEventListener('click', function () { go(state.step - 1); });
   document.getElementById('next').addEventListener('click', function () { go(state.step + 1); });
 
-  function addXp(n) { state.xp += n; document.getElementById('xp').textContent = '+' + state.xp + ' XP'; }
+  function addXp(n) {
+    state.xp += n; document.getElementById('xp').textContent = '+' + state.xp + ' XP';
+    if (window.LBProgres) LBProgres.activite(n);
+  }
 
   // ---- Variante ----
   function setVariant(v) {

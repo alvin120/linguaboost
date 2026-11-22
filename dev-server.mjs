@@ -55,5 +55,5 @@ http.createServer(async (req, res) => {
   fs.createReadStream(fichier).pipe(res);
 }).listen(PORT, () => {
   console.log(`LinguaBoost en local : http://localhost:${PORT}/maquettes/professeur.html`);
-  if (!process.env.ANTHROPIC_API_KEY) console.log('⚠️  ANTHROPIC_API_KEY absente : créez un fichier .env (voir .env.example).');
+  if (!process.env.AI_GATEWAY_API_KEY && !process.env.VERCEL_OIDC_TOKEN) console.log('⚠️  Accès AI Gateway absent : lancez « vercel env pull .env » ou ajoutez AI_GATEWAY_API_KEY (voir .env.example).');
 });

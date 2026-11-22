@@ -1,5 +1,5 @@
 // Serveur de développement local : sert les fichiers statiques et la route /api/professeur,
-// comme le ferait Vercel. Usage : npm run dev  (clé dans .env : ANTHROPIC_API_KEY=...)
+// comme le ferait Vercel. Usage : npm run dev  (accès IA dans .env : AI_GATEWAY_API_KEY ou VERCEL_OIDC_TOKEN)
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
